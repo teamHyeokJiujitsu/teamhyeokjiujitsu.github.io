@@ -1,26 +1,19 @@
-@import "tailwindcss";
+/* 심플한 기본 스타일 */
+* { box-sizing: border-box; }
+html, body { padding: 0; margin: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif; color: #111; }
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; height: auto; display: block; }
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+.container { max-width: 960px; margin: 0 auto; padding: 16px; }
+.header { border-bottom: 1px solid #eee; }
+.nav { display: flex; gap: 12px; padding: 12px 0; }
+.footer { border-top: 1px solid #eee; padding: 24px 0; color: #666; font-size: 14px; margin-top: 40px; }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+.grid { display: grid; grid-template-columns: repeat(1, 1fr); gap: 16px; }
+@media (min-width: 720px) {
+  .grid { grid-template-columns: repeat(2, 1fr); }
 }
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-}
+.card { border: 1px solid #eee; border-radius: 8px; padding: 16px; background: #fff; }
+.badge { display: inline-block; padding: 2px 8px; font-size: 12px; border: 1px solid #ddd; border-radius: 999px; margin-right: 6px; color: #444; }
+.small { color: #666; font-size: 14px; }
