@@ -35,6 +35,15 @@ export default async function EventDetailPage({ params }: Props) {
           <a href={meta.registrationUrl} target="_blank">접수 링크</a>
         </div>
       ) : null}
+      <div style={{ marginTop: 8 }}>
+        <a
+          href={`https://www.google.com/search?q=${encodeURIComponent(meta.title + ' 대회 신청')}`}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          대회 신청 검색
+        </a>
+      </div>
       <div style={{ marginTop: 16 }} dangerouslySetInnerHTML={{ __html: html }} />
     </article>
   );

@@ -9,6 +9,8 @@ const TABS = [
   { key: 'kbjjf', label: 'KBJJF' },
   { key: 'street', label: '스트릿 주짓수' },
   { key: 'jagers', label: '예거스' },
+  { key: 'women', label: '여성' },
+  { key: 'jjf', label: 'JJF' },
 ];
 
 export default function EventsList({
