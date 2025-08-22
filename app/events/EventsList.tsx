@@ -13,7 +13,7 @@ const TABS = [
 
 export default function EventsList({
   events,
-  basePath = '/events/',
+  basePath = '/',
 }: {
   events: EventMeta[];
   basePath?: string;
@@ -54,13 +54,6 @@ export default function EventsList({
                 </span>
               ))}
             </div>
-            {e.registrationUrl ? (
-              <div style={{ marginTop: 8 }}>
-                <a href={e.registrationUrl} target="_blank">
-                  접수 링크
-                </a>
-              </div>
-            ) : null}
           </div>
         ))}
       </div>
