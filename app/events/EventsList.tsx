@@ -10,6 +10,9 @@ const TABS = [
   { key: 'yaegers', label: '예거스컵' },
   { key: 'heroes', label: '히어로즈 리그' },
   { key: 'pbjjf', label: 'PBJJF' },
+  { key: 'kbjjf', label: 'KBJJF' },
+  { key: 'street', label: '스트릿 주짓수' },
+  { key: 'yaegers', label: '예거스' },
 ];
 
 export default function EventsList({ events }: { events: EventMeta[] }) {
