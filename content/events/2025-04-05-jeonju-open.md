@@ -1,12 +1,12 @@
 ---
 title: "스트릿 주짓수 96 전주 오픈"
-date: "2025-02-15"
+date: "2025-04-05"
 city: "전주"
 venue: ""
 organizer: "Street Jiujitsu"
 tags: ["gi","street"]
 registrationUrl: "https://www.street-jiujitsu.com/"
-sourceUrl: "https://www.street-jiujitsu.com/"
+sourceUrl: "http://mrparkerbjj.com/category/jiujitsu-competition-schedule/"
 ---
 
-> 출처: Street Jiujitsu 공식 페이지(https://www.street-jiujitsu.com/). 일정은 변동될 수 있습니다.
+> Street 공식 페이지/결과 기반
