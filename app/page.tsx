@@ -1,14 +1,10 @@
 import { Suspense } from 'react';
-import { Suspense } from 'react';
 import { getAllEventsMeta } from '@/lib/content';
-import EventsList from './events/EventsList';
 import EventsList from './events/EventsList';
 
 export const metadata = { title: '대회 목록' };
 
-export default function HomePage() {
-  const events = getAllEventsMeta();
-export default function HomePage() {
+export default function Page() {
   const events = getAllEventsMeta();
   return (
     <div>
