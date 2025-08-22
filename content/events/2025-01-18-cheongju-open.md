@@ -1,8 +1,8 @@
 ---
-title: "스트릿 주짓수 88 서울 오픈"
-date: "2025-02-09"
-city: "서울"
-venue: "SETEC 2전시장"
+title: "스트릿 주짓수 85 청주 오픈"
+date: "2025-01-18"
+city: "청주"
+venue: "청주장애인스포츠센터"
 organizer: "Street Jiujitsu"
 tags: ["gi","street"]
 registrationUrl: "https://www.street-jiujitsu.com/"
