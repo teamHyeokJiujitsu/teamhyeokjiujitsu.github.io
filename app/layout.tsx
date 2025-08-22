@@ -14,7 +14,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <div className="container">
             <nav className="nav">
               <Link href="/">홈</Link>
-              <Link href="/events/">대회 일정</Link>
             </nav>
           </div>
         </header>
