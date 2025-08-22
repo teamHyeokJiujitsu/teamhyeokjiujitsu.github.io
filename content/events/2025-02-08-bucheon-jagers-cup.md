@@ -3,8 +3,8 @@ title: "예거스컵 부천"
 date: "2025-02-08"
 city: "부천"
 venue: "송내사회체육관"
-organizer: "Jagers Cup"
-tags: ["gi","yaegers"]
+organizer: "예거스"
+tags: ["gi","jagers"]
 registrationUrl: "https://www.instagram.com/jagers_cup/"
 sourceUrl: "http://mrparkerbjj.com/category/jiujitsu-competition-schedule/"
 ---
