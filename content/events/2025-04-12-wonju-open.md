@@ -1,12 +1,12 @@
 ---
 title: "스트릿 주짓수 97 원주 오픈"
-date: "2025-02-22"
+date: "2025-04-12"
 city: "원주"
 venue: ""
 organizer: "Street Jiujitsu"
 tags: ["gi","street"]
 registrationUrl: "https://www.street-jiujitsu.com/"
-sourceUrl: "https://www.street-jiujitsu.com/"
+sourceUrl: "http://mrparkerbjj.com/category/jiujitsu-competition-schedule/"
 ---
 
-> 출처: Street Jiujitsu 공식 페이지(https://www.street-jiujitsu.com/). 일정은 변동될 수 있습니다.
+> Street 공식 페이지/결과 기반
