@@ -6,6 +6,10 @@ import type { EventMeta } from '@/lib/content';
 
 const TABS = [
   { key: undefined, label: '전체' },
+  { key: 'street', label: '스트릿 주짓수' },
+  { key: 'yaegers', label: '예거스컵' },
+  { key: 'heroes', label: '히어로즈 리그' },
+  { key: 'pbjjf', label: 'PBJJF' },
   { key: 'kbjjf', label: 'KBJJF' },
   { key: 'street', label: '스트릿 주짓수' },
   { key: 'yaegers', label: '예거스' },
