@@ -1,8 +1,8 @@
 ---
-title: "스트릿 주짓수 88 서울 오픈"
-date: "2025-02-09"
-city: "서울"
-venue: "SETEC 2전시장"
+title: "스트릿 주짓수 86 부산 오픈"
+date: "2025-01-19"
+city: "부산"
+venue: "강서체육공원 실내체육관"
 organizer: "Street Jiujitsu"
 tags: ["gi","street"]
 registrationUrl: "https://www.street-jiujitsu.com/"

@@ -1,8 +1,8 @@
 ---
-title: "스트릿 주짓수 88 서울 오픈"
-date: "2025-02-09"
-city: "서울"
-venue: "SETEC 2전시장"
+title: "스트릿 주짓수 89 울산 오픈"
+date: "2025-02-15"
+city: "울산"
+venue: "울산문수체육관"
 organizer: "Street Jiujitsu"
 tags: ["gi","street"]
 registrationUrl: "https://www.street-jiujitsu.com/"
