@@ -1,4 +1,5 @@
 import { getAllEventsMeta, getEventHtmlBySlug } from '@/lib/content';
+import { notFound } from 'next/navigation';
 
 export const dynamicParams = false;
 
@@ -18,7 +19,7 @@ export async function generateMetadata({ params }: Props) {
 export default async function EventDetailPage({ params }: Props) {
   const { slug } = await params;
   const meta = getAllEventsMeta().find(e => e.slug === slug);
-  if (!meta) return <div>존재하지 않는 대회입니다.</div>;
+  if (!meta) notFound();
 
   const html = await getEventHtmlBySlug(slug);
 
@@ -30,11 +31,20 @@ export default async function EventDetailPage({ params }: Props) {
         {meta.city ? ` · ${meta.city}` : ''}{meta.venue ? ` · ${meta.venue}` : ''}
       </div>
       {meta.registrationUrl ? (
-        <div style={{ marginTop: 8 }}>
+        <div className="mt-8">
           <a href={meta.registrationUrl} target="_blank">접수 링크</a>
         </div>
       ) : null}
-      <div style={{ marginTop: 16 }} dangerouslySetInnerHTML={{ __html: html }} />
+      <div className="mt-8">
+        <a
+          href={`https://www.google.com/search?q=${encodeURIComponent(meta.title + ' 대회 신청')}`}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          대회 신청 검색
+        </a>
+      </div>
+      <div className="mt-16" dangerouslySetInnerHTML={{ __html: html }} />
     </article>
   );
 }
