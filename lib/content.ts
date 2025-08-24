@@ -59,11 +59,15 @@ export function getAllEventsMeta(): EventMeta[] {
     const raw = fs.readFileSync(path.join(dir, file), 'utf-8');
     const { data } = matter(raw);
     const slug = file.replace(/\.mdx?$/, '');
+    let tags = ((data.tags as string[]) || []).map(t => t.toLowerCase());
+    if (tags.some(t => t.endsWith('jjf'))) tags.push('jjf');
+    if (tags.includes('woman') && !tags.includes('women')) tags.push('women');
+    tags = Array.from(new Set(tags));
     return {
       slug,
       title: String(data.title || slug),
       date: String(data.date || ''),
-      tags: (data.tags as string[]) || [],
+      tags,
       excerpt: String(data.excerpt || ''),
       cover: String(data.cover || ''),
       city: String(data.city || ''),
