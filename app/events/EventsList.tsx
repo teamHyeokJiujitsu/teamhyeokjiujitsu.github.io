@@ -9,8 +9,6 @@ const TABS = [
   { key: 'kbjjf', label: 'KBJJF' },
   { key: 'street', label: '스트릿 주짓수' },
   { key: 'jagers', label: '예거스' },
-  { key: 'women', label: '여성' },
-  { key: 'jjf', label: 'JJF' },
 ];
 
 export default function EventsList({
@@ -41,15 +39,16 @@ export default function EventsList({
       <div className="grid">
         {items.map(e => (
           <div key={e.slug} className="card">
-            <h3 style={{ margin: '8px 0' }}>
+            <h3 className="card-title">
               <Link href={`/events/${e.slug}/`}>{e.title}</Link>
             </h3>
-            <div className="small">
+            <div className="card-meta small">
               {new Date(e.date).toLocaleDateString('ko-KR')}
-              {e.city ? ` · ${e.city}` : ''}{e.venue ? ` · ${e.venue}` : ''}
+              {e.city ? ` · ${e.city}` : ''}
+              {e.venue ? ` · ${e.venue}` : ''}
             </div>
-            <div style={{ marginTop: 8 }}>{e.excerpt}</div>
-            <div style={{ marginTop: 8 }}>
+            <div className="card-excerpt">{e.excerpt}</div>
+            <div className="card-tags">
               {e.tags?.map(t => (
                 <span key={t} className="badge">
                   {t}

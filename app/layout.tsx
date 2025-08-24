@@ -13,7 +13,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <header className="header">
           <div className="container">
             <nav className="nav">
-              <Link href="/">홈</Link>
+              <Link href="/" className="logo">
+                BJJ 대회 캘린더
+              </Link>
             </nav>
           </div>
         </header>
