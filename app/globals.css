@@ -67,3 +67,21 @@ img { max-width: 100%; height: auto; display: block; }
 .home-intro { margin-bottom: 24px; color: var(--muted); }
 .mt-8 { margin-top: 8px; }
 .mt-16 { margin-top: 16px; }
+
+/* floating rulebook button */
+.rulebook-tab {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  padding: 12px 20px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #6366f1, #ec4899);
+  color: #fff;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s ease;
+  z-index: 50;
+}
+.rulebook-tab:hover {
+  transform: scale(1.05);
+}

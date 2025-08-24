@@ -25,6 +25,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <div className="small">© {new Date().getFullYear()} BJJ 대회 정보</div>
           </div>
         </footer>
+        <Link href="/rules" className="rulebook-tab">
+          룰 북 보러가기!
+        </Link>
       </body>
     </html>
   );
