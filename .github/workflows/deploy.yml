@@ -1,14 +1,17 @@
-name: Deploy to GitHub Pages (static export)
-
+name: Deploy to GitHub Pages
 on:
-  push:
-    branches: [ "main" ]
+  push: { branches: [ main ] }
+  workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency: pages
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
