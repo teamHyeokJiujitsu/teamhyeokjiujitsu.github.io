@@ -53,9 +53,26 @@ jobs:
         with:
           node-version: "20"
           cache: ${{ steps.detect-package-manager.outputs.manager }}
+      - name: Ensure npm
+        run: |
+          corepack enable
+          corepack prepare npm@latest --activate
       - name: Setup Pages
+        if: ${{ secrets.PAGES_TOKEN != '' }}
         uses: actions/configure-pages@v5
         with:
+          token: ${{ secrets.PAGES_TOKEN }}
+          enablement: true
+          # Automatically inject basePath in your Next.js configuration file and disable
+          # server side image optimization (https://nextjs.org/docs/api-reference/next/image#unoptimized).
+          #
+          # You may remove this line if you want to manage the configuration yourself.
+          static_site_generator: next
+      - name: Setup Pages (existing site)
+        if: ${{ secrets.PAGES_TOKEN == '' }}
+        uses: actions/configure-pages@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
           # Automatically inject basePath in your Next.js configuration file and disable
           # server side image optimization (https://nextjs.org/docs/api-reference/next/image#unoptimized).
           #
