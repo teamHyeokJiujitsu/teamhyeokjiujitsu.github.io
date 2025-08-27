@@ -14,28 +14,28 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20, cache: npm }
+      - run: corepack enable && corepack prepare npm@latest --activate
+      - run: npm ci
+      - run: npm run build                 # out/가 생성되어야 함 (Next.js는 output:'export')
+      - run: ls -la out && test -f out/index.html
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      # ✅ 여기 추가
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
         with:
-          node-version: 20
-          cache: 'npm'
-
-      - name: Ensure npm
-        run: |
-          corepack enable
-          corepack prepare npm@latest --activate
-
-      - name: Install deps
-        run: npm ci
-
-      - name: Build (static output -> out/)
-        run: npm run build
-
-      - name: Deploy to gh-pages
-        uses: peaceiris/actions-gh-pages@v3
+          enablement: true                 # 첫 배포이거나 Pages가 비활성화돼 있으면 필요. 이후엔 생략 가능
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./out
+          path: ./out
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    environment: { name: github-pages }
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
