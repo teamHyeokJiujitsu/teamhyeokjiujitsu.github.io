@@ -27,7 +27,6 @@ jobs:
         uses: actions/configure-pages@v5
         with:
           enablement: true                 # 첫 배포이거나 Pages가 비활성화돼 있으면 필요. 이후엔 생략 가능
-
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
