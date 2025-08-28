@@ -10,6 +10,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="ko">
       <body>
+        <a href="#main" className="skip-link">본문 바로가기</a>
         <header className="header">
           <div className="container">
             <nav className="nav">
@@ -19,7 +20,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </nav>
           </div>
         </header>
-        <main className="container">{children}</main>
+        <main id="main" className="container">{children}</main>
         <footer className="footer">
           <div className="container">
             <div className="small">© {new Date().getFullYear()} BJJ 대회 정보</div>
