@@ -1,7 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useRef, type KeyboardEvent } from 'react';
 import type { EventMeta } from '@/lib/content';
 
 const TABS = [
@@ -19,21 +20,52 @@ export default function EventsList({
   basePath?: string;
 }) {
   const searchParams = useSearchParams();
+  const router = useRouter();
   const tag = searchParams.get('tag') || undefined;
+  const currentIndex = Math.max(
+    0,
+    TABS.findIndex(t => t.key === tag),
+  );
+  const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const filtered = tag ? events.filter(e => e.tags?.includes(tag)) : events;
   const items = filtered;
 
+  const selectTab = (idx: number) => {
+    const { key } = TABS[idx];
+    router.push(key ? `${basePath}?tag=${key}` : basePath);
+  };
+
+  const handleKeyDown = (
+    e: KeyboardEvent<HTMLButtonElement>,
+    idx: number,
+  ) => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+      e.preventDefault();
+      const nextIndex =
+        e.key === 'ArrowRight'
+          ? (idx + 1) % TABS.length
+          : (idx - 1 + TABS.length) % TABS.length;
+      tabRefs.current[nextIndex]?.focus();
+      selectTab(nextIndex);
+    }
+  };
+
   return (
     <>
-      <div className="tabs">
-        {TABS.map(({ key, label }) => (
-          <Link
+      <div className="tabs" role="tablist">
+        {TABS.map(({ key, label }, idx) => (
+          <button
             key={key ?? 'all'}
-            href={key ? `${basePath}?tag=${key}` : basePath}
-            className={`tab${key === tag ? ' active' : ''}`}
+            ref={el => (tabRefs.current[idx] = el)}
+            role="tab"
+            aria-selected={idx === currentIndex}
+            tabIndex={idx === currentIndex ? 0 : -1}
+            className={`tab${idx === currentIndex ? ' active' : ''}`}
+            onClick={() => selectTab(idx)}
+            onKeyDown={e => handleKeyDown(e, idx)}
           >
             {label}
-          </Link>
+          </button>
         ))}
       </div>
       <div className="grid">
