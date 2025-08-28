@@ -68,22 +68,28 @@ export default async function EventDetailPage({ params }: Props) {
           {new Date(meta.date).toLocaleDateString('ko-KR')}
           {meta.city ? ` · ${meta.city}` : ''}{meta.venue ? ` · ${meta.venue}` : ''}
         </div>
-      {meta.registrationUrl ? (
-        <div className="mt-8">
-          <a href={meta.registrationUrl} target="_blank">접수 링크</a>
+        <div className="actions">
+          {meta.registrationUrl && (
+            <a
+              className="btn btn-primary"
+              href={meta.registrationUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              접수하기
+            </a>
+          )}
+          <a
+            className="btn btn-outline"
+            href={`https://www.google.com/search?q=${encodeURIComponent(meta.title + ' 대회 신청')}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            대회 신청 검색
+          </a>
         </div>
-      ) : null}
-      <div className="mt-8">
-        <a
-          href={`https://www.google.com/search?q=${encodeURIComponent(meta.title + ' 대회 신청')}`}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          대회 신청 검색
-        </a>
-      </div>
-      <div className="mt-16" dangerouslySetInnerHTML={{ __html: html }} />
-    </article>
+        <div className="mt-16" dangerouslySetInnerHTML={{ __html: html }} />
+      </article>
     </>
   );
 }
