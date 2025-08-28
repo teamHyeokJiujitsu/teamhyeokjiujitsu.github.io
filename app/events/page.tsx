@@ -20,7 +20,13 @@ export default function EventsListPage() {
             <div style={{ marginTop: 8 }}>{e.excerpt}</div>
             {e.registrationUrl ? (
               <div style={{ marginTop: 8 }}>
-                <a href={e.registrationUrl} target="_blank">접수 링크 바로가기</a>
+                <a
+                  href={e.registrationUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  접수 링크 바로가기
+                </a>
               </div>
             ) : null}
           </div>
