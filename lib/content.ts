@@ -2,7 +2,10 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 import { remark } from 'remark';
-import html from 'remark-html';
+import remarkRehype from 'remark-rehype';
+import rehypeSanitize from 'rehype-sanitize';
+import rehypeStringify from 'rehype-stringify';
+import DOMPurify from 'isomorphic-dompurify';
 
 const ROOT = process.cwd();
 
@@ -80,14 +83,23 @@ export function getAllEventsMeta(): EventMeta[] {
   return items.sort((a, b) => (a.date > b.date ? -1 : 1));
 }
 
+async function markdownToSafeHtml(content: string) {
+  const processed = await remark()
+    .use(remarkRehype)
+    .use(rehypeSanitize)
+    .use(rehypeStringify)
+    .process(content);
+  const html = processed.toString();
+  return DOMPurify.sanitize(html);
+}
+
 export async function getNewsHtmlBySlug(slug: string) {
   const fileMd = path.join(ROOT, 'content', 'news', `${slug}.md`);
   const fileMdx = path.join(ROOT, 'content', 'news', `${slug}.mdx`);
   const file = fs.existsSync(fileMd) ? fileMd : fileMdx;
   const raw = fs.readFileSync(file, 'utf-8');
   const { content } = matter(raw);
-  const processed = await remark().use(html).process(content);
-  return processed.toString();
+  return markdownToSafeHtml(content);
 }
 
 export async function getEventHtmlBySlug(slug: string) {
@@ -96,6 +108,5 @@ export async function getEventHtmlBySlug(slug: string) {
   const file = fs.existsSync(fileMd) ? fileMd : fileMdx;
   const raw = fs.readFileSync(file, 'utf-8');
   const { content } = matter(raw);
-  const processed = await remark().use(html).process(content);
-  return processed.toString();
+  return markdownToSafeHtml(content);
 }

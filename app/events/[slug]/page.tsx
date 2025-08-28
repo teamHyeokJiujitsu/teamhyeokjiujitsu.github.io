@@ -1,6 +1,7 @@
 import { getAllEventsMeta, getEventHtmlBySlug } from '@/lib/content';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
+import DOMPurify from 'isomorphic-dompurify';
 
 export const dynamicParams = false;
 
@@ -27,7 +28,8 @@ export default async function EventDetailPage({ params }: Props) {
   const meta = getAllEventsMeta().find(e => e.slug === slug);
   if (!meta) notFound();
 
-  const html = await getEventHtmlBySlug(slug);
+  const rawHtml = await getEventHtmlBySlug(slug);
+  const html = DOMPurify.sanitize(rawHtml);
 
   const eventJsonLd = {
     '@context': 'https://schema.org',
