@@ -9,4 +9,3 @@ registrationUrl: "https://www.spotlite.me/tournaments/6842"
 sourceUrl: "https://www.spotlite.me/tournaments/6842"
 ---
 
-> 스팟라이트 대회 페이지.
