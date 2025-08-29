@@ -1,6 +1,7 @@
 /* 기본 스타일과 컬러 팔레트 */
 * { box-sizing: border-box; }
 html, body { padding: 0; margin: 0; }
+html { scroll-behavior: smooth; }
 :root {
   --bg: #f9fafb;
   --border: #e5e7eb;
@@ -30,8 +31,16 @@ img { max-width: 100%; height: auto; display: block; }
 }
 
 .container { max-width: 960px; margin: 0 auto; padding: 24px 16px; }
-.header { border-bottom: 1px solid var(--border); background: #fff; position: sticky; top: 0; z-index: 10; }
-.nav { display: flex; gap: 16px; padding: 16px 0; font-weight: 500; }
+.header {
+  border-bottom: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(8px);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  animation: slideDown 0.6s ease;
+}
+.nav { display: flex; gap: 16px; padding: 16px 0; font-weight: 500; align-items: center; }
 .logo { font-weight: 600; font-size: 18px; }
 .footer { border-top: 1px solid var(--border); padding: 24px 0; color: var(--muted); font-size: 14px; margin-top: 40px; }
 
@@ -45,9 +54,12 @@ img { max-width: 100%; height: auto; display: block; }
   padding: 20px;
   background: #fff;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-  transition: box-shadow 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
-.card:hover { box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08); }
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
 .badge {
   display: inline-block;
   padding: 2px 8px;
@@ -66,19 +78,147 @@ img { max-width: 100%; height: auto; display: block; }
   border-radius: 999px;
   font-size: 14px;
   background: var(--bg);
-  transition: background 0.2s ease, color 0.2s ease;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease,
+    box-shadow 0.2s ease;
+  display: inline-flex;
+  align-items: center;
 }
-.tab:hover { background: #e5e7eb; }
-.tab.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+.tab:hover {
+  background: #e5e7eb;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.tab.active {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}
+
+.tab-count {
+  margin-left: 6px;
+  padding: 2px 6px;
+  border-radius: 999px;
+  background: var(--primary);
+  color: #fff;
+  font-size: 12px;
+}
 
 .card-title { margin: 0 0 8px; font-size: 18px; }
-.card-meta { margin-top: 4px; }
+.card-meta { margin-top: 4px; display: flex; flex-wrap: wrap; gap: 8px; }
+.meta-item { display: inline-flex; align-items: center; gap: 4px; }
+.meta-item svg { width: 14px; height: 14px; stroke: currentColor; }
 .card-excerpt { margin-top: 8px; }
 .card-tags { margin-top: 12px; }
 .home-title { font-size: 28px; margin-bottom: 4px; }
 .home-intro { margin-bottom: 24px; color: var(--muted); }
 .mt-8 { margin-top: 8px; }
 .mt-16 { margin-top: 16px; }
+
+/* hero section */
+.hero {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  padding: 80px 20px;
+  text-align: center;
+  background: linear-gradient(-45deg, #6366f1, #ec4899, #f97316, #23d5ab);
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+  color: #fff;
+  margin-bottom: 40px;
+}
+.hero-title {
+  animation: fadeSlideDown 0.8s ease both;
+  position: relative;
+  z-index: 1;
+}
+.hero-intro {
+  animation: fadeSlideDown 0.8s ease both;
+  animation-delay: 0.2s;
+  position: relative;
+  z-index: 1;
+}
+
+.hero-orb {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  filter: blur(2px);
+  animation: orbFloat 6s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+.orb1 {
+  width: 40px;
+  height: 40px;
+  top: 10%;
+  left: 15%;
+}
+.orb2 {
+  width: 24px;
+  height: 24px;
+  top: 60%;
+  left: 70%;
+  animation-delay: 2s;
+}
+.orb3 {
+  width: 32px;
+  height: 32px;
+  top: 80%;
+  left: 30%;
+  animation-delay: 4s;
+}
+
+/* cards appear animation */
+.animated-card {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes fadeSlideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes orbFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
 
 /* floating rulebook button */
 .rulebook-tab {
@@ -128,4 +268,33 @@ img { max-width: 100%; height: auto; display: block; }
 .btn-outline:hover {
   background: var(--primary);
   color: #fff;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--primary);
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  transition: transform 0.1s ease, background 0.2s ease;
+  z-index: 1000;
+}
+.cursor--down {
+  transform: translate(-50%, -50%) scale(0.8);
+  background: var(--primary);
 }
