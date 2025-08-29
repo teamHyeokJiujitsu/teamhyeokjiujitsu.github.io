@@ -29,12 +29,20 @@ export default function EventsList({
     TABS.findIndex(t => t.key === tag),
   );
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
-  let filtered = tag ? events.filter(e => e.tags?.includes(tag)) : events;
-  filtered = region ? filtered.filter(e => e.city === region) : filtered;
-  const items = filtered;
+
+  const regionFiltered = region
+    ? events.filter(e => e.city === region)
+    : events;
+
   const counts = TABS.map(({ key }) =>
-    key ? events.filter(e => e.tags?.includes(key)).length : events.length,
+    key
+      ? regionFiltered.filter(e => e.tags?.includes(key)).length
+      : regionFiltered.length,
   );
+
+  const items = tag
+    ? regionFiltered.filter(e => e.tags?.includes(tag))
+    : regionFiltered;
 
   const selectTab = (idx: number) => {
     const { key } = TABS[idx];
