@@ -145,6 +145,14 @@ img { max-width: 100%; height: auto; display: block; }
   font-size: 18px;
 }
 
+.hero .actions {
+  animation: fadeSlideDown 0.8s ease both;
+  animation-delay: 0.4s;
+  position: relative;
+  z-index: 1;
+  justify-content: center;
+}
+
 .hero-orb {
   position: absolute;
   border-radius: 50%;
