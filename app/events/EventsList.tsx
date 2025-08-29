@@ -71,8 +71,12 @@ export default function EventsList({
         ))}
       </div>
       <div className="grid">
-        {items.map(e => (
-          <div key={e.slug} className="card">
+        {items.map((e, idx) => (
+          <div
+            key={e.slug}
+            className="card animated-card"
+            style={{ animationDelay: `${idx * 0.1}s` }}
+          >
             <h3 className="card-title">
               <Link href={`/events/${e.slug}/`}>{e.title}</Link>
             </h3>
