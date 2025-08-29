@@ -131,6 +131,7 @@ img { max-width: 100%; height: auto; display: block; }
   animation: fadeSlideDown 0.8s ease both;
   position: relative;
   z-index: 1;
+
 }
 .hero-intro {
   animation: fadeSlideDown 0.8s ease both;
@@ -298,3 +299,4 @@ img { max-width: 100%; height: auto; display: block; }
   transform: translate(-50%, -50%) scale(0.8);
   background: var(--primary);
 }
+
