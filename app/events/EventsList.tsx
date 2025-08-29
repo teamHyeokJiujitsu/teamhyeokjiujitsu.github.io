@@ -29,6 +29,9 @@ export default function EventsList({
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const filtered = tag ? events.filter(e => e.tags?.includes(tag)) : events;
   const items = filtered;
+  const counts = TABS.map(({ key }) =>
+    key ? events.filter(e => e.tags?.includes(key)).length : events.length,
+  );
 
   const selectTab = (idx: number) => {
     const { key } = TABS[idx];
@@ -67,6 +70,7 @@ export default function EventsList({
             onKeyDown={e => handleKeyDown(e, idx)}
           >
             {label}
+            <span className="tab-count">{counts[idx]}</span>
           </button>
         ))}
       </div>
@@ -81,9 +85,31 @@ export default function EventsList({
               <Link href={`/events/${e.slug}/`}>{e.title}</Link>
             </h3>
             <div className="card-meta small">
-              {new Date(e.date).toLocaleDateString('ko-KR')}
-              {e.city ? ` · ${e.city}` : ''}
-              {e.venue ? ` · ${e.venue}` : ''}
+              <span className="meta-item">
+                <svg viewBox="0 0 24 24" fill="none" strokeWidth="2" aria-hidden="true">
+                  <path
+                    d="M8 2v4M16 2v4M3 10h18M5 22h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v14a2 2 0 002 2z"
+                  />
+                </svg>
+                {new Date(e.date).toLocaleDateString('ko-KR')}
+              </span>
+              {e.city && (
+                <span className="meta-item">
+                  <svg viewBox="0 0 24 24" fill="none" strokeWidth="2" aria-hidden="true">
+                    <path d="M12 21s-6-5.686-6-10a6 6 0 1112 0c0 4.314-6 10-6 10z" />
+                    <circle cx="12" cy="11" r="2" />
+                  </svg>
+                  {e.city}
+                </span>
+              )}
+              {e.venue && (
+                <span className="meta-item">
+                  <svg viewBox="0 0 24 24" fill="none" strokeWidth="2" aria-hidden="true">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2h-4v-5H9v5H5a2 2 0 01-2-2z" />
+                  </svg>
+                  {e.venue}
+                </span>
+              )}
             </div>
             <div className="card-excerpt">{e.excerpt}</div>
             <div className="card-tags">

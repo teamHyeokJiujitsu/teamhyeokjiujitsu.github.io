@@ -1,6 +1,7 @@
 /* 기본 스타일과 컬러 팔레트 */
 * { box-sizing: border-box; }
 html, body { padding: 0; margin: 0; }
+html { scroll-behavior: smooth; }
 :root {
   --bg: #f9fafb;
   --border: #e5e7eb;
@@ -30,8 +31,16 @@ img { max-width: 100%; height: auto; display: block; }
 }
 
 .container { max-width: 960px; margin: 0 auto; padding: 24px 16px; }
-.header { border-bottom: 1px solid var(--border); background: #fff; position: sticky; top: 0; z-index: 10; }
-.nav { display: flex; gap: 16px; padding: 16px 0; font-weight: 500; }
+.header {
+  border-bottom: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(8px);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  animation: slideDown 0.6s ease;
+}
+.nav { display: flex; gap: 16px; padding: 16px 0; font-weight: 500; align-items: center; }
 .logo { font-weight: 600; font-size: 18px; }
 .footer { border-top: 1px solid var(--border); padding: 24px 0; color: var(--muted); font-size: 14px; margin-top: 40px; }
 
@@ -69,13 +78,35 @@ img { max-width: 100%; height: auto; display: block; }
   border-radius: 999px;
   font-size: 14px;
   background: var(--bg);
-  transition: background 0.2s ease, color 0.2s ease;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease,
+    box-shadow 0.2s ease;
+  display: inline-flex;
+  align-items: center;
 }
-.tab:hover { background: #e5e7eb; }
-.tab.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+.tab:hover {
+  background: #e5e7eb;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.tab.active {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}
+
+.tab-count {
+  margin-left: 6px;
+  padding: 2px 6px;
+  border-radius: 999px;
+  background: var(--primary);
+  color: #fff;
+  font-size: 12px;
+}
 
 .card-title { margin: 0 0 8px; font-size: 18px; }
-.card-meta { margin-top: 4px; }
+.card-meta { margin-top: 4px; display: flex; flex-wrap: wrap; gap: 8px; }
+.meta-item { display: inline-flex; align-items: center; gap: 4px; }
+.meta-item svg { width: 14px; height: 14px; stroke: currentColor; }
 .card-excerpt { margin-top: 8px; }
 .card-tags { margin-top: 12px; }
 .home-title { font-size: 28px; margin-bottom: 4px; }
@@ -193,4 +224,15 @@ img { max-width: 100%; height: auto; display: block; }
 .btn-outline:hover {
   background: var(--primary);
   color: #fff;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
