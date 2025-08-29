@@ -56,7 +56,9 @@ export default function EventsList({
         {TABS.map(({ key, label }, idx) => (
           <button
             key={key ?? 'all'}
-            ref={el => (tabRefs.current[idx] = el)}
+            ref={el => {
+              tabRefs.current[idx] = el;
+            }}
             role="tab"
             aria-selected={idx === currentIndex}
             tabIndex={idx === currentIndex ? 0 : -1}
