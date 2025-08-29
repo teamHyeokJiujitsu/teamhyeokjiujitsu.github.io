@@ -1,4 +1,5 @@
 import { Suspense } from 'react';
+import Link from 'next/link';
 import { getAllEventsMeta } from '@/lib/content';
 import EventsList from './events/EventsList';
 
@@ -16,10 +17,17 @@ export default function Page() {
         <p className="home-intro hero-intro">
           국내 주짓수 대회를 한 번에 확인하세요.
         </p>
+        <div className="actions">
+          <Link href="#events" className="btn btn-primary">
+            대회 보기
+          </Link>
+        </div>
       </section>
-      <Suspense>
-        <EventsList events={events} />
-      </Suspense>
+      <section id="events">
+        <Suspense>
+          <EventsList events={events} />
+        </Suspense>
+      </section>
     </div>
   );
 }
