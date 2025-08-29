@@ -1,6 +1,11 @@
 import './globals.css';
+import { Noto_Sans_KR } from 'next/font/google';
 import Link from 'next/link';
 import FancyCursor from '@/components/FancyCursor';
+
+const notoSans = Noto_Sans_KR({
+  subsets: ['latin'],
+});
 
 export const metadata = {
   title: 'BJJ 대회 일정',
@@ -10,7 +15,7 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ko">
-      <body>
+      <body className={notoSans.className}>
         <FancyCursor />
         <a href="#main" className="skip-link">본문 바로가기</a>
         <header className="header">
