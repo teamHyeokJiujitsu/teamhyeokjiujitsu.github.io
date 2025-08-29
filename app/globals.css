@@ -131,7 +131,7 @@ img { max-width: 100%; height: auto; display: block; }
   animation: fadeSlideDown 0.8s ease both;
   position: relative;
   z-index: 1;
-  font-size: 48px;
+  font-size: clamp(32px, 5vw, 56px);
   font-weight: 700;
   line-height: 1.2;
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
@@ -142,7 +142,8 @@ img { max-width: 100%; height: auto; display: block; }
   position: relative;
   z-index: 1;
   color: rgba(255, 255, 255, 0.9);
-  font-size: 18px;
+  font-size: clamp(16px, 2.5vw, 24px);
+  line-height: 1.6;
 }
 
 .hero .actions {
