@@ -46,7 +46,6 @@ export default function RegionFilter({
     () => regions.filter(r => r.includes(search)),
     [regions, search],
   );
-
   const updateRegion = (value: string) => {
     const params = new URLSearchParams(Array.from(searchParams.entries()));
     if (value) {
