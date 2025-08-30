@@ -20,9 +20,13 @@ jobs:
       - run: corepack enable && corepack prepare npm@latest --activate
       - run: npm ci
       - run: npm run build                 # out/가 생성되어야 함 (Next.js는 output:'export')
-      - run: ls -la out && test -f out/index.html
+      - run: |
+          ls -la out
+          test -f out/index.html
+          test -f out/sitemap.xml
+          test -f out/robots.txt
+      - run: touch out/.nojekyll
 
-      # ✅ 여기 추가
       - name: Setup Pages
         uses: actions/configure-pages@v5
         with:
