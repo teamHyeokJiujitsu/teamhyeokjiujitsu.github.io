@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useRef, type KeyboardEvent } from 'react';
+import RegionFilter from './RegionFilter';
 import type { EventMeta } from '@/lib/content';
 
 const TABS = [
@@ -22,20 +23,36 @@ export default function EventsList({
   const searchParams = useSearchParams();
   const router = useRouter();
   const tag = searchParams.get('tag') || undefined;
+  const region = searchParams.get('region') || undefined;
   const currentIndex = Math.max(
     0,
     TABS.findIndex(t => t.key === tag),
   );
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
-  const filtered = tag ? events.filter(e => e.tags?.includes(tag)) : events;
-  const items = filtered;
+
+  const regionFiltered = region
+    ? events.filter(e => e.city === region)
+    : events;
+
   const counts = TABS.map(({ key }) =>
-    key ? events.filter(e => e.tags?.includes(key)).length : events.length,
+    key
+      ? regionFiltered.filter(e => e.tags?.includes(key)).length
+      : regionFiltered.length,
   );
+
+  const items = tag
+    ? regionFiltered.filter(e => e.tags?.includes(tag))
+    : regionFiltered;
 
   const selectTab = (idx: number) => {
     const { key } = TABS[idx];
-    router.push(key ? `${basePath}?tag=${key}` : basePath);
+    const params = new URLSearchParams(Array.from(searchParams.entries()));
+    if (key) {
+      params.set('tag', key);
+    } else {
+      params.delete('tag');
+    }
+    router.push(`${basePath}?${params.toString()}`);
   };
 
   const handleKeyDown = (
@@ -55,6 +72,7 @@ export default function EventsList({
 
   return (
     <>
+      <RegionFilter events={events} basePath={basePath} />
       <div className="tabs" role="tablist">
         {TABS.map(({ key, label }, idx) => (
           <button
