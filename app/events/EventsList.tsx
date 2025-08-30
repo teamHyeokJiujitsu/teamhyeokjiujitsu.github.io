@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useRef, type KeyboardEvent } from 'react';
+import RegionFilter from './RegionFilter';
 import type { EventMeta } from '@/lib/content';
 
 const TABS = [
@@ -22,20 +23,53 @@ export default function EventsList({
   const searchParams = useSearchParams();
   const router = useRouter();
   const tag = searchParams.get('tag') || undefined;
+  const region = searchParams.get('region') || undefined;
+  const showPast = searchParams.get('past') === '1';
   const currentIndex = Math.max(
     0,
     TABS.findIndex(t => t.key === tag),
   );
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
-  const filtered = tag ? events.filter(e => e.tags?.includes(tag)) : events;
-  const items = filtered;
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const dateFiltered = showPast
+    ? events
+    : events.filter(e => new Date(e.date) >= today);
+
+  const regionFiltered = region
+    ? dateFiltered.filter(e => e.city === region)
+    : dateFiltered;
+
   const counts = TABS.map(({ key }) =>
-    key ? events.filter(e => e.tags?.includes(key)).length : events.length,
+    key
+      ? regionFiltered.filter(e => e.tags?.includes(key)).length
+      : regionFiltered.length,
   );
+
+  const items = tag
+    ? regionFiltered.filter(e => e.tags?.includes(tag))
+    : regionFiltered;
+
+  const togglePast = (checked: boolean) => {
+    const params = new URLSearchParams(Array.from(searchParams.entries()));
+    if (checked) {
+      params.set('past', '1');
+    } else {
+      params.delete('past');
+    }
+    router.push(`${basePath}?${params.toString()}`);
+  };
 
   const selectTab = (idx: number) => {
     const { key } = TABS[idx];
-    router.push(key ? `${basePath}?tag=${key}` : basePath);
+    const params = new URLSearchParams(Array.from(searchParams.entries()));
+    if (key) {
+      params.set('tag', key);
+    } else {
+      params.delete('tag');
+    }
+    router.push(`${basePath}?${params.toString()}`);
   };
 
   const handleKeyDown = (
@@ -48,13 +82,27 @@ export default function EventsList({
         e.key === 'ArrowRight'
           ? (idx + 1) % TABS.length
           : (idx - 1 + TABS.length) % TABS.length;
-      tabRefs.current[nextIndex]?.focus();
-      selectTab(nextIndex);
+      const nextTab = tabRefs.current[nextIndex];
+      if (nextTab) {
+        nextTab.focus();
+        selectTab(nextIndex);
+      }
     }
   };
 
   return (
     <>
+      <RegionFilter events={dateFiltered} basePath={basePath} />
+      <div className="past-toggle">
+        <label>
+          <input
+            type="checkbox"
+            checked={showPast}
+            onChange={e => togglePast(e.target.checked)}
+          />
+          날짜 지난 시합 일정도 보기
+        </label>
+      </div>
       <div className="tabs" role="tablist">
         {TABS.map(({ key, label }, idx) => (
           <button
