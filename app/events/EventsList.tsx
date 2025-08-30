@@ -25,6 +25,12 @@ export default function EventsList({
   const tag = searchParams.get('tag') || undefined;
   const region = searchParams.get('region') || undefined;
   const showPast = searchParams.get('past') === '1';
+  const currentIndex = Math.max(
+    0,
+    TABS.findIndex(t => t.key === tag),
+  );
+  const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
+
 
   const today = new Date();
   today.setHours(0, 0, 0, 0);
@@ -35,7 +41,6 @@ export default function EventsList({
   const regionFiltered = region
     ? dateFiltered.filter(e => e.city === region)
     : dateFiltered;
-
 
   const counts = TABS.map(({ key }) =>
     key
@@ -78,8 +83,11 @@ export default function EventsList({
         e.key === 'ArrowRight'
           ? (idx + 1) % TABS.length
           : (idx - 1 + TABS.length) % TABS.length;
-      tabRefs.current[nextIndex]?.focus();
-      selectTab(nextIndex);
+      const nextTab = tabRefs.current[nextIndex];
+      if (nextTab) {
+        nextTab.focus();
+        selectTab(nextIndex);
+      }
     }
   };
 
