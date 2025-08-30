@@ -31,6 +31,7 @@ export default function EventsList({
   );
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
+
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   const dateFiltered = showPast
