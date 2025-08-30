@@ -22,9 +22,9 @@ jobs:
       - run: npm run build                 # out/가 생성되어야 함 (Next.js는 output:'export')
       - run: |
           ls -la out
-          test -f out/team-jiujitsu/index.html
-          test -f out/team-jiujitsu/sitemap.xml
-          test -f out/team-jiujitsu/robots.txt
+          test -f out/index.html
+          test -f out/sitemap.xml
+          test -f out/robots.txt
       - run: touch out/.nojekyll
 
       - name: Setup Pages
