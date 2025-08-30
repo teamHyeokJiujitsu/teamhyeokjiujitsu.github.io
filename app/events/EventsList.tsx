@@ -24,15 +24,18 @@ export default function EventsList({
   const router = useRouter();
   const tag = searchParams.get('tag') || undefined;
   const region = searchParams.get('region') || undefined;
-  const currentIndex = Math.max(
-    0,
-    TABS.findIndex(t => t.key === tag),
-  );
-  const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const showPast = searchParams.get('past') === '1';
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const dateFiltered = showPast
+    ? events
+    : events.filter(e => new Date(e.date) >= today);
 
   const regionFiltered = region
-    ? events.filter(e => e.city === region)
-    : events;
+    ? dateFiltered.filter(e => e.city === region)
+    : dateFiltered;
+
 
   const counts = TABS.map(({ key }) =>
     key
@@ -43,6 +46,16 @@ export default function EventsList({
   const items = tag
     ? regionFiltered.filter(e => e.tags?.includes(tag))
     : regionFiltered;
+
+  const togglePast = (checked: boolean) => {
+    const params = new URLSearchParams(Array.from(searchParams.entries()));
+    if (checked) {
+      params.set('past', '1');
+    } else {
+      params.delete('past');
+    }
+    router.push(`${basePath}?${params.toString()}`);
+  };
 
   const selectTab = (idx: number) => {
     const { key } = TABS[idx];
@@ -72,7 +85,17 @@ export default function EventsList({
 
   return (
     <>
-      <RegionFilter events={events} basePath={basePath} />
+      <RegionFilter events={dateFiltered} basePath={basePath} />
+      <div className="past-toggle">
+        <label>
+          <input
+            type="checkbox"
+            checked={showPast}
+            onChange={e => togglePast(e.target.checked)}
+          />
+          날짜 지난 시합 일정도 보기
+        </label>
+      </div>
       <div className="tabs" role="tablist">
         {TABS.map(({ key, label }, idx) => (
           <button
