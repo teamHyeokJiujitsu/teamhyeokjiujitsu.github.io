@@ -109,16 +109,15 @@ export default function EventsList({
         aria-label="대회 검색"
       />
       <RegionFilter events={dateFiltered} basePath={basePath} />
-      <div className="past-toggle">
-        <label>
-          <input
-            type="checkbox"
-            checked={showPast}
-            onChange={e => togglePast(e.target.checked)}
-          />
-          날짜 지난 시합 일정도 보기
-        </label>
-      </div>
+      <label className="past-toggle">
+        <input
+          type="checkbox"
+          checked={showPast}
+          onChange={e => togglePast(e.target.checked)}
+        />
+        <span className="switch" aria-hidden="true"></span>
+        <span>날짜 지난 시합 일정도 보기</span>
+      </label>
       <div className="tabs" role="tablist">
         {tabs.map(({ key, label }, idx) => (
           <button
