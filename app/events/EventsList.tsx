@@ -125,14 +125,13 @@ export default function EventsList({
       </div>
       <div className="grid">
         {items.map((e, idx) => (
-          <div
+          <Link
             key={e.slug}
+            href={`/events/${e.slug}/`}
             className="card animated-card"
             style={{ animationDelay: `${idx * 0.1}s` }}
           >
-            <h3 className="card-title">
-              <Link href={`/events/${e.slug}/`}>{e.title}</Link>
-            </h3>
+            <h3 className="card-title">{e.title}</h3>
             <div className="card-meta small">
               <span className="meta-item">
                 <svg viewBox="0 0 24 24" fill="none" strokeWidth="2" aria-hidden="true">
@@ -168,7 +167,7 @@ export default function EventsList({
                 </span>
               ))}
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </>
