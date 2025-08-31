@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useRef, type KeyboardEvent } from 'react';
+import { useRef, useState, type KeyboardEvent } from 'react';
 import RegionFilter from './RegionFilter';
 import type { EventMeta } from '@/lib/content';
 
@@ -25,6 +25,7 @@ export default function EventsList({
   const tag = searchParams.get('tag') || undefined;
   const region = searchParams.get('region') || undefined;
   const showPast = searchParams.get('past') === '1';
+  const [query, setQuery] = useState('');
   const currentIndex = Math.max(
     0,
     TABS.findIndex(t => t.key === tag),
@@ -42,15 +43,21 @@ export default function EventsList({
     ? dateFiltered.filter(e => e.city === region)
     : dateFiltered;
 
+  const searchFiltered = query
+    ? regionFiltered.filter(e =>
+        e.title.toLowerCase().includes(query.toLowerCase()),
+      )
+    : regionFiltered;
+
   const counts = TABS.map(({ key }) =>
     key
-      ? regionFiltered.filter(e => e.tags?.includes(key)).length
-      : regionFiltered.length,
+      ? searchFiltered.filter(e => e.tags?.includes(key)).length
+      : searchFiltered.length,
   );
 
   const items = tag
-    ? regionFiltered.filter(e => e.tags?.includes(tag))
-    : regionFiltered;
+    ? searchFiltered.filter(e => e.tags?.includes(tag))
+    : searchFiltered;
 
   const togglePast = (checked: boolean) => {
     const params = new URLSearchParams(Array.from(searchParams.entries()));
@@ -93,6 +100,14 @@ export default function EventsList({
 
   return (
     <>
+      <input
+        type="text"
+        className="event-search"
+        value={query}
+        onChange={e => setQuery(e.target.value)}
+        placeholder="대회 검색..."
+        aria-label="대회 검색"
+      />
       <RegionFilter events={dateFiltered} basePath={basePath} />
       <div className="past-toggle">
         <label>
