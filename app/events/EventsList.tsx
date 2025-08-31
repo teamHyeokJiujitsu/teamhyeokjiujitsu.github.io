@@ -19,6 +19,14 @@ export default function EventsList({
   const region = searchParams.get('region') || undefined;
   const showPast = searchParams.get('past') === '1';
   const [query, setQuery] = useState('');
+
+  const tabs = [
+    { key: undefined, label: '전체' },
+    ...Array.from(new Set(events.flatMap(e => e.tags ?? [])))
+      .sort()
+      .map(key => ({ key, label: key })),
+  ];
+
   const currentIndex = Math.max(
     0,
     tabs.findIndex(t => t.key === tag),
@@ -41,7 +49,7 @@ export default function EventsList({
       )
     : regionFiltered;
 
-  const counts = TABS.map(({ key }) =>
+  const counts = tabs.map(({ key }) =>
     key
       ? searchFiltered.filter(e => e.tags?.includes(key)).length
       : searchFiltered.length,
