@@ -278,6 +278,15 @@ img { max-width: 100%; height: auto; display: block; }
   gap: 12px;
 }
 
+/* events search */
+.event-search {
+  width: 100%;
+  padding: 6px 8px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  margin-bottom: 16px;
+}
+
 /* region filter */
 .region-filter {
   position: relative;
