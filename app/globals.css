@@ -11,16 +11,18 @@ html { scroll-behavior: smooth; }
   --surface: #fff;
   --hover: #e5e7eb;
   --header-bg: rgba(255, 255, 255, 0.8);
+  --hero-gradient: linear-gradient(-45deg, #6366f1, #ec4899, #f97316, #23d5ab);
 }
 [data-theme="dark"] {
-  --bg: #111827;
-  --border: #374151;
-  --text: #f9fafb;
-  --muted: #9ca3af;
-  --primary: #6366f1;
-  --surface: #1f2937;
-  --hover: #374151;
-  --header-bg: rgba(17, 24, 39, 0.8);
+  --bg: #0f172a;
+  --border: #1e293b;
+  --text: #e2e8f0;
+  --muted: #94a3b8;
+  --primary: #8b5cf6;
+  --surface: #1e293b;
+  --hover: #334155;
+  --header-bg: rgba(15, 23, 42, 0.8);
+  --hero-gradient: linear-gradient(-45deg, #312e81, #4338ca, #4c1d95, #2563eb);
 }
 body {
   color: var(--text);
@@ -91,7 +93,7 @@ img { max-width: 100%; height: auto; display: block; }
   display: inline-block;
   padding: 2px 8px;
   font-size: 12px;
-  background: var(--bg);
+  background: var(--surface);
   border-radius: 4px;
   margin-right: 4px;
   color: var(--text);
@@ -104,7 +106,7 @@ img { max-width: 100%; height: auto; display: block; }
   border: 1px solid var(--border);
   border-radius: 999px;
   font-size: 14px;
-  background: var(--bg);
+  background: var(--surface);
   transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease,
     box-shadow 0.2s ease;
   display: inline-flex;
@@ -154,7 +156,7 @@ img { max-width: 100%; height: auto; display: block; }
   border-radius: 12px;
   padding: 80px 20px;
   text-align: center;
-  background: linear-gradient(-45deg, #6366f1, #ec4899, #f97316, #23d5ab);
+  background: var(--hero-gradient);
   background-size: 400% 400%;
   color: #fff;
   margin-bottom: 40px;
