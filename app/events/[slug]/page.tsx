@@ -2,6 +2,7 @@ import { getAllEventsMeta, getEventHtmlBySlug } from '@/lib/content';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import DOMPurify from 'isomorphic-dompurify';
+import AddToCalendar from '@/components/AddToCalendar';
 
 export const dynamicParams = false;
 
@@ -89,6 +90,7 @@ export default async function EventDetailPage({ params }: Props) {
               접수하기
             </a>
           )}
+          <AddToCalendar meta={meta} />
           <a
             className="btn btn-outline"
             href={`https://www.google.com/search?q=${encodeURIComponent(meta.title + ' 대회 신청')}`}
