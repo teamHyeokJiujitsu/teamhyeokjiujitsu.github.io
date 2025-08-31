@@ -6,13 +6,6 @@ import { useRef, useState, type KeyboardEvent } from 'react';
 import RegionFilter from './RegionFilter';
 import type { EventMeta } from '@/lib/content';
 
-const TABS = [
-  { key: undefined, label: '전체' },
-  { key: 'kbjjf', label: 'KBJJF' },
-  { key: 'street', label: '스트릿 주짓수' },
-  { key: 'jagers', label: '예거스' },
-];
-
 export default function EventsList({
   events,
   basePath = '/',
@@ -28,10 +21,9 @@ export default function EventsList({
   const [query, setQuery] = useState('');
   const currentIndex = Math.max(
     0,
-    TABS.findIndex(t => t.key === tag),
+    tabs.findIndex(t => t.key === tag),
   );
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
-
 
   const today = new Date();
   today.setHours(0, 0, 0, 0);
@@ -70,7 +62,7 @@ export default function EventsList({
   };
 
   const selectTab = (idx: number) => {
-    const { key } = TABS[idx];
+    const { key } = tabs[idx];
     const params = new URLSearchParams(Array.from(searchParams.entries()));
     if (key) {
       params.set('tag', key);
@@ -88,8 +80,8 @@ export default function EventsList({
       e.preventDefault();
       const nextIndex =
         e.key === 'ArrowRight'
-          ? (idx + 1) % TABS.length
-          : (idx - 1 + TABS.length) % TABS.length;
+          ? (idx + 1) % tabs.length
+          : (idx - 1 + tabs.length) % tabs.length;
       const nextTab = tabRefs.current[nextIndex];
       if (nextTab) {
         nextTab.focus();
@@ -120,7 +112,7 @@ export default function EventsList({
         </label>
       </div>
       <div className="tabs" role="tablist">
-        {TABS.map(({ key, label }, idx) => (
+        {tabs.map(({ key, label }, idx) => (
           <button
             key={key ?? 'all'}
             ref={el => {

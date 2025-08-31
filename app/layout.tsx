@@ -25,6 +25,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <Link href="/" className="logo">
                 BJJ 대회 캘린더
               </Link>
+              <Link href="/news">뉴스</Link>
               <CursorToggle />
             </nav>
           </div>
