@@ -125,6 +125,12 @@ img { max-width: 100%; height: auto; display: block; }
 .mt-8 { margin-top: 8px; }
 .mt-16 { margin-top: 16px; }
 
+.event-cover {
+  width: 100%;
+  border-radius: 12px;
+  margin-bottom: 16px;
+}
+
 /* hero section */
 .hero {
   position: relative;
