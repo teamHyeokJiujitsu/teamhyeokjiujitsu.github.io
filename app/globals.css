@@ -9,6 +9,13 @@ html { scroll-behavior: smooth; }
   --muted: #6b7280;
   --primary: #111;
 }
+[data-theme="dark"] {
+  --bg: #111827;
+  --border: #374151;
+  --text: #f9fafb;
+  --muted: #9ca3af;
+  --primary: #fff;
+}
 body {
   color: var(--text);
   background: var(--bg);
@@ -40,8 +47,8 @@ img { max-width: 100%; height: auto; display: block; }
 }
 .nav { display: flex; gap: 16px; padding: 16px 0; font-weight: 500; align-items: center; }
 .logo { font-weight: 600; font-size: 18px; }
+.theme-toggle,
 .cursor-toggle {
-  margin-left: auto;
   padding: 6px 14px;
   border: 1px solid var(--border);
   border-radius: 999px;
@@ -49,6 +56,10 @@ img { max-width: 100%; height: auto; display: block; }
   background: var(--bg);
   cursor: pointer;
 }
+.theme-toggle {
+  margin-left: auto;
+}
+.theme-toggle:hover,
 .cursor-toggle:hover {
   background: #e5e7eb;
 }
