@@ -324,6 +324,10 @@ img { max-width: 100%; height: auto; display: block; }
   transition: background 0.2s ease;
   font-size: 14px;
 }
+.region-option:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
 .region-option:hover {
   background: #e5e7eb;
 }
