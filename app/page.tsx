@@ -2,6 +2,7 @@ import { Suspense } from 'react';
 import Link from 'next/link';
 import { getAllEventsMeta } from '@/lib/content';
 import EventsList from './events/EventsList';
+import EventsListSkeleton from './events/EventsListSkeleton';
 
 export const metadata = { title: '대회 목록' };
 
@@ -24,7 +25,7 @@ export default function Page() {
         </div>
       </section>
       <section id="events">
-        <Suspense>
+        <Suspense fallback={<EventsListSkeleton />}>
           <EventsList events={events} />
         </Suspense>
       </section>
