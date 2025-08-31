@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useMemo, useState, useRef, useEffect } from 'react';
+import { useMemo, useState, useRef, useEffect, useCallback } from 'react';
 import type { EventMeta } from '@/lib/content';
 
 export default function RegionFilter({
@@ -17,7 +17,9 @@ export default function RegionFilter({
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState('');
   const [recent, setRecent] = useState<string[]>([]);
+  const [focused, setFocused] = useState(-1);
   const ref = useRef<HTMLDivElement>(null);
+  const optionsRef = useRef<HTMLButtonElement[]>([]);
 
   useEffect(() => {
     const stored = localStorage.getItem('recentRegions');
@@ -43,32 +45,75 @@ export default function RegionFilter({
   }, [events]);
 
   const filtered = useMemo(
-    () => regions.filter(r => r.includes(search)),
+    () => regions.filter(r => r.toLowerCase().includes(search.toLowerCase())),
     [regions, search],
   );
-  const updateRegion = (value: string) => {
-    const params = new URLSearchParams(Array.from(searchParams.entries()));
-    if (value) {
-      params.set('region', value);
-    } else {
-      params.delete('region');
-    }
-    const query = params.toString();
-    router.push(`${basePath}${query ? `?${query}` : ''}`);
-  };
+  const options = useMemo(() => [...recent, ...filtered], [recent, filtered]);
+  const updateRegion = useCallback(
+    (value: string) => {
+      const params = new URLSearchParams(Array.from(searchParams.entries()));
+      if (value) {
+        params.set('region', value);
+      } else {
+        params.delete('region');
+      }
+      const query = params.toString();
+      router.push(`${basePath}${query ? `?${query}` : ''}`);
+    },
+    [basePath, router, searchParams],
+  );
 
-  const selectRegion = (value: string) => {
-    updateRegion(value);
-    setOpen(false);
-    if (value) {
-      setRecent(prev => {
-        const next = [value, ...prev.filter(r => r !== value)].slice(0, 5);
-        localStorage.setItem('recentRegions', JSON.stringify(next));
-        return next;
-      });
-    }
-  };
+  const selectRegion = useCallback(
+    (value: string) => {
+      updateRegion(value);
+      setOpen(false);
+      if (value) {
+        setRecent(prev => {
+          const next = [value, ...prev.filter(r => r !== value)].slice(0, 5);
+          localStorage.setItem('recentRegions', JSON.stringify(next));
+          return next;
+        });
+      }
+    },
+    [updateRegion],
+  );
 
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setOpen(false);
+        return;
+      }
+      if (!open) return;
+      if (!options.length) return;
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        setFocused(f => (f + 1) % options.length);
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        setFocused(f => (f - 1 + options.length) % options.length);
+      } else if (e.key === 'Enter') {
+        if (focused >= 0 && options[focused]) {
+          e.preventDefault();
+          selectRegion(options[focused]);
+        }
+      }
+    };
+    document.addEventListener('keydown', handleKey);
+    return () => document.removeEventListener('keydown', handleKey);
+  }, [open, options, focused, selectRegion]);
+
+  useEffect(() => {
+    if (focused >= 0) {
+      optionsRef.current[focused]?.focus();
+    }
+  }, [focused]);
+
+  useEffect(() => {
+    if (!open) setFocused(-1);
+  }, [open]);
+
+  optionsRef.current = [];
   return (
     <div className="region-filter" ref={ref}>
       <button
@@ -97,13 +142,15 @@ export default function RegionFilter({
             <>
               <div className="dropdown-section-title">최근 선택</div>
               <div className="region-options">
-                {recent.map(r => (
+                {recent.map((r, i) => (
                   <button
                     key={`recent-${r}`}
                     className="region-option"
                     onClick={() => selectRegion(r)}
                     role="option"
                     aria-selected={region === r}
+                    ref={el => (optionsRef.current[i] = el!)}
+                    tabIndex={-1}
                   >
                     {r}
                   </button>
@@ -113,13 +160,15 @@ export default function RegionFilter({
           )}
           <div className="dropdown-section-title">전체 지역</div>
           <div className="region-options">
-            {filtered.map(r => (
+            {filtered.map((r, i) => (
               <button
                 key={r}
                 className="region-option"
                 onClick={() => selectRegion(r)}
                 role="option"
                 aria-selected={region === r}
+                ref={el => (optionsRef.current[recent.length + i] = el!)}
+                tabIndex={-1}
               >
                 {r}
               </button>
