@@ -136,7 +136,7 @@ img { max-width: 100%; height: auto; display: block; }
 }
 .tab.active {
   background: var(--primary);
-  color: #fff;
+  color: var(--bg);
   border-color: var(--primary);
 }
 
