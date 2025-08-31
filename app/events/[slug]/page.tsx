@@ -65,6 +65,14 @@ export default async function EventDetailPage({ params }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(eventJsonLd) }}
       />
       <article>
+        {meta.cover && (
+          <img
+            className="event-cover"
+            src={meta.cover}
+            alt={meta.title}
+            loading="lazy"
+          />
+        )}
         <h1>{meta.title}</h1>
         <div className="small">
           {new Date(meta.date).toLocaleDateString('ko-KR')}
