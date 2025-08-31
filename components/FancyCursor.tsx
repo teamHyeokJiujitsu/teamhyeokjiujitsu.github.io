@@ -1,10 +1,38 @@
 'use client';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export default function FancyCursor() {
   const cursorRef = useRef<HTMLDivElement>(null);
+  const [disabled, setDisabled] = useState(true);
 
   useEffect(() => {
+    const detectDisabled = () => {
+      const touch =
+        navigator.maxTouchPoints > 0 ||
+        window.matchMedia('(pointer: coarse)').matches;
+      const reduceMotion = window
+        .matchMedia('(prefers-reduced-motion: reduce)')
+        .matches;
+      const stored = localStorage.getItem('cursorDisabled') === 'true';
+      return touch || reduceMotion || stored;
+    };
+    setDisabled(detectDisabled());
+
+    const handleToggle = () => setDisabled(detectDisabled());
+    window.addEventListener('storage', handleToggle);
+    window.addEventListener('cursor-toggle', handleToggle as EventListener);
+    return () => {
+      window.removeEventListener('storage', handleToggle);
+      window.removeEventListener(
+        'cursor-toggle',
+        handleToggle as EventListener,
+      );
+    };
+  }, []);
+
+  useEffect(() => {
+    if (disabled) return;
+
     const move = (e: PointerEvent) => {
       if (cursorRef.current) {
         cursorRef.current.style.left = e.clientX + 'px';
@@ -22,7 +50,7 @@ export default function FancyCursor() {
       window.removeEventListener('pointerdown', down);
       window.removeEventListener('pointerup', up);
     };
-  }, []);
+  }, [disabled]);
 
-  return <div ref={cursorRef} className="cursor" />;
+  return disabled ? null : <div ref={cursorRef} className="cursor" />;
 }

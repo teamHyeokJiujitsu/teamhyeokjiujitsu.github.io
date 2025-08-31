@@ -149,7 +149,9 @@ export default function RegionFilter({
                     onClick={() => selectRegion(r)}
                     role="option"
                     aria-selected={region === r}
-                    ref={el => (optionsRef.current[i] = el!)}
+                    ref={el => {
+                      optionsRef.current[i] = el!;
+                    }}
                     tabIndex={-1}
                   >
                     {r}
@@ -167,7 +169,9 @@ export default function RegionFilter({
                 onClick={() => selectRegion(r)}
                 role="option"
                 aria-selected={region === r}
-                ref={el => (optionsRef.current[recent.length + i] = el!)}
+                ref={el => {
+                  optionsRef.current[recent.length + i] = el!;
+                }}
                 tabIndex={-1}
               >
                 {r}
