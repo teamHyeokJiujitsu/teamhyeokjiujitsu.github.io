@@ -7,7 +7,7 @@ html { scroll-behavior: smooth; }
   --border: #e5e7eb;
   --text: #111;
   --muted: #6b7280;
-  --primary: #111;
+  --primary: #6366f1;
   --surface: #fff;
   --hover: #e5e7eb;
   --header-bg: rgba(255, 255, 255, 0.8);
@@ -17,7 +17,7 @@ html { scroll-behavior: smooth; }
   --border: #374151;
   --text: #f9fafb;
   --muted: #9ca3af;
-  --primary: #fff;
+  --primary: #6366f1;
   --surface: #1f2937;
   --hover: #374151;
   --header-bg: rgba(17, 24, 39, 0.8);
@@ -388,6 +388,7 @@ img { max-width: 100%; height: auto; display: block; }
   padding: 10px 18px;
   border-radius: 8px;
   font-weight: 600;
+  color: var(--text);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 .btn:hover {
