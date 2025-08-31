@@ -100,23 +100,24 @@ export default function EventsList({
 
   return (
     <>
-      <input
-        type="text"
-        className="event-search"
-        value={query}
-        onChange={e => setQuery(e.target.value)}
-        placeholder="대회 검색..."
-        aria-label="대회 검색"
-      />
-      <RegionFilter events={dateFiltered} basePath={basePath} />
-      <div className="past-toggle">
-        <label>
+      <div className="filters">
+        <input
+          type="text"
+          className="event-search"
+          value={query}
+          onChange={e => setQuery(e.target.value)}
+          placeholder="대회 검색..."
+          aria-label="대회 검색"
+        />
+        <RegionFilter events={dateFiltered} basePath={basePath} />
+        <label className="past-toggle">
           <input
             type="checkbox"
             checked={showPast}
             onChange={e => togglePast(e.target.checked)}
           />
-          날짜 지난 시합 일정도 보기
+          <span className="switch" aria-hidden="true"></span>
+          <span>날짜 지난 시합 일정도 보기</span>
         </label>
       </div>
       <div className="tabs" role="tablist">
