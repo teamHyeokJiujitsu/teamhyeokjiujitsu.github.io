@@ -148,7 +148,7 @@ export default function EventsList({
             style={{ animationDelay: `${idx * 0.1}s` }}
           >
             <h3 className="card-title">{e.title}</h3>
-            <div className="card-meta small">
+            <div className="card-meta">
               <span className="meta-item">
                 <svg viewBox="0 0 24 24" fill="none" strokeWidth="2" aria-hidden="true">
                   <path
