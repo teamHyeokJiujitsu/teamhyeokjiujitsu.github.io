@@ -107,6 +107,7 @@ img { max-width: 100%; height: auto; display: block; }
   border-radius: 999px;
   font-size: 14px;
   background: var(--surface);
+  color: var(--text);
   transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease,
     box-shadow 0.2s ease;
   display: inline-flex;
@@ -310,6 +311,7 @@ img { max-width: 100%; height: auto; display: block; }
   border: 1px solid var(--border);
   border-radius: 8px;
   background: var(--surface);
+  color: var(--text);
   cursor: pointer;
   transition: background 0.2s ease, box-shadow 0.2s ease;
 }
@@ -358,6 +360,7 @@ img { max-width: 100%; height: auto; display: block; }
   border: 1px solid var(--border);
   border-radius: 6px;
   background: var(--bg);
+  color: var(--text);
   cursor: pointer;
   transition: background 0.2s ease;
   font-size: 14px;
