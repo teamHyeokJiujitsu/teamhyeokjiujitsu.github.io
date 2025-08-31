@@ -127,7 +127,7 @@ img { max-width: 100%; height: auto; display: block; }
 }
 .tab.active {
   background: var(--primary);
-  color: #fff;
+  color: var(--bg);
   border-color: var(--primary);
 }
 
@@ -138,6 +138,10 @@ img { max-width: 100%; height: auto; display: block; }
   background: var(--hover);
   color: var(--text);
   font-size: 11px;
+}
+.tab.active .tab-count {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
 }
 .tab.active .tab-count {
   background: rgba(255, 255, 255, 0.2);
