@@ -41,6 +41,18 @@ img { max-width: 100%; height: auto; display: block; }
 }
 .nav { display: flex; gap: 16px; padding: 16px 0; font-weight: 500; align-items: center; }
 .logo { font-weight: 600; font-size: 18px; }
+.cursor-toggle {
+  margin-left: auto;
+  padding: 6px 14px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 14px;
+  background: var(--bg);
+  cursor: pointer;
+}
+.cursor-toggle:hover {
+  background: #e5e7eb;
+}
 .footer { border-top: 1px solid var(--border); padding: 24px 0; color: var(--muted); font-size: 14px; margin-top: 40px; }
 
 .grid { display: grid; grid-template-columns: repeat(1, 1fr); gap: 20px; }

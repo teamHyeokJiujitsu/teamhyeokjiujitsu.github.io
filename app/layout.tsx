@@ -2,6 +2,7 @@ import './globals.css';
 import { Noto_Sans_KR } from 'next/font/google';
 import Link from 'next/link';
 import FancyCursor from '@/components/FancyCursor';
+import CursorToggle from '@/components/CursorToggle';
 
 const notoSans = Noto_Sans_KR({
   subsets: ['latin'],
@@ -24,6 +25,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <Link href="/" className="logo">
                 BJJ 대회 캘린더
               </Link>
+              <CursorToggle />
             </nav>
           </div>
         </header>
