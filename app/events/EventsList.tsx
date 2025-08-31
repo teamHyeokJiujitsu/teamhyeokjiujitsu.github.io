@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useRef, useState, type KeyboardEvent } from 'react';
+import { useRef, useState, useEffect, type KeyboardEvent } from 'react';
 import RegionFilter from './RegionFilter';
 import type { EventMeta } from '@/lib/content';
 
@@ -54,6 +54,19 @@ export default function EventsList({
       ? searchFiltered.filter(e => e.tags?.includes(key)).length
       : searchFiltered.length,
   );
+  const tabsWithCounts = tabs.map((t, idx) => ({ ...t, idx, count: counts[idx] }));
+  const SHOW_LIMIT = 6;
+  const [showAllTabs, setShowAllTabs] = useState(currentIndex < SHOW_LIMIT - 1);
+  useEffect(() => {
+    if (currentIndex >= SHOW_LIMIT - 1) {
+      setShowAllTabs(true);
+    }
+  }, [currentIndex]);
+  const visibleTabs = showAllTabs
+    ? [...tabsWithCounts, { key: '__less', label: '접기', idx: -1 }]
+    : tabsWithCounts.length > SHOW_LIMIT
+    ? [...tabsWithCounts.slice(0, SHOW_LIMIT - 1), { key: '__more', label: '더보기', idx: -1 }]
+    : tabsWithCounts;
 
   const items = tag
     ? searchFiltered.filter(e => e.tags?.includes(tag))
@@ -121,22 +134,34 @@ export default function EventsList({
         </label>
       </div>
       <div className="tabs" role="tablist">
-        {tabs.map(({ key, label }, idx) => (
-          <button
-            key={key ?? 'all'}
-            ref={el => {
-              tabRefs.current[idx] = el;
-            }}
-            role="tab"
-            aria-selected={idx === currentIndex}
-            tabIndex={idx === currentIndex ? 0 : -1}
-            className={`tab${idx === currentIndex ? ' active' : ''}`}
-            onClick={() => selectTab(idx)}
-            onKeyDown={e => handleKeyDown(e, idx)}
-          >
-            {label}
-            <span className="tab-count">{counts[idx]}</span>
-          </button>
+        {visibleTabs.map(({ key, label, idx, count }) => (
+          key === '__more' || key === '__less' ? (
+            <button
+              key={key}
+              className="tab"
+              onClick={() => setShowAllTabs(key === '__more')}
+            >
+              {label}
+            </button>
+          ) : (
+            <button
+              key={key ?? 'all'}
+              ref={el => {
+                tabRefs.current[idx] = el;
+              }}
+              role="tab"
+              aria-selected={idx === currentIndex}
+              tabIndex={idx === currentIndex ? 0 : -1}
+              className={`tab${idx === currentIndex ? ' active' : ''}`}
+              onClick={() => selectTab(idx)}
+              onKeyDown={e => handleKeyDown(e, idx)}
+            >
+              {label}
+              {typeof count === 'number' && (
+                <span className="tab-count">{count}</span>
+              )}
+            </button>
+          )
         ))}
       </div>
       <div className="grid">
