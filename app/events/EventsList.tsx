@@ -69,6 +69,7 @@ export default function EventsList({
     idx,
     count: counts[idx],
   }));
+
   const SHOW_LIMIT = 6;
   const [showAllTabs, setShowAllTabs] = useState(currentIndex < SHOW_LIMIT - 1);
   useEffect(() => {
