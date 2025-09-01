@@ -2,9 +2,16 @@
 
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useRef, useState, type KeyboardEvent } from 'react';
+import { useRef, useState, useEffect, type KeyboardEvent } from 'react';
 import RegionFilter from './RegionFilter';
 import type { EventMeta } from '@/lib/content';
+
+interface Tab {
+  key: string | undefined;
+  label: string;
+  idx: number;
+  count?: number;
+}
 
 export default function EventsList({
   events,
@@ -20,7 +27,7 @@ export default function EventsList({
   const showPast = searchParams.get('past') === '1';
   const [query, setQuery] = useState('');
 
-  const tabs = [
+  const tabs: Omit<Tab, 'idx' | 'count'>[] = [
     { key: undefined, label: '전체' },
     ...Array.from(new Set(events.flatMap(e => e.tags ?? [])))
       .sort()
@@ -54,6 +61,26 @@ export default function EventsList({
       ? searchFiltered.filter(e => e.tags?.includes(key)).length
       : searchFiltered.length,
   );
+  const tabsWithCounts: Tab[] = tabs.map((t, idx) => ({
+    ...t,
+    idx,
+    count: counts[idx],
+  }));
+  const SHOW_LIMIT = 6;
+  const [showAllTabs, setShowAllTabs] = useState(currentIndex < SHOW_LIMIT - 1);
+  useEffect(() => {
+    if (currentIndex >= SHOW_LIMIT - 1) {
+      setShowAllTabs(true);
+    }
+  }, [currentIndex]);
+  const visibleTabs: Tab[] = showAllTabs
+    ? [...tabsWithCounts, { key: '__less', label: '접기', idx: -1 }]
+    : tabsWithCounts.length > SHOW_LIMIT
+    ? [
+        ...tabsWithCounts.slice(0, SHOW_LIMIT - 1),
+        { key: '__more', label: '더보기', idx: -1 },
+      ]
+    : tabsWithCounts;
 
   const items = tag
     ? searchFiltered.filter(e => e.tags?.includes(tag))
@@ -100,42 +127,57 @@ export default function EventsList({
 
   return (
     <>
-      <input
-        type="text"
-        className="event-search"
-        value={query}
-        onChange={e => setQuery(e.target.value)}
-        placeholder="대회 검색..."
-        aria-label="대회 검색"
-      />
-      <RegionFilter events={dateFiltered} basePath={basePath} />
-      <div className="past-toggle">
-        <label>
+      <div className="filters">
+        <input
+          type="text"
+          className="event-search"
+          value={query}
+          onChange={e => setQuery(e.target.value)}
+          placeholder="대회 검색..."
+          aria-label="대회 검색"
+        />
+        <RegionFilter events={dateFiltered} basePath={basePath} />
+        <label className="past-toggle">
           <input
             type="checkbox"
             checked={showPast}
             onChange={e => togglePast(e.target.checked)}
           />
-          날짜 지난 시합 일정도 보기
+          <span className="switch" aria-hidden="true"></span>
+          <span>날짜 지난 시합 일정도 보기</span>
         </label>
       </div>
       <div className="tabs" role="tablist">
-        {tabs.map(({ key, label }, idx) => (
-          <button
-            key={key ?? 'all'}
-            ref={el => {
-              tabRefs.current[idx] = el;
-            }}
-            role="tab"
-            aria-selected={idx === currentIndex}
-            tabIndex={idx === currentIndex ? 0 : -1}
-            className={`tab${idx === currentIndex ? ' active' : ''}`}
-            onClick={() => selectTab(idx)}
-            onKeyDown={e => handleKeyDown(e, idx)}
-          >
-            {label}
-            <span className="tab-count">{counts[idx]}</span>
-          </button>
+        {visibleTabs.map(({ key, label, idx, count }) => (
+          key === '__more' || key === '__less' ? (
+            <button
+              key={key}
+              className="tab"
+              onClick={() => setShowAllTabs(key === '__more')}
+            >
+              {label}
+            </button>
+          ) : (
+            <button
+              key={key ?? 'all'}
+              ref={el => {
+                if (idx >= 0) {
+                  tabRefs.current[idx] = el;
+                }
+              }}
+              role="tab"
+              aria-selected={idx === currentIndex}
+              tabIndex={idx === currentIndex ? 0 : -1}
+              className={`tab${idx === currentIndex ? ' active' : ''}`}
+              onClick={() => selectTab(idx)}
+              onKeyDown={e => handleKeyDown(e, idx)}
+            >
+              {label}
+              {typeof count === 'number' && (
+                <span className="tab-count">{count}</span>
+              )}
+            </button>
+          )
         ))}
       </div>
       <div className="grid">
@@ -147,7 +189,7 @@ export default function EventsList({
             style={{ animationDelay: `${idx * 0.1}s` }}
           >
             <h3 className="card-title">{e.title}</h3>
-            <div className="card-meta small">
+            <div className="card-meta">
               <span className="meta-item">
                 <svg viewBox="0 0 24 24" fill="none" strokeWidth="2" aria-hidden="true">
                   <path
