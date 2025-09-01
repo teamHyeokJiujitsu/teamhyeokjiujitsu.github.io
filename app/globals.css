@@ -107,14 +107,39 @@ img { max-width: 100%; height: auto; display: block; }
 }
 .small { color: var(--muted); font-size: 14px; }
 
+.tabs-wrapper {
+  position: relative;
+  margin-bottom: 24px;
+}
 .tabs {
   display: flex;
   flex-wrap: nowrap;
   gap: 8px;
-  margin-bottom: 24px;
   overflow-x: auto;
+  padding: 0 32px;
+  scroll-behavior: smooth;
 }
 .tabs::-webkit-scrollbar { display: none; }
+.tab-scroll {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.tab-scroll:hover { background: var(--hover); }
+.tab-scroll.left { left: 4px; }
+.tab-scroll.right { right: 4px; }
+.tab-scroll:disabled { opacity: 0.3; cursor: default; }
 .tab {
   padding: 4px 12px;
   border: 1px solid var(--border);

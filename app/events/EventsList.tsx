@@ -39,6 +39,9 @@ export default function EventsList({
     tabs.findIndex(t => t.key === tag),
   );
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const tabsContainerRef = useRef<HTMLDivElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(false);
 
   const today = new Date();
   today.setHours(0, 0, 0, 0);
@@ -82,6 +85,32 @@ export default function EventsList({
         { key: '__more', label: '더보기', idx: -1 },
       ]
     : tabsWithCounts;
+
+  const updateScrollButtons = () => {
+    const el = tabsContainerRef.current;
+    if (!el) return;
+    setCanScrollLeft(el.scrollLeft > 0);
+    setCanScrollRight(el.scrollLeft + el.clientWidth < el.scrollWidth);
+  };
+
+  useEffect(() => {
+    updateScrollButtons();
+    const el = tabsContainerRef.current;
+    if (!el) return;
+    el.addEventListener('scroll', updateScrollButtons);
+    window.addEventListener('resize', updateScrollButtons);
+    return () => {
+      el.removeEventListener('scroll', updateScrollButtons);
+      window.removeEventListener('resize', updateScrollButtons);
+    };
+  }, []);
+
+  const scrollTabs = (dir: number) => {
+    tabsContainerRef.current?.scrollBy({
+      left: dir * 120,
+      behavior: 'smooth',
+    });
+  };
 
   const items = tag
     ? searchFiltered.filter(e => e.tags?.includes(tag))
@@ -148,38 +177,60 @@ export default function EventsList({
           <span>날짜 지난 시합 일정도 보기</span>
         </label>
       </div>
-      <div className="tabs" role="tablist">
-        {visibleTabs.map(({ key, label, idx, count }) => (
-          key === '__more' || key === '__less' ? (
-            <button
-              key={key}
-              className="tab"
-              onClick={() => setShowAllTabs(key === '__more')}
-            >
-              {label}
-            </button>
-          ) : (
-            <button
-              key={key ?? 'all'}
-              ref={el => {
-                if (idx >= 0) {
-                  tabRefs.current[idx] = el;
-                }
-              }}
-              role="tab"
-              aria-selected={idx === currentIndex}
-              tabIndex={idx === currentIndex ? 0 : -1}
-              className={`tab${idx === currentIndex ? ' active' : ''}`}
-              onClick={() => selectTab(idx)}
-              onKeyDown={e => handleKeyDown(e, idx)}
-            >
-              {label}
-              {typeof count === 'number' && (
-                <span className="tab-count">{count}</span>
-              )}
-            </button>
-          )
-        ))}
+      <div className="tabs-wrapper">
+        <button
+          className="tab-scroll left"
+          onClick={() => scrollTabs(-1)}
+          disabled={!canScrollLeft}
+          aria-label="이전 탭"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M15 6l-6 6 6 6" />
+          </svg>
+        </button>
+        <div className="tabs" role="tablist" ref={tabsContainerRef}>
+          {visibleTabs.map(({ key, label, idx, count }) => (
+            key === '__more' || key === '__less' ? (
+              <button
+                key={key}
+                className="tab"
+                onClick={() => setShowAllTabs(key === '__more')}
+              >
+                {label}
+              </button>
+            ) : (
+              <button
+                key={key ?? 'all'}
+                ref={el => {
+                  if (idx >= 0) {
+                    tabRefs.current[idx] = el;
+                  }
+                }}
+                role="tab"
+                aria-selected={idx === currentIndex}
+                tabIndex={idx === currentIndex ? 0 : -1}
+                className={`tab${idx === currentIndex ? ' active' : ''}`}
+                onClick={() => selectTab(idx)}
+                onKeyDown={e => handleKeyDown(e, idx)}
+              >
+                {label}
+                {typeof count === 'number' && (
+                  <span className="tab-count">{count}</span>
+                )}
+              </button>
+            )
+          ))}
+        </div>
+        <button
+          className="tab-scroll right"
+          onClick={() => scrollTabs(1)}
+          disabled={!canScrollRight}
+          aria-label="다음 탭"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M9 18l6-6-6-6" />
+          </svg>
+        </button>
       </div>
       <div className="grid">
         {items.map((e, idx) => (
