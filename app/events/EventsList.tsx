@@ -6,6 +6,13 @@ import { useRef, useState, useEffect, type KeyboardEvent } from 'react';
 import RegionFilter from './RegionFilter';
 import type { EventMeta } from '@/lib/content';
 
+interface Tab {
+  key: string | undefined;
+  label: string;
+  idx: number;
+  count?: number;
+}
+
 export default function EventsList({
   events,
   basePath = '/',
@@ -20,7 +27,7 @@ export default function EventsList({
   const showPast = searchParams.get('past') === '1';
   const [query, setQuery] = useState('');
 
-  const tabs = [
+  const tabs: Omit<Tab, 'idx' | 'count'>[] = [
     { key: undefined, label: '전체' },
     ...Array.from(new Set(events.flatMap(e => e.tags ?? [])))
       .sort()
@@ -54,7 +61,12 @@ export default function EventsList({
       ? searchFiltered.filter(e => e.tags?.includes(key)).length
       : searchFiltered.length,
   );
-  const tabsWithCounts = tabs.map((t, idx) => ({ ...t, idx, count: counts[idx] }));
+  const tabsWithCounts: Tab[] = tabs.map((t, idx) => ({
+    ...t,
+    idx,
+    count: counts[idx],
+  }));
+
   const SHOW_LIMIT = 6;
   const [showAllTabs, setShowAllTabs] = useState(currentIndex < SHOW_LIMIT - 1);
   useEffect(() => {
@@ -62,10 +74,13 @@ export default function EventsList({
       setShowAllTabs(true);
     }
   }, [currentIndex]);
-  const visibleTabs = showAllTabs
+  const visibleTabs: Tab[] = showAllTabs
     ? [...tabsWithCounts, { key: '__less', label: '접기', idx: -1 }]
     : tabsWithCounts.length > SHOW_LIMIT
-    ? [...tabsWithCounts.slice(0, SHOW_LIMIT - 1), { key: '__more', label: '더보기', idx: -1 }]
+    ? [
+        ...tabsWithCounts.slice(0, SHOW_LIMIT - 1),
+        { key: '__more', label: '더보기', idx: -1 },
+      ]
     : tabsWithCounts;
 
   const items = tag
@@ -147,7 +162,9 @@ export default function EventsList({
             <button
               key={key ?? 'all'}
               ref={el => {
-                tabRefs.current[idx] = el;
+                if (idx >= 0) {
+                  tabRefs.current[idx] = el;
+                }
               }}
               role="tab"
               aria-selected={idx === currentIndex}
