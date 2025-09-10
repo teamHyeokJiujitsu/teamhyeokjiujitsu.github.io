@@ -6,11 +6,29 @@ const pages = ['/', '/events/', '/rules/'];
 
 const today = new Date().toISOString().split('T')[0];
 
-const entries = pages.map((page) => {
-  return `  <url>\n    <loc>${baseUrl}${page}</loc>\n    <lastmod>${today}</lastmod>\n  </url>`;
-}).join('\n');
+function escapeXml(value) {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;');
+}
 
-const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${entries}\n</urlset>\n`;
+const entries = pages
+  .map((page) => {
+    const loc = escapeXml(`${baseUrl}${page}`);
+    return `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${today}</lastmod>\n  </url>`;
+  })
+  .join('\n');
+
+const sitemap = [
+  '<?xml version="1.0" encoding="UTF-8"?>',
+  '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+  entries,
+  '</urlset>',
+  ''
+].join('\n');
 
 const outPath = path.join(__dirname, '..', 'public', 'sitemap.xml');
-fs.writeFileSync(outPath, sitemap);
+fs.writeFileSync(outPath, sitemap.replace(/<script.*?>.*?<\/script>/gi, ''), 'utf8');
