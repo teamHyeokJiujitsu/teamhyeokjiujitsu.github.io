@@ -4,6 +4,7 @@ import Link from 'next/link';
 import FancyCursor from '@/components/FancyCursor';
 import CursorToggle from '@/components/CursorToggle';
 import ThemeToggle from '@/components/ThemeToggle';
+import AdBanner from '@/components/AdBanner';
 
 const notoSans = Noto_Sans_KR({
   subsets: ['latin'],
@@ -17,6 +18,17 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ko">
+      <head>
+        <meta
+          name="google-adsense-account"
+          content="ca-pub-2370970936034063"
+        />
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2370970936034063"
+          crossOrigin="anonymous"
+        ></script>
+      </head>
       <body className={notoSans.className}>
         <FancyCursor />
         <a href="#main" className="skip-link">본문 바로가기</a>
@@ -40,6 +52,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Link href="/rules" className="rulebook-tab">
           룰 북 보러가기!
         </Link>
+        <AdBanner />
       </body>
     </html>
   );
