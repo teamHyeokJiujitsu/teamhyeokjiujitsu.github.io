@@ -30,5 +30,24 @@ const sitemap = [
   ''
 ].join('\n');
 
-const outPath = path.join(__dirname, '..', 'public', 'sitemap.xml');
-fs.writeFileSync(outPath, sitemap.replace(/<script.*?>.*?<\/script>/gi, ''), 'utf8');
+const publicDir = path.join(__dirname, '..', 'public');
+
+fs.writeFileSync(
+  path.join(publicDir, 'sitemap.xml'),
+  sitemap.replace(/<script.*?>.*?<\/script>/gi, ''),
+  'utf8'
+);
+
+const sitemapIndex = [
+  '<?xml version="1.0" encoding="UTF-8"?>',
+  '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+  `  <sitemap>\n    <loc>${escapeXml(`${baseUrl}/sitemap.xml`)}</loc>\n  </sitemap>`,
+  '</sitemapindex>',
+  ''
+].join('\n');
+
+fs.writeFileSync(
+  path.join(publicDir, 'sitemap-index.xml'),
+  sitemapIndex,
+  'utf8'
+);
