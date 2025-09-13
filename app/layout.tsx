@@ -1,7 +1,6 @@
 import './globals.css';
 import { Noto_Sans_KR } from 'next/font/google';
 import Link from 'next/link';
-import Script from 'next/script';
 import FancyCursor from '@/components/FancyCursor';
 import CursorToggle from '@/components/CursorToggle';
 import ThemeToggle from '@/components/ThemeToggle';
@@ -31,12 +30,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         ></script>
       </head>
       <body className={notoSans.className}>
-        <Script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2370970936034063"
-          crossOrigin="anonymous"
-          strategy="afterInteractive"
-        />
         <FancyCursor />
         <a href="#main" className="skip-link">본문 바로가기</a>
         <header className="header">
