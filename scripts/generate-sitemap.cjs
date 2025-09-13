@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const baseUrl = 'https://teamhyeok.github.io';
+const baseUrl = 'https://teamhyeokjiujitsu.github.io';
 const pages = ['/', '/events/', '/rules/'];
 
 const today = new Date().toISOString().split('T')[0];
