@@ -3,7 +3,7 @@
 전국 주짓수 대회 일정을 한눈에 모아보는 비공식 캘린더입니다. 
 KBJJF, 스트릿 주짓수, 예거스 등 주요 주최 기관의 대회를 쉽게 찾아보세요.
 
-👉 [바로가기](https://teamhyeok.github.io/team-jiujitsu/?tag=kbjjf)
+👉 [바로가기](https://teamhyeok.github.io/?tag=kbjjf)
 
 ## 주요 기능
 - 주최 기관별 탭 필터: KBJJF, 스트릿 주짓수, 예거스

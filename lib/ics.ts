@@ -20,10 +20,10 @@ export function eventToICS(meta: EventMeta): string {
   const lines = [
     'BEGIN:VCALENDAR',
     'VERSION:2.0',
-    'PRODID:-//team-jiujitsu//EN',
+    'PRODID:-//teamhyeok.github.io//EN',
     'CALSCALE:GREGORIAN',
     'BEGIN:VEVENT',
-    `UID:${meta.slug}@team-jiujitsu`,
+    `UID:${meta.slug}@teamhyeok.github.io`,
     `DTSTAMP:${formatDateTime(new Date())}`,
     `DTSTART;VALUE=DATE:${formatDate(start)}`,
     `DTEND;VALUE=DATE:${formatDate(end)}`,
