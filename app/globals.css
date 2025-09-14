@@ -523,6 +523,11 @@ img { max-width: 100%; height: auto; display: block; }
   background: linear-gradient(135deg, #6366f1, #ec4899);
   color: #fff;
 }
+.btn-urgent {
+  background: linear-gradient(135deg, #ef4444, #f97316);
+  color: #fff;
+  animation: pulse 2s infinite;
+}
 .btn-outline {
   border: 2px solid var(--primary);
   color: var(--primary);
