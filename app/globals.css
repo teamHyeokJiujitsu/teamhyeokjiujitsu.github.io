@@ -368,13 +368,31 @@ img { max-width: 100%; height: auto; display: block; }
   margin-bottom: 0;
 }
 .filters .month-filter {
-  margin-bottom: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 0;
+}
+
+.filters .month-filter .month-option {
   padding: 4px 8px;
   border: 1px solid var(--border);
   border-radius: 6px;
   background: var(--surface);
   color: var(--text);
   font-size: 14px;
+  cursor: pointer;
+}
+
+.filters .month-filter .month-option.active {
+  background: var(--primary);
+  color: var(--bg);
+  border-color: var(--primary);
+}
+
+.filters .month-filter .month-option:disabled {
+  opacity: 0.4;
+  cursor: default;
 }
 .filters .past-toggle {
   margin: 0;
