@@ -22,6 +22,9 @@ export default function Page() {
           <Link href="#events" className="btn btn-primary">
             대회 보기
           </Link>
+          <Link href="/events/closing" className="btn btn-urgent">
+            얼마 남지 않은 대회
+          </Link>
         </div>
       </section>
       <section id="events">
