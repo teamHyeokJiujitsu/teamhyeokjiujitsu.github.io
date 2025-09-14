@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useRef, useState, useEffect, type KeyboardEvent } from 'react';
 import RegionFilter from './RegionFilter';
+import MonthFilter from './MonthFilter';
 import type { EventMeta } from '@/lib/content';
 
 interface Tab {
@@ -49,15 +50,6 @@ export default function EventsList({
   const dateFiltered = showPast
     ? events
     : events.filter(e => new Date(e.date) >= today);
-
-  const months = Array.from(
-    new Set(dateFiltered.map(e => e.date.slice(0, 7))),
-  ).sort();
-
-  const formatMonth = (m: string) => {
-    const [year, month] = m.split('-');
-    return `${year}년 ${Number(month)}월`;
-  };
 
   const regionFiltered = region
     ? dateFiltered.filter(e => e.city === region)
@@ -135,16 +127,6 @@ export default function EventsList({
     ? searchFiltered.filter(e => e.tags?.includes(tag))
     : searchFiltered;
 
-  const changeMonth = (value: string) => {
-    const params = new URLSearchParams(Array.from(searchParams.entries()));
-    if (value) {
-      params.set('month', value);
-    } else {
-      params.delete('month');
-    }
-    router.push(`${basePath}?${params.toString()}`);
-  };
-
   const togglePast = (checked: boolean) => {
     const params = new URLSearchParams(Array.from(searchParams.entries()));
     if (checked) {
@@ -196,19 +178,11 @@ export default function EventsList({
           aria-label="대회 검색"
         />
         <RegionFilter events={dateFiltered} basePath={basePath} />
-        <select
-          className="month-filter"
-          value={month}
-          onChange={e => changeMonth(e.target.value)}
-          aria-label="월별 검색"
-        >
-          <option value="">전체 월</option>
-          {months.map(m => (
-            <option key={m} value={m}>
-              {formatMonth(m)}
-            </option>
-          ))}
-        </select>
+        <MonthFilter
+          events={events}
+          available={dateFiltered}
+          basePath={basePath}
+        />
         <label className="past-toggle">
           <input
             type="checkbox"
