@@ -368,10 +368,13 @@ img { max-width: 100%; height: auto; display: block; }
   margin-bottom: 0;
 }
 .filters .month-filter {
-  margin-bottom: 0;
-  padding: 4px 6px;
+  margin-bottom: 16px;
+  padding: 4px 8px;
   border: 1px solid var(--border);
   border-radius: 6px;
+  background: var(--surface);
+  color: var(--text);
+  font-size: 14px;
 }
 .filters .past-toggle {
   margin: 0;

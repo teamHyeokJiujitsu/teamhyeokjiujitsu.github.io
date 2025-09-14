@@ -50,6 +50,15 @@ export default function EventsList({
     ? events
     : events.filter(e => new Date(e.date) >= today);
 
+  const months = Array.from(
+    new Set(dateFiltered.map(e => e.date.slice(0, 7))),
+  ).sort();
+
+  const formatMonth = (m: string) => {
+    const [year, month] = m.split('-');
+    return `${year}년 ${Number(month)}월`;
+  };
+
   const regionFiltered = region
     ? dateFiltered.filter(e => e.city === region)
     : dateFiltered;
@@ -58,10 +67,15 @@ export default function EventsList({
     ? regionFiltered.filter(e => e.date.startsWith(month))
     : regionFiltered;
 
+  const searchMonthMatch = query.match(/^(\d{1,2})월$/);
   const searchFiltered = query
-    ? monthFiltered.filter(e =>
-        e.title.toLowerCase().includes(query.toLowerCase()),
-      )
+    ? searchMonthMatch
+      ? monthFiltered.filter(
+          e => e.date.slice(5, 7) === searchMonthMatch[1].padStart(2, '0'),
+        )
+      : monthFiltered.filter(e =>
+          e.title.toLowerCase().includes(query.toLowerCase()),
+        )
     : monthFiltered;
 
   const counts = tabs.map(({ key }) =>
@@ -182,13 +196,19 @@ export default function EventsList({
           aria-label="대회 검색"
         />
         <RegionFilter events={dateFiltered} basePath={basePath} />
-        <input
-          type="month"
+        <select
           className="month-filter"
           value={month}
           onChange={e => changeMonth(e.target.value)}
           aria-label="월별 검색"
-        />
+        >
+          <option value="">전체 월</option>
+          {months.map(m => (
+            <option key={m} value={m}>
+              {formatMonth(m)}
+            </option>
+          ))}
+        </select>
         <label className="past-toggle">
           <input
             type="checkbox"
