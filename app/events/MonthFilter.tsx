@@ -15,6 +15,7 @@ export default function MonthFilter({ events, available, basePath = '/' }: Props
   const searchParams = useSearchParams();
   const selected = searchParams.get('month') || '';
 
+  /** 전체 이벤트에서 월 단위 타임라인을 생성한다. */
   const months = useMemo(() => {
     if (events.length === 0) return [];
     const sorted = events.map(e => e.date.slice(0, 7)).sort();
@@ -36,6 +37,7 @@ export default function MonthFilter({ events, available, basePath = '/' }: Props
     return result;
   }, [events]);
 
+  /** 월 버튼을 클릭했을 때 URL 쿼리 파라미터를 갱신한다. */
   const changeMonth = (value: string) => {
     const params = new URLSearchParams(Array.from(searchParams.entries()));
     if (value) {

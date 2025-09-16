@@ -11,6 +11,7 @@ export default function RegionFilter({
   events: EventMeta[];
   basePath?: string;
 }) {
+  /** 드롭다운 열림 여부 및 검색/최근 상태를 관리한다. */
   const router = useRouter();
   const searchParams = useSearchParams();
   const region = searchParams.get('region') || '';
@@ -23,9 +24,18 @@ export default function RegionFilter({
 
   useEffect(() => {
     const stored = localStorage.getItem('recentRegions');
-    if (stored) setRecent(JSON.parse(stored));
+    if (!stored) return;
+    try {
+      const parsed = JSON.parse(stored) as unknown;
+      if (Array.isArray(parsed)) {
+        setRecent(parsed.filter((item): item is string => typeof item === 'string'));
+      }
+    } catch (error) {
+      console.warn('최근 지역 정보를 불러오지 못했습니다.', error);
+    }
   }, []);
 
+  // 드롭다운 밖을 클릭하면 닫는다.
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
       if (ref.current && !ref.current.contains(e.target as Node)) {
@@ -44,11 +54,15 @@ export default function RegionFilter({
     return Array.from(set).sort();
   }, [events]);
 
+  /** 검색어가 적용된 지역 목록과 최근 선택 항목을 합친다. */
   const filtered = useMemo(
     () => regions.filter(r => r.toLowerCase().includes(search.toLowerCase())),
     [regions, search],
   );
-  const options = useMemo(() => [...recent, ...filtered], [recent, filtered]);
+  const options = useMemo(
+    () => [...recent, ...filtered],
+    [filtered, recent],
+  );
   const updateRegion = useCallback(
     (value: string) => {
       const params = new URLSearchParams(Array.from(searchParams.entries()));
@@ -78,6 +92,7 @@ export default function RegionFilter({
     [updateRegion],
   );
 
+  // 키보드 내비게이션 및 단축키 처리.
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
@@ -103,16 +118,19 @@ export default function RegionFilter({
     return () => document.removeEventListener('keydown', handleKey);
   }, [open, options, focused, selectRegion]);
 
+  // 포커스된 옵션을 DOM에 반영한다.
   useEffect(() => {
     if (focused >= 0) {
       optionsRef.current[focused]?.focus();
     }
   }, [focused]);
 
+  // 드롭다운이 닫히면 포커스 상태를 초기화한다.
   useEffect(() => {
     if (!open) setFocused(-1);
   }, [open]);
 
+  // 다음 렌더링에서 새로 채우기 위해 참조 배열을 초기화한다.
   optionsRef.current = [];
   return (
     <div className="region-filter" ref={ref}>

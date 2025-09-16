@@ -2,7 +2,14 @@
 
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useRef, useState, useEffect, type KeyboardEvent } from 'react';
+import {
+  useRef,
+  useState,
+  useEffect,
+  useMemo,
+  useCallback,
+  type KeyboardEvent,
+} from 'react';
 import RegionFilter from './RegionFilter';
 import MonthFilter from './MonthFilter';
 import type { EventMeta } from '@/lib/content';
@@ -21,6 +28,14 @@ export default function EventsList({
   events: EventMeta[];
   basePath?: string;
 }) {
+  /**
+   * URL 쿼리 파라미터와 사용자 입력을 읽어 필터 조건을 만든다.
+   * - tag: 태그 탭
+   * - region: 지역 드롭다운
+   * - month: 월 선택 버튼
+   * - past: 지난 대회 표시 여부
+   * - query: 텍스트 검색어 (컴포넌트 내부 상태)
+   */
   const searchParams = useSearchParams();
   const router = useRouter();
   const tag = searchParams.get('tag') || undefined;
@@ -29,57 +44,88 @@ export default function EventsList({
   const showPast = searchParams.get('past') === '1';
   const [query, setQuery] = useState('');
 
-  const tabs: Omit<Tab, 'idx' | 'count'>[] = [
-    { key: undefined, label: '전체' },
-    ...Array.from(new Set(events.flatMap(e => e.tags ?? [])))
-      .sort()
-      .map(key => ({ key, label: key })),
-  ];
-
-  const currentIndex = Math.max(
-    0,
-    tabs.findIndex(t => t.key === tag),
+  /**
+   * 탭(태그) 목록은 이벤트에 등장한 태그를 기반으로 생성한다.
+   * 첫 번째 항목은 전체 보기이며, 이후 항목은 알파벳 순으로 정렬한다.
+   */
+  const tabs: Omit<Tab, 'idx' | 'count'>[] = useMemo(
+    () => [
+      { key: undefined, label: '전체' },
+      ...Array.from(new Set(events.flatMap(e => e.tags ?? [])))
+        .sort()
+        .map(key => ({ key, label: key })),
+    ],
+    [events],
   );
+
+  const currentIndex = useMemo(
+    () => Math.max(0, tabs.findIndex(t => t.key === tag)),
+    [tabs, tag],
+  );
+
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const tabsContainerRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
 
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  const dateFiltered = showPast
-    ? events
-    : events.filter(e => new Date(e.date) >= today);
+  /** 오늘 날짜(시간은 00:00으로 고정)를 미리 계산해 재사용한다. */
+  const today = useMemo(() => {
+    const value = new Date();
+    value.setHours(0, 0, 0, 0);
+    return value;
+  }, []);
 
-  const regionFiltered = region
-    ? dateFiltered.filter(e => e.city === region)
-    : dateFiltered;
-
-  const monthFiltered = month
-    ? regionFiltered.filter(e => e.date.startsWith(month))
-    : regionFiltered;
-
-  const searchMonthMatch = query.match(/^(\d{1,2})월$/);
-  const searchFiltered = query
-    ? searchMonthMatch
-      ? monthFiltered.filter(
-          e => e.date.slice(5, 7) === searchMonthMatch[1].padStart(2, '0'),
-        )
-      : monthFiltered.filter(e =>
-          e.title.toLowerCase().includes(query.toLowerCase()),
-        )
-    : monthFiltered;
-
-  const counts = tabs.map(({ key }) =>
-    key
-      ? searchFiltered.filter(e => e.tags?.includes(key)).length
-      : searchFiltered.length,
+  /**
+   * 필터 파이프라인
+   * 1) 지난 대회 숨기기 여부
+   * 2) 지역 선택
+   * 3) 월 선택
+   * 4) 검색어 (월/텍스트 모두 지원)
+   */
+  const dateFiltered = useMemo(
+    () =>
+      showPast ? events : events.filter(e => new Date(e.date) >= today),
+    [events, showPast, today],
   );
-  const tabsWithCounts: Tab[] = tabs.map((t, idx) => ({
-    ...t,
-    idx,
-    count: counts[idx],
-  }));
+
+  const regionFiltered = useMemo(
+    () => (region ? dateFiltered.filter(e => e.city === region) : dateFiltered),
+    [dateFiltered, region],
+  );
+
+  const monthFiltered = useMemo(
+    () =>
+      month ? regionFiltered.filter(e => e.date.startsWith(month)) : regionFiltered,
+    [month, regionFiltered],
+  );
+
+  const searchFiltered = useMemo(() => {
+    if (!query) return monthFiltered;
+
+    const trimmed = query.trim();
+    const monthMatch = trimmed.match(/^(\d{1,2})월$/);
+
+    if (monthMatch) {
+      const target = monthMatch[1].padStart(2, '0');
+      return monthFiltered.filter(e => e.date.slice(5, 7) === target);
+    }
+
+    const lowered = trimmed.toLowerCase();
+    return monthFiltered.filter(e => e.title.toLowerCase().includes(lowered));
+  }, [monthFiltered, query]);
+
+  /**
+   * 각 탭별로 필터 후 남는 개수를 계산하고, 탭 배열에 결합한다.
+   * 이 정보는 뱃지 카운트와 키보드 내비게이션에 사용된다.
+   */
+  const tabsWithCounts: Tab[] = useMemo(() => {
+    const counts = tabs.map(({ key }) =>
+      key ? searchFiltered.filter(e => e.tags?.includes(key)).length : searchFiltered.length,
+    );
+    return tabs.map((t, idx) => ({ ...t, idx, count: counts[idx] }));
+  }, [searchFiltered, tabs]);
+
+  /** 기본으로 노출할 탭 수 (이후에는 더보기/접기 버튼으로 토글). */
   const SHOW_LIMIT = 6;
   const [showAllTabs, setShowAllTabs] = useState(currentIndex < SHOW_LIMIT - 1);
 
@@ -88,21 +134,27 @@ export default function EventsList({
       setShowAllTabs(true);
     }
   }, [currentIndex]);
-  const visibleTabs: Tab[] = showAllTabs
-    ? [...tabsWithCounts, { key: '__less', label: '접기', idx: -1 }]
-    : tabsWithCounts.length > SHOW_LIMIT
-    ? [
+
+  const visibleTabs: Tab[] = useMemo(() => {
+    if (showAllTabs) {
+      return [...tabsWithCounts, { key: '__less', label: '접기', idx: -1 }];
+    }
+    if (tabsWithCounts.length > SHOW_LIMIT) {
+      return [
         ...tabsWithCounts.slice(0, SHOW_LIMIT - 1),
         { key: '__more', label: '더보기', idx: -1 },
-      ]
-    : tabsWithCounts;
+      ];
+    }
+    return tabsWithCounts;
+  }, [showAllTabs, tabsWithCounts]);
 
-  const updateScrollButtons = () => {
+  /** 탭 바 스크롤 버튼 활성화 여부를 계산한다. */
+  const updateScrollButtons = useCallback(() => {
     const el = tabsContainerRef.current;
     if (!el) return;
     setCanScrollLeft(el.scrollLeft > 0);
     setCanScrollRight(el.scrollLeft + el.clientWidth < el.scrollWidth);
-  };
+  }, []);
 
   useEffect(() => {
     updateScrollButtons();
@@ -114,45 +166,53 @@ export default function EventsList({
       el.removeEventListener('scroll', updateScrollButtons);
       window.removeEventListener('resize', updateScrollButtons);
     };
-  }, []);
+  }, [updateScrollButtons]);
 
-  const scrollTabs = (dir: number) => {
+  const scrollTabs = useCallback((dir: number) => {
     tabsContainerRef.current?.scrollBy({
       left: dir * 120,
       behavior: 'smooth',
     });
-  };
+  }, []);
 
-  const items = tag
-    ? searchFiltered.filter(e => e.tags?.includes(tag))
-    : searchFiltered;
+  const items = useMemo(
+    () => (tag ? searchFiltered.filter(e => e.tags?.includes(tag)) : searchFiltered),
+    [searchFiltered, tag],
+  );
 
-  const togglePast = (checked: boolean) => {
-    const params = new URLSearchParams(Array.from(searchParams.entries()));
-    if (checked) {
-      params.set('past', '1');
-    } else {
-      params.delete('past');
-    }
-    router.push(`${basePath}?${params.toString()}`);
-  };
+  const updateSearchParam = useCallback(
+    (key: string, value: string | undefined) => {
+      const params = new URLSearchParams(Array.from(searchParams.entries()));
+      if (value) {
+        params.set(key, value);
+      } else {
+        params.delete(key);
+      }
+      const queryString = params.toString();
+      router.push(`${basePath}${queryString ? `?${queryString}` : ''}`);
+    },
+    [basePath, router, searchParams],
+  );
 
-  const selectTab = (idx: number) => {
-    const { key } = tabs[idx];
-    const params = new URLSearchParams(Array.from(searchParams.entries()));
-    if (key) {
-      params.set('tag', key);
-    } else {
-      params.delete('tag');
-    }
-    router.push(`${basePath}?${params.toString()}`);
-  };
+  const togglePast = useCallback(
+    (checked: boolean) => {
+      updateSearchParam('past', checked ? '1' : undefined);
+    },
+    [updateSearchParam],
+  );
 
-  const handleKeyDown = (
-    e: KeyboardEvent<HTMLButtonElement>,
-    idx: number,
-  ) => {
-    if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+  const selectTab = useCallback(
+    (idx: number) => {
+      const { key } = tabs[idx];
+      updateSearchParam('tag', key);
+    },
+    [tabs, updateSearchParam],
+  );
+
+  const handleKeyDown = useCallback(
+    (e: KeyboardEvent<HTMLButtonElement>, idx: number) => {
+      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+
       e.preventDefault();
       const nextIndex =
         e.key === 'ArrowRight'
@@ -163,11 +223,13 @@ export default function EventsList({
         nextTab.focus();
         selectTab(nextIndex);
       }
-    }
-  };
+    },
+    [selectTab, tabs],
+  );
 
   return (
     <>
+      {/* 필터 컨트롤 모음 */}
       <div className="filters">
         <input
           type="text"
@@ -193,6 +255,8 @@ export default function EventsList({
           <span>날짜 지난 시합 일정도 보기</span>
         </label>
       </div>
+
+      {/* 태그 탭 목록 */}
       <div className="tabs-wrapper">
         <button
           className="tab-scroll left"
@@ -248,6 +312,8 @@ export default function EventsList({
           </svg>
         </button>
       </div>
+
+      {/* 대회 카드 목록 */}
       <div className="grid">
         {items.map((e, idx) => (
           <Link
