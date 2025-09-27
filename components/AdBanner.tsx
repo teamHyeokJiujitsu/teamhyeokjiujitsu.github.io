@@ -14,7 +14,6 @@ export default function AdBanner() {
   const adSlotId = process.env.NEXT_PUBLIC_ADSENSE_SLOT_ID ?? '1234567890';
   const isConfigured = adSlotId && adSlotId !== '1234567890';
   const shouldUseTestAds = process.env.NODE_ENV !== 'production';
-
   useEffect(() => {
     if (!isConfigured) {
       if (process.env.NODE_ENV !== 'production') {
