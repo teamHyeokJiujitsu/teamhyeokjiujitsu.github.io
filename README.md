@@ -13,3 +13,13 @@ KBJJF, 스트릿 주짓수, 예거스 등 주요 주최 기관의 대회를 쉽�
 
 ## 기여하기
 오류 제보나 일정 추가는 언제든지 Pull Request로 환영합니다.
+
+### 환경 변수
+Google AdSense 광고를 사용하려면 `.env.local` 파일에 다음 값을 채워주세요.
+
+```
+NEXT_PUBLIC_ADSENSE_CLIENT_ID=ca-pub-xxxxxxxxxxxxxxxx
+NEXT_PUBLIC_ADSENSE_SLOT_ID=xxxxxxxxxx
+```
+
+실제 승인된 광고 단위(`data-ad-slot`)를 입력하지 않으면 광고가 노출되지 않습니다.
