@@ -23,3 +23,6 @@ NEXT_PUBLIC_ADSENSE_SLOT_ID=xxxxxxxxxx
 ```
 
 실제 승인된 광고 단위(`data-ad-slot`)를 입력하지 않으면 광고가 노출되지 않습니다.
+로컬 개발 환경에서는 자동으로 테스트 광고(`data-adtest="on"`)가 요청되므로,
+실제 광고 동작은 프로덕션 도메인에서 확인해주세요.
+

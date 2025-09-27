@@ -13,7 +13,7 @@ export default function AdBanner() {
     process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID ?? 'ca-pub-2370970936034063';
   const adSlotId = process.env.NEXT_PUBLIC_ADSENSE_SLOT_ID ?? '1234567890';
   const isConfigured = adSlotId && adSlotId !== '1234567890';
-
+  const shouldUseTestAds = process.env.NODE_ENV !== 'production';
   useEffect(() => {
     if (!isConfigured) {
       if (process.env.NODE_ENV !== 'production') {
@@ -45,6 +45,7 @@ export default function AdBanner() {
         data-ad-slot={adSlotId}
         data-ad-format="auto"
         data-full-width-responsive="true"
+        {...(shouldUseTestAds ? { 'data-adtest': 'on' } : {})}
       ></ins>
     </div>
   );
