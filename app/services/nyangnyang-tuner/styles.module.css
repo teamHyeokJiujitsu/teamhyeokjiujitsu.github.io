@@ -1,0 +1,158 @@
+.page {
+  display: grid;
+  gap: 64px;
+  padding: 48px 0 80px;
+}
+
+.hero {
+  display: grid;
+  gap: 20px;
+}
+
+.heroTagline {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: rgba(252, 211, 77, 0.2);
+  color: #b45309;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.heroTitle {
+  margin: 0;
+  font-size: clamp(32px, 5vw, 48px);
+  font-weight: 700;
+}
+
+.heroDescription {
+  margin: 0;
+  color: var(--muted);
+  font-size: 18px;
+  max-width: 720px;
+}
+
+.heroActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.heroButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-weight: 600;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.primaryButton {
+  background: #f59e0b;
+  color: #1f2937;
+  box-shadow: 0 12px 24px rgba(245, 158, 11, 0.25);
+}
+
+.primaryButton:hover {
+  transform: translateY(-2px);
+}
+
+.secondaryButton {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+}
+
+.secondaryButton:hover {
+  transform: translateY(-2px);
+  background: var(--hover);
+}
+
+.section {
+  display: grid;
+  gap: 24px;
+}
+
+.sectionTitle {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.sectionDescription {
+  margin: 0;
+  color: var(--muted);
+  max-width: 720px;
+}
+
+.featureGrid {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.featureCard {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 24px;
+  display: grid;
+  gap: 12px;
+}
+
+.featureIcon {
+  font-size: 28px;
+}
+
+.featureTitle {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.featureDescription {
+  margin: 0;
+  color: var(--muted);
+}
+
+.useCaseList {
+  display: grid;
+  gap: 12px;
+}
+
+.useCaseItem {
+  padding: 18px 20px;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.useCaseTitle {
+  margin: 0 0 6px;
+  font-weight: 600;
+}
+
+.nextSteps {
+  list-style: disc;
+  padding-left: 20px;
+  display: grid;
+  gap: 10px;
+}
+
+@media (max-width: 720px) {
+  .page {
+    padding-top: 32px;
+  }
+
+  .heroActions {
+    width: 100%;
+  }
+
+  .heroButton {
+    width: 100%;
+    justify-content: center;
+  }
+}
