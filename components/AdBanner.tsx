@@ -33,7 +33,15 @@ export default function AdBanner() {
   }, [isConfigured]);
 
   if (!isConfigured) {
-    return null;
+    return shouldUseTestAds ? (
+      <div className="ad-banner ad-banner--warning">
+        <div className="badge badge--warning">개발 환경</div>
+        <div className="small">
+          Google AdSense 광고 단위(`NEXT_PUBLIC_ADSENSE_SLOT_ID`)가 비어 있어 테스트 광고도
+          렌더링할 수 없습니다. 승인된 광고 단위를 환경 변수에 설정해 주세요.
+        </div>
+      </div>
+    ) : null;
   }
 
   return (
