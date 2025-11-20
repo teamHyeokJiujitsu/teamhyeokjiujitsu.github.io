@@ -101,6 +101,14 @@ img { max-width: 100%; height: auto; display: block; }
   text-align: center;
 }
 
+.ad-banner__list {
+  color: var(--muted);
+  font-size: 14px;
+  margin: 4px 0 0;
+  padding-left: 18px;
+  text-align: left;
+}
+
 .badge--warning {
   background: #fef3c7;
   color: #92400e;
