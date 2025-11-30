@@ -14,15 +14,16 @@ const FALLBACK_SLOT_ID = '1234567890';
 export default function AdBanner() {
   const adClientId = process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID ?? FALLBACK_CLIENT_ID;
   const adSlotId = process.env.NEXT_PUBLIC_ADSENSE_SLOT_ID ?? FALLBACK_SLOT_ID;
-  const isConfigured = adClientId !== FALLBACK_CLIENT_ID && adSlotId !== FALLBACK_SLOT_ID;
+  const isClientDefault = adClientId === FALLBACK_CLIENT_ID;
+  const isSlotDefault = adSlotId === FALLBACK_SLOT_ID;
+  const isConfigured = !isClientDefault && !isSlotDefault;
   const shouldUseTestAds = process.env.NODE_ENV !== 'production';
+
   useEffect(() => {
     if (!isConfigured) {
-      if (process.env.NODE_ENV !== 'production') {
-        console.warn(
-          'Google AdSense 광고 단위 또는 클라이언트 ID가 기본값을 사용 중입니다. 승인된 값으로 설정하지 않으면 403이 발생할 수 있습니다.',
-        );
-      }
+      console.warn(
+        '[AdSense] 승인된 `NEXT_PUBLIC_ADSENSE_CLIENT_ID`/`NEXT_PUBLIC_ADSENSE_SLOT_ID`가 없어 광고 요청이 중단됩니다. .env.local을 확인하세요.',
+      );
       return;
     }
 
@@ -35,23 +36,28 @@ export default function AdBanner() {
   }, [isConfigured]);
 
   if (!isConfigured) {
-    return shouldUseTestAds ? (
+    return (
       <div className="ad-banner ad-banner--warning">
-        <div className="badge badge--warning">개발 환경</div>
+        <div className="badge badge--warning">광고 미표시</div>
         <div className="small">
-          Google AdSense 설정이 비어 있거나 기본값을 사용 중이라 광고 요청이 403으로 차단될 수
-          있습니다. 아래를 확인하세요.
+          {isClientDefault || isSlotDefault
+            ? 'AdSense 클라이언트 ID 또는 광고 단위가 기본값으로 설정되어 있어 광고가 노출되지 않습니다.'
+            : 'AdSense 설정이 비어 있어 광고가 노출되지 않습니다.'}
         </div>
         <ul className="ad-banner__list">
           <li>
-            .env 파일에 `NEXT_PUBLIC_ADSENSE_CLIENT_ID`, `NEXT_PUBLIC_ADSENSE_SLOT_ID`를 승인된 값으로
-            채워주세요.
+            `.env.local`에 승인된 `NEXT_PUBLIC_ADSENSE_CLIENT_ID`, `NEXT_PUBLIC_ADSENSE_SLOT_ID` 값을 입력했는지 확인하세요.
           </li>
-          <li>AdSense 콘솔에서 도메인이 “사이트”에 추가되고 승인되었는지 확인하세요.</li>
-          <li>개발 모드에서는 테스트 광고로 동작하지만, 실제 광고 노출을 위해서는 위 설정이 필수입니다.</li>
+          <li>AdSense 콘솔에서 도메인을 “사이트”에 등록·승인했는지 확인하세요.</li>
+          <li>네트워크 필터(Adblock)나 브라우저 보안 설정으로 요청이 차단되지 않는지 확인하세요.</li>
         </ul>
+        <div className="small">
+          {shouldUseTestAds
+            ? '개발 환경에서는 테스트 광고(data-adtest="on")로만 요청합니다.'
+            : '프로덕션에서는 승인된 값이 없으면 광고 요청이 생성되지 않습니다.'}
+        </div>
       </div>
-    ) : null;
+    );
   }
 
   return (
@@ -68,4 +74,3 @@ export default function AdBanner() {
     </div>
   );
 }
-
