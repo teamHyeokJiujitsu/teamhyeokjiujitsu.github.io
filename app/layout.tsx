@@ -26,13 +26,15 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ko">
-      <body className={notoSans.className}>
+      <head>
         <Script
           id="adsbygoogle-init"
           strategy="afterInteractive"
           src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adsenseClientId}`}
           crossOrigin="anonymous"
         />
+      </head>
+      <body className={notoSans.className}>
         <FancyCursor />
         <a href="#main" className="skip-link">본문 바로가기</a>
         <header className="header">
