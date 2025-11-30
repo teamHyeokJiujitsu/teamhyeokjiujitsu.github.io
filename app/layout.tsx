@@ -31,8 +31,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           id="adsbygoogle-init"
           strategy="afterInteractive"
           async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
-          data-ad-client={adsenseClientId}
+          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adsenseClientId}`}
           crossOrigin="anonymous"
         />
         <FancyCursor />
