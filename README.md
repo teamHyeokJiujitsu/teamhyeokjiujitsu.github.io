@@ -14,6 +14,16 @@ KBJJF, 스트릿 주짓수, 예거스 등 주요 주최 기관의 대회를 쉽�
 ## 기여하기
 오류 제보나 일정 추가는 언제든지 Pull Request로 환영합니다.
 
+### GPT에게 최신 대회 정보 요청하기
+주짓수 최신 대회 일정을 GPT에게 바로 물어보고 싶다면 아래 프롬프트를 복사해 사용하세요.
+
+```
+전국 주짓수 대회(예: KBJJF, 스트릿 주짓수, 예거스, ROX, KJSA, NAGA 등)의 최신 일정을 정리해 줘.
+각 대회마다 다음 정보를 포함해: 대회명, 개최 날짜(연-월-일), 개최 장소(도시/체육관), 공식 안내 또는 접수 링크.
+가능하면 접수 마감일과 계체 정보도 알려 줘.
+결과는 표 형태로 보여주고, 출처 링크를 함께 적어 줘.
+```
+
 ### 환경 변수
 Google AdSense 광고를 사용하려면 `.env.local` 파일에 다음 값을 채워주세요.
 
@@ -29,4 +39,3 @@ NEXT_PUBLIC_ADSENSE_SLOT_ID=xxxxxxxxxx
 `app/layout.tsx`에서 AdSense 스크립트가 `NEXT_PUBLIC_ADSENSE_CLIENT_ID`를 읽어
 `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=...` 쿼리로 전달합니다.
 값을 변경하려면 `.env.local`에 위 변수를 채운 뒤 서버를 다시 실행하세요.
-
