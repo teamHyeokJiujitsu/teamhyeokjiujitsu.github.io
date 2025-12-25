@@ -1,12 +1,15 @@
 ---
 title: "영암 키즈 주짓수 챔피언쉽 F1 KIKC"
 date: "2026-01-31"
-city: "영암군"
-venue: "영암 실내 체육관"
+city: "전남 영암"
+venue: "영암실내체육관"
 organizer: "GY"
-tags: ["gi","kids","spotlite"]
-registrationUrl: "https://www.spotlite.co.kr/jiujitsu/315"
-sourceUrl: "https://www.spotlite.co.kr/jiujitsu/315"
+tags: ["gi","kids"]
+registrationUrl: "https://spotlite.co.kr/jiujitsu/315/"
+sourceUrl: "https://spotlite.co.kr/jiujitsu/315/"
 ---
 
-> 어린이 부문 중심의 F1 KIKC 챔피언십으로 영암 실내 체육관에서 진행되는 Gi 대회입니다.
+- 등록 마감: 2026-01-21
+- 계체: 정보 없음
+
+키즈 대회 세부 내용은 스포라이트 공지를 확인하세요.
