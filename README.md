@@ -39,18 +39,12 @@ KBJJF, 스트릿 주짓수, 예거스 등 주요 주최 기관의 대회를 쉽�
 정보가 불분명하거나 링크를 찾지 못한 항목은 필드 값을 `null`로 두고, 표에는 “(정보 없음)”이라고 명시해 줘. 근거 출처 링크가 없으면 source를 `null`로 남겨 줘.
 ```
 
-### 환경 변수
-Google AdSense 광고를 사용하려면 `.env.local` 파일에 다음 값을 채워주세요.
+### 광고 설정 (쿠팡 파트너스)
+쿠팡 파트너스 트래킹 코드(기본: `AF8593380`)와 템플릿 ID(기본: `784777`)를 `.env.local`로 변경할 수 있습니다.
 
 ```
-NEXT_PUBLIC_ADSENSE_CLIENT_ID=ca-pub-xxxxxxxxxxxxxxxx
-NEXT_PUBLIC_ADSENSE_SLOT_ID=xxxxxxxxxx
+NEXT_PUBLIC_COUPANG_PARTNER_ID=AF8593380
+NEXT_PUBLIC_COUPANG_TEMPLATE_ID=784777
 ```
 
-실제 승인된 광고 단위(`data-ad-slot`)를 입력하지 않으면 광고가 노출되지 않습니다.
-로컬 개발 환경에서는 자동으로 테스트 광고(`data-adtest="on"`)가 요청되므로,
-실제 광고 동작은 프로덕션 도메인에서 확인해주세요.
-
-`app/layout.tsx`에서 AdSense 스크립트가 `NEXT_PUBLIC_ADSENSE_CLIENT_ID`를 읽어
-`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=...` 쿼리로 전달합니다.
-값을 변경하려면 `.env.local`에 위 변수를 채운 뒤 서버를 다시 실행하세요.
+값을 수정한 뒤 서버를 재시작하면 `components/AdBanner.tsx`에서 쿠팡 파트너스 위젯이 새 설정으로 로드됩니다.
