@@ -329,13 +329,27 @@ export default function EventsList({
           >
             <h3 className="card-title">{e.title}</h3>
             <div className="card-meta">
+              {(() => {
+                const parsed = e.date ? new Date(e.date) : null;
+                const isValid = parsed && !Number.isNaN(parsed.getTime());
+                const dateLabel = isValid ? parsed.toLocaleDateString('ko-KR') : '일정 미정';
+                return (
+                  <span className="meta-item">
+                    <svg viewBox="0 0 24 24" fill="none" strokeWidth="2" aria-hidden="true">
+                      <path
+                        d="M8 2v4M16 2v4M3 10h18M5 22h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v14a2 2 0 002 2z"
+                      />
+                    </svg>
+                    {dateLabel}
+                  </span>
+                );
+              })()}
               <span className="meta-item">
                 <svg viewBox="0 0 24 24" fill="none" strokeWidth="2" aria-hidden="true">
                   <path
                     d="M8 2v4M16 2v4M3 10h18M5 22h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v14a2 2 0 002 2z"
                   />
                 </svg>
-                {new Date(e.date).toLocaleDateString('ko-KR')}
               </span>
               {e.city && (
                 <span className="meta-item">
