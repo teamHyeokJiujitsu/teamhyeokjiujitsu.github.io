@@ -29,6 +29,10 @@ export default async function EventDetailPage({ params }: Props) {
   const meta = getAllEventsMeta().find(e => e.slug === slug);
   if (!meta) notFound();
 
+  const parsedDate = meta.date ? new Date(meta.date) : null;
+  const isValidDate = parsedDate && !Number.isNaN(parsedDate.getTime());
+  const dateLabel = isValidDate ? parsedDate.toLocaleDateString('ko-KR') : '일정 미정';
+
   const rawHtml = await getEventHtmlBySlug(slug);
   const html = DOMPurify.sanitize(rawHtml);
 
@@ -36,7 +40,7 @@ export default async function EventDetailPage({ params }: Props) {
     '@context': 'https://schema.org',
     '@type': 'Event',
     name: meta.title,
-    startDate: meta.date,
+    startDate: isValidDate ? meta.date : undefined,
     description: meta.excerpt || undefined,
     image: meta.cover || undefined,
     url: meta.registrationUrl || undefined,
@@ -76,7 +80,7 @@ export default async function EventDetailPage({ params }: Props) {
         )}
         <h1>{meta.title}</h1>
         <div className="small">
-          {new Date(meta.date).toLocaleDateString('ko-KR')}
+          {dateLabel}
           {meta.city ? ` · ${meta.city}` : ''}{meta.venue ? ` · ${meta.venue}` : ''}
         </div>
         <div className="actions">
