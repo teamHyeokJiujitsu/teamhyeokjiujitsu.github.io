@@ -175,10 +175,15 @@ export default function EventsList({
     });
   }, []);
 
-  const items = useMemo(
-    () => (tag ? searchFiltered.filter(e => e.tags?.includes(tag)) : searchFiltered),
-    [searchFiltered, tag],
-  );
+  const items = useMemo(() => {
+    const pool = tag ? searchFiltered.filter(e => e.tags?.includes(tag)) : searchFiltered;
+    return [...pool].sort((a, b) => {
+      if (!a.date && !b.date) return 0;
+      if (!a.date) return 1;
+      if (!b.date) return -1;
+      return a.date.localeCompare(b.date);
+    });
+  }, [searchFiltered, tag]);
 
   const updateSearchParam = useCallback(
     (key: string, value: string | undefined) => {
