@@ -80,7 +80,14 @@ export function getAllEventsMeta(): EventMeta[] {
       organizer: String(data.organizer || ''),
     } as EventMeta;
   });
-  return items.sort((a, b) => (a.date > b.date ? -1 : 1));
+  return items.sort((a, b) => {
+    const aDate = a.date || '';
+    const bDate = b.date || '';
+    if (!aDate && !bDate) return 0;
+    if (!aDate) return 1;
+    if (!bDate) return -1;
+    return aDate.localeCompare(bDate);
+  });
 }
 
 async function markdownToSafeHtml(content: string) {
