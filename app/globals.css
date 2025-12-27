@@ -87,12 +87,12 @@ img { max-width: 100%; height: auto; display: block; }
   bottom: 16px;
   left: 50%;
   transform: translateX(-50%);
-  width: min(90vw, 420px);
+  width: min(94vw, 520px);
   z-index: 20;
 }
 @media (min-width: 960px) {
   .ad-banner {
-    width: min(90vw, 560px);
+    width: min(92vw, 680px);
   }
 }
 .ad-banner__frame {
