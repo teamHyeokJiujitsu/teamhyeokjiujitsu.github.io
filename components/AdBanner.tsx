@@ -4,7 +4,7 @@ const COUPANG_TRACKING_CODE = process.env.NEXT_PUBLIC_COUPANG_PARTNER_ID ?? 'AF8
 const COUPANG_TEMPLATE_ID = Number.parseInt(process.env.NEXT_PUBLIC_COUPANG_TEMPLATE_ID ?? '784777', 10);
 const TEMPLATE_ID = Number.isFinite(COUPANG_TEMPLATE_ID) ? COUPANG_TEMPLATE_ID : 784777;
 
-const IFRAME_HEIGHT = 250;
+const IFRAME_HEIGHT = 180;
 
 export default function AdBanner() {
   const src = `https://ads-partners.coupang.com/widgets.html?id=${encodeURIComponent(
@@ -14,34 +14,19 @@ export default function AdBanner() {
   )}&subId=&width=100%&height=${IFRAME_HEIGHT}&ts=${Date.now()}`;
 
   return (
-    <div
-      className="ad-banner"
-      aria-live="polite"
-      style={{
-        position: 'relative',
-        minHeight: IFRAME_HEIGHT,
-        height: IFRAME_HEIGHT,
-        overflow: 'hidden',
-        maxWidth: 1140,
-        margin: '0 auto',
-      }}
-    >
-      <iframe
-        title="Coupang Partners Carousel"
-        src={src}
-        width="100%"
-        height={IFRAME_HEIGHT}
-        frameBorder="0"
-        scrolling="no"
-        referrerPolicy="unsafe-url"
-        loading="lazy"
-        style={{
-          display: 'block',
-          width: '100%',
-          height: IFRAME_HEIGHT,
-          border: 'none',
-        }}
-      />
+    <div className="ad-banner" aria-live="polite">
+      <div className="ad-banner__frame">
+        <iframe
+          title="Coupang Partners Carousel"
+          src={src}
+          width="100%"
+          height={IFRAME_HEIGHT}
+          frameBorder="0"
+          scrolling="no"
+          referrerPolicy="unsafe-url"
+          loading="lazy"
+        />
+      </div>
     </div>
   );
 }
