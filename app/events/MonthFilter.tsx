@@ -18,9 +18,14 @@ export default function MonthFilter({ events, available, basePath = '/' }: Props
   /** 전체 이벤트에서 월 단위 타임라인을 생성한다. */
   const months = useMemo(() => {
     if (events.length === 0) return [];
-    const sorted = events.map(e => e.date.slice(0, 7)).sort();
-    const start = sorted[0];
-    const end = sorted[sorted.length - 1];
+    const validMonths = events
+      .map(e => e.date?.slice(0, 7) ?? '')
+      .filter(m => /^\d{4}-\d{2}$/.test(m))
+      .sort();
+    if (validMonths.length === 0) return [];
+
+    const start = validMonths[0];
+    const end = validMonths[validMonths.length - 1];
     const [startY, startM] = start.split('-').map(Number);
     const [endY, endM] = end.split('-').map(Number);
     const result: string[] = [];
@@ -80,4 +85,3 @@ export default function MonthFilter({ events, available, basePath = '/' }: Props
     </div>
   );
 }
-
