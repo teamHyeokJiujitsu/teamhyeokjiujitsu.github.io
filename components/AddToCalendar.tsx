@@ -8,6 +8,11 @@ type Props = {
 };
 
 export default function AddToCalendar({ meta }: Props) {
+  if (!meta.date) return null;
+
+  const start = new Date(meta.date);
+  if (Number.isNaN(start.getTime())) return null;
+
   const download = () => {
     const ics = eventToICS(meta);
     const blob = new Blob([ics], { type: 'text/calendar' });
@@ -19,7 +24,6 @@ export default function AddToCalendar({ meta }: Props) {
     URL.revokeObjectURL(url);
   };
 
-  const start = new Date(meta.date);
   const end = new Date(start);
   end.setDate(start.getDate() + 1);
   const fmt = (d: Date) => d.toISOString().slice(0, 10).replace(/-/g, '');
