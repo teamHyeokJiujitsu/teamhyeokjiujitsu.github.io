@@ -4,7 +4,7 @@ const COUPANG_TRACKING_CODE = process.env.NEXT_PUBLIC_COUPANG_PARTNER_ID ?? 'AF8
 const COUPANG_TEMPLATE_ID = Number.parseInt(process.env.NEXT_PUBLIC_COUPANG_TEMPLATE_ID ?? '784777', 10);
 const TEMPLATE_ID = Number.isFinite(COUPANG_TEMPLATE_ID) ? COUPANG_TEMPLATE_ID : 784777;
 
-const IFRAME_HEIGHT = 96;
+const IFRAME_HEIGHT = 120;
 
 export default function AdBanner() {
   const src = `https://ads-partners.coupang.com/widgets.html?id=${encodeURIComponent(
