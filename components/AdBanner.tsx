@@ -4,29 +4,20 @@ const COUPANG_TRACKING_CODE = process.env.NEXT_PUBLIC_COUPANG_PARTNER_ID ?? 'AF8
 const COUPANG_TEMPLATE_ID = Number.parseInt(process.env.NEXT_PUBLIC_COUPANG_TEMPLATE_ID ?? '784777', 10);
 const TEMPLATE_ID = Number.isFinite(COUPANG_TEMPLATE_ID) ? COUPANG_TEMPLATE_ID : 784777;
 
-const IFRAME_HEIGHT = 120;
+const COUPANG_LINK = 'https://link.coupang.com/a/diSftp';
 
 export default function AdBanner() {
-  const src = `https://ads-partners.coupang.com/widgets.html?id=${encodeURIComponent(
-    TEMPLATE_ID,
-  )}&template=carousel&trackingCode=${encodeURIComponent(
-    COUPANG_TRACKING_CODE,
-  )}&subId=&width=100%&height=${IFRAME_HEIGHT}&ts=${Date.now()}`;
-
   return (
     <div className="ad-banner" aria-live="polite">
-      <div className="ad-banner__frame">
-        <iframe
-          title="Coupang Partners Carousel"
-          src={src}
-          width="100%"
-          height={IFRAME_HEIGHT}
-          frameBorder="0"
-          scrolling="no"
-          referrerPolicy="unsafe-url"
-          loading="lazy"
-        />
-      </div>
+      <a
+        className="ad-banner__frame ad-banner__cta"
+        href={COUPANG_LINK}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <span className="ad-banner__brand">coupang</span>
+        <span className="ad-banner__text">특가 보러가기</span>
+      </a>
     </div>
   );
 }
