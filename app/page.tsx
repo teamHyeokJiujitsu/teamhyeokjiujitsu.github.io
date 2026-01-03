@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { getAllEventsMeta } from '@/lib/content';
 import EventsList from './events/EventsList';
 import EventsListSkeleton from './events/EventsListSkeleton';
+import KeywordBlockRemover from '@/components/KeywordBlockRemover';
 
 export const metadata = {
   title: '2026 주짓수 대회 일정 | 서울·부산·전국 | 신청 링크 포함',
@@ -14,6 +15,7 @@ export default function Page() {
   const events = getAllEventsMeta();
   return (
     <div>
+      <KeywordBlockRemover />
       <section className="hero">
         <span className="hero-orb orb1" />
         <span className="hero-orb orb2" />
