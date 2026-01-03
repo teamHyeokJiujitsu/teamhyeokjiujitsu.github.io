@@ -179,6 +179,28 @@ img { max-width: 100%; height: auto; display: block; }
   border-radius: 999px;
   color: var(--text);
 }
+.event-fields {
+  margin-top: 12px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 10px 12px;
+}
+.event-field {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 10px 12px;
+  background: var(--bg);
+}
+.event-field dt {
+  margin: 0 0 6px;
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--muted);
+}
+.event-field dd {
+  margin: 0;
+  font-size: 15px;
+}
 .small { color: var(--muted); font-size: 14px; }
 
 .tabs-wrapper {
