@@ -327,17 +327,16 @@ export default function EventsList({
           const tagSet = (e.tags ?? []).map(t => t.toLowerCase());
           const hasGi = tagSet.includes('gi');
           const hasNoGi = tagSet.includes('nogi') || tagSet.includes('no-gi');
-          const disciplineLabel = hasGi && hasNoGi
-            ? '기 / 노기'
-            : hasGi
-              ? '기(도복)'
-              : hasNoGi
-                ? '노기'
-                : '종목 정보 확인 중';
+          const disciplineLabel =
+            hasGi && hasNoGi
+              ? '기 / 노기'
+              : hasGi
+                ? '기(도복)'
+                : hasNoGi
+                  ? '노기'
+                  : '종목 정보 확인 중';
           const organizerLabel = e.organizer || '주최 정보 확인 중';
           const ruleLabel = tagSet.includes('adcc') ? 'ADCC 룰 (공식 확인 권장)' : '체급·룰 안내 확인 중';
-          const feeLabel = '참가비 안내 확인 중';
-          const deadlineLabel = '접수 마감일 확인 중';
 
           return (
             <article
@@ -345,9 +344,9 @@ export default function EventsList({
               className="card animated-card"
               style={{ animationDelay: `${idx * 0.1}s` }}
             >
-              <header style={{ display: 'flex', justifyContent: 'space-between', gap: 12 }}>
+              <header className="card-top">
                 <div>
-                  <h3 className="card-title" style={{ marginBottom: 4 }}>
+                  <h3 className="card-title" style={{ marginBottom: 6 }}>
                     <Link href={`/events/${e.slug}/`}>{e.title}</Link>
                   </h3>
                   <div className="card-meta">
@@ -378,11 +377,11 @@ export default function EventsList({
                     )}
                   </div>
                 </div>
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 6 }}>
+                <div className="card-actions">
                   <Link href={`/events/${e.slug}/`} className="btn btn-small">
                     자세히 보기
                   </Link>
-                  <div className="card-tags" style={{ justifyContent: 'flex-end' }}>
+                  <div className="card-tags">
                     {e.tags?.map(t => (
                       <span key={t} className="badge">
                         {t}
@@ -394,52 +393,37 @@ export default function EventsList({
 
               {e.excerpt && <div className="card-excerpt">{e.excerpt}</div>}
 
-              <dl className="event-fields">
-                <div className="event-field">
-                  <dt>주최</dt>
-                  <dd>{organizerLabel}</dd>
-                </div>
-                <div className="event-field">
-                  <dt>참가 링크</dt>
-                  <dd>
-                    {e.registrationUrl ? (
-                      <a href={e.registrationUrl} target="_blank" rel="noopener noreferrer">
-                        접수 페이지 바로가기
-                      </a>
-                    ) : (
-                      '참가 신청 링크 확인 중'
-                    )}
-                  </dd>
-                </div>
-                <div className="event-field">
-                  <dt>종목(기/노기)</dt>
-                  <dd>{disciplineLabel}</dd>
-                </div>
-                <div className="event-field">
-                  <dt>체급/룰</dt>
-                  <dd>{ruleLabel}</dd>
-                </div>
-                <div className="event-field">
-                  <dt>참가비</dt>
-                  <dd>{feeLabel}</dd>
-                </div>
-                <div className="event-field">
-                  <dt>접수 마감</dt>
-                  <dd>{deadlineLabel}</dd>
-                </div>
-                <div className="event-field">
-                  <dt>출처</dt>
-                  <dd>
-                    {e.sourceUrl ? (
-                      <a href={e.sourceUrl} target="_blank" rel="noopener noreferrer">
-                        공식/주최 확인
-                      </a>
-                    ) : (
-                      '공식 안내 링크 확인 중'
-                    )}
-                  </dd>
-                </div>
-              </dl>
+              <ul className="event-quick">
+                <li>
+                  <strong>주최:</strong> {organizerLabel}
+                </li>
+                <li>
+                  <strong>참가 링크:</strong>{' '}
+                  {e.registrationUrl ? (
+                    <a href={e.registrationUrl} target="_blank" rel="noopener noreferrer">
+                      접수 페이지 바로가기
+                    </a>
+                  ) : (
+                    '확인 중'
+                  )}
+                </li>
+                <li>
+                  <strong>종목(기/노기):</strong> {disciplineLabel}
+                </li>
+                <li>
+                  <strong>체급/룰:</strong> {ruleLabel}
+                </li>
+                <li>
+                  <strong>출처:</strong>{' '}
+                  {e.sourceUrl ? (
+                    <a href={e.sourceUrl} target="_blank" rel="noopener noreferrer">
+                      공식/주최 확인
+                    </a>
+                  ) : (
+                    '공식 안내 확인 중'
+                  )}
+                </li>
+              </ul>
             </article>
           );
         })}
