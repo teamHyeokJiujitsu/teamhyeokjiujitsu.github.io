@@ -179,6 +179,35 @@ img { max-width: 100%; height: auto; display: block; }
   border-radius: 999px;
   color: var(--text);
 }
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: flex-start;
+}
+.card-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+}
+.event-quick {
+  list-style: none;
+  padding: 0;
+  margin: 12px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: var(--muted);
+  font-size: 14px;
+}
+.event-quick a {
+  color: var(--text);
+  text-decoration: underline;
+}
+.event-quick strong {
+  color: var(--text);
+}
 .small { color: var(--muted); font-size: 14px; }
 
 .tabs-wrapper {

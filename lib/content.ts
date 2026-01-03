@@ -28,6 +28,7 @@ export type EventMeta = BaseMeta & {
   venue?: string;
   registrationUrl?: string;
   organizer?: string;
+  sourceUrl?: string;
 };
 
 function readDir(dir: string) {
@@ -78,6 +79,7 @@ export function getAllEventsMeta(): EventMeta[] {
       venue: String(data.venue || ''),
       registrationUrl: String(data.registrationUrl || ''),
       organizer: String(data.organizer || ''),
+      sourceUrl: String(data.sourceUrl || ''),
     } as EventMeta;
   });
   return items.sort((a, b) => {
