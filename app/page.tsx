@@ -51,6 +51,18 @@ export default function Page() {
           <EventsList events={events} />
         </Suspense>
       </section>
+      <section className="card" style={{ marginTop: 32 }}>
+        <h2 style={{ marginBottom: 12 }}>주요 키워드로 빠르게 찾기</h2>
+        <p style={{ marginBottom: 8 }}>
+          2026년까지 예정된 <strong>주짓수 대회 일정 2026</strong>과 서울에서 열리는{' '}
+          <strong>서울 주짓수 대회</strong>, 도복 없이 진행되는 <strong>노기 대회 일정</strong>을
+          최신 정보로 정리하고 있습니다.
+        </p>
+        <p>
+          국내·국제 무대를 아우르는 <strong>ADCC KOREA 일정</strong>과 단계별로 따라 할 수 있는{' '}
+          <strong>주짓수 대회 신청 방법</strong> 안내도 제공하니, 원하는 대회를 바로 찾아보세요.
+        </p>
+      </section>
     </div>
   );
 }
