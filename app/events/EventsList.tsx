@@ -249,6 +249,13 @@ export default function EventsList({
     [selectTab, tabsWithData],
   );
 
+  const formatTagLabel = useCallback((value: string) => {
+    const normalized = value.toLowerCase();
+    if (normalized === 'gi') return 'GI';
+    if (normalized === 'nogi' || normalized === 'no-gi') return 'No-Gi';
+    return value;
+  }, []);
+
   return (
     <>
       {/* 필터 컨트롤 모음 */}
@@ -400,8 +407,8 @@ export default function EventsList({
                   </Link>
                   <div className="card-tags">
                     {e.tags?.map(t => (
-                      <span key={t} className="badge">
-                        {t}
+                      <span key={t} className="badge badge--tag">
+                        {formatTagLabel(t)}
                       </span>
                     ))}
                   </div>
