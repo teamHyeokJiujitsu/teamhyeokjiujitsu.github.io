@@ -58,11 +58,6 @@ export default function EventsList({
     [events],
   );
 
-  const currentIndex = useMemo(
-    () => Math.max(0, tabs.findIndex(t => t.key === tag)),
-    [tabs, tag],
-  );
-
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const tabsContainerRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
@@ -125,6 +120,28 @@ export default function EventsList({
     return tabs.map((t, idx) => ({ ...t, idx, count: counts[idx] }));
   }, [searchFiltered, tabs]);
 
+  const tabsWithData = useMemo(
+    () =>
+      tabsWithCounts
+        .filter(t => t.key === undefined || (t.count ?? 0) > 0)
+        .map((t, idx) => ({ ...t, idx })),
+    [tabsWithCounts],
+  );
+
+  const currentIndex = useMemo(
+    () => Math.max(0, tabsWithData.findIndex(t => t.key === tag)),
+    [tabsWithData, tag],
+  );
+
+  useEffect(() => {
+    if (tag && !tabsWithData.some(t => t.key === tag)) {
+      const params = new URLSearchParams(Array.from(searchParams.entries()));
+      params.delete('tag');
+      const queryString = params.toString();
+      router.push(`${basePath}${queryString ? `?${queryString}` : ''}`);
+    }
+  }, [basePath, router, searchParams, tag, tabsWithData]);
+
   /** 기본으로 노출할 탭 수 (이후에는 더보기/접기 버튼으로 토글). */
   const SHOW_LIMIT = 6;
   const [showAllTabs, setShowAllTabs] = useState(currentIndex < SHOW_LIMIT - 1);
@@ -137,16 +154,16 @@ export default function EventsList({
 
   const visibleTabs: Tab[] = useMemo(() => {
     if (showAllTabs) {
-      return [...tabsWithCounts, { key: '__less', label: '접기', idx: -1 }];
+      return [...tabsWithData, { key: '__less', label: '접기', idx: -1 }];
     }
-    if (tabsWithCounts.length > SHOW_LIMIT) {
+    if (tabsWithData.length > SHOW_LIMIT) {
       return [
-        ...tabsWithCounts.slice(0, SHOW_LIMIT - 1),
+        ...tabsWithData.slice(0, SHOW_LIMIT - 1),
         { key: '__more', label: '더보기', idx: -1 },
       ];
     }
-    return tabsWithCounts;
-  }, [showAllTabs, tabsWithCounts]);
+    return tabsWithData;
+  }, [showAllTabs, tabsWithData]);
 
   /** 탭 바 스크롤 버튼 활성화 여부를 계산한다. */
   const updateScrollButtons = useCallback(() => {
@@ -208,10 +225,10 @@ export default function EventsList({
 
   const selectTab = useCallback(
     (idx: number) => {
-      const { key } = tabs[idx];
+      const { key } = tabsWithData[idx];
       updateSearchParam('tag', key);
     },
-    [tabs, updateSearchParam],
+    [tabsWithData, updateSearchParam],
   );
 
   const handleKeyDown = useCallback(
@@ -221,16 +238,23 @@ export default function EventsList({
       e.preventDefault();
       const nextIndex =
         e.key === 'ArrowRight'
-          ? (idx + 1) % tabs.length
-          : (idx - 1 + tabs.length) % tabs.length;
+          ? (idx + 1) % tabsWithData.length
+          : (idx - 1 + tabsWithData.length) % tabsWithData.length;
       const nextTab = tabRefs.current[nextIndex];
       if (nextTab) {
         nextTab.focus();
         selectTab(nextIndex);
       }
     },
-    [selectTab, tabs],
+    [selectTab, tabsWithData],
   );
+
+  const formatTagLabel = useCallback((value: string) => {
+    const normalized = value.toLowerCase();
+    if (normalized === 'gi') return 'GI';
+    if (normalized === 'nogi' || normalized === 'no-gi') return 'No-Gi';
+    return value;
+  }, []);
 
   return (
     <>
@@ -345,7 +369,7 @@ export default function EventsList({
               style={{ animationDelay: `${idx * 0.1}s` }}
             >
               <header className="card-top">
-                <div>
+                <div className="card-main">
                   <h3 className="card-title" style={{ marginBottom: 6 }}>
                     <Link href={`/events/${e.slug}/`}>{e.title}</Link>
                   </h3>
@@ -383,8 +407,8 @@ export default function EventsList({
                   </Link>
                   <div className="card-tags">
                     {e.tags?.map(t => (
-                      <span key={t} className="badge">
-                        {t}
+                      <span key={t} className="badge badge--tag">
+                        {formatTagLabel(t)}
                       </span>
                     ))}
                   </div>
