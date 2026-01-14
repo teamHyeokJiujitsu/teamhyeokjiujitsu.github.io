@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import type { EventMeta } from '@/lib/content';
 
@@ -15,35 +15,18 @@ export default function MonthFilter({ events, available, basePath = '/' }: Props
   const searchParams = useSearchParams();
   const selected = searchParams.get('month') || '';
 
-  /** 전체 이벤트에서 월 단위 타임라인을 생성한다. */
+  /** 실제 일정이 존재하는 월만 추려낸다. */
   const months = useMemo(() => {
-    if (events.length === 0) return [];
-    const validMonths = events
+    const source = available.length > 0 ? available : events;
+    if (source.length === 0) return [];
+    const validMonths = source
       .map(e => e.date?.slice(0, 7) ?? '')
-      .filter(m => /^\d{4}-\d{2}$/.test(m))
-      .sort();
-    if (validMonths.length === 0) return [];
-
-    const start = validMonths[0];
-    const end = validMonths[validMonths.length - 1];
-    const [startY, startM] = start.split('-').map(Number);
-    const [endY, endM] = end.split('-').map(Number);
-    const result: string[] = [];
-    let y = startY;
-    let m = startM;
-    while (y < endY || (y === endY && m <= endM)) {
-      result.push(`${y}-${String(m).padStart(2, '0')}`);
-      m += 1;
-      if (m > 12) {
-        m = 1;
-        y += 1;
-      }
-    }
-    return result;
-  }, [events]);
+      .filter(m => /^\d{4}-\d{2}$/.test(m));
+    return Array.from(new Set(validMonths)).sort();
+  }, [available, events]);
 
   /** 월 버튼을 클릭했을 때 URL 쿼리 파라미터를 갱신한다. */
-  const changeMonth = (value: string) => {
+  const changeMonth = useCallback((value: string) => {
     const params = new URLSearchParams(Array.from(searchParams.entries()));
     if (value) {
       params.set('month', value);
@@ -52,7 +35,13 @@ export default function MonthFilter({ events, available, basePath = '/' }: Props
     }
     const query = params.toString();
     router.push(`${basePath}${query ? `?${query}` : ''}`);
-  };
+  }, [basePath, router, searchParams]);
+
+  useEffect(() => {
+    if (selected && !months.includes(selected)) {
+      changeMonth('');
+    }
+  }, [changeMonth, months, selected]);
 
   const formatMonth = (value: string) => {
     const [year, month] = value.split('-');
@@ -69,14 +58,12 @@ export default function MonthFilter({ events, available, basePath = '/' }: Props
         전체
       </button>
       {months.map(m => {
-        const disabled = !available.some(e => e.date.startsWith(m));
         return (
           <button
             key={m}
             type="button"
             className={`month-option${selected === m ? ' active' : ''}`}
             onClick={() => changeMonth(m)}
-            disabled={disabled}
           >
             {formatMonth(m)}
           </button>
