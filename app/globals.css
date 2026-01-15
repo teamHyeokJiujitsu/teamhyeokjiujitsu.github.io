@@ -179,17 +179,32 @@ img { max-width: 100%; height: auto; display: block; }
   border-radius: 999px;
   color: var(--text);
 }
+.badge--tag {
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  border: 1px solid rgba(79, 70, 229, 0.25);
+  background: rgba(79, 70, 229, 0.08);
+  color: #4338ca;
+  letter-spacing: 0.3px;
+}
 .card-top {
   display: flex;
   justify-content: space-between;
-  gap: 12px;
+  gap: 16px;
   align-items: flex-start;
+}
+.card-main {
+  flex: 1;
+  min-width: 0;
 }
 .card-actions {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   gap: 6px;
+  flex: 0 0 auto;
+  min-width: 120px;
 }
 .event-quick {
   list-style: none;
@@ -288,12 +303,22 @@ img { max-width: 100%; height: auto; display: block; }
   color: #fff;
 }
 
-.card-title { margin: 0 0 12px; font-size: 20px; }
+.card-title {
+  margin: 0 0 10px;
+  font-size: 20px;
+  word-break: keep-all;
+}
 .card-meta { margin-top: 4px; display: flex; flex-wrap: wrap; gap: 8px; color: var(--muted); font-size: 14px; }
 .meta-item { display: inline-flex; align-items: center; gap: 4px; }
 .meta-item svg { width: 14px; height: 14px; stroke: currentColor; }
 .card-excerpt { margin-top: 8px; }
-.card-tags { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 4px; }
+.card-tags {
+  margin-top: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: flex-end;
+}
 .home-title { font-size: 28px; margin-bottom: 4px; }
 .home-intro { margin-bottom: 24px; color: var(--muted); }
 .mt-8 { margin-top: 8px; }
@@ -631,6 +656,11 @@ img { max-width: 100%; height: auto; display: block; }
   font-weight: 600;
   color: var(--text);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.btn-small {
+  padding: 8px 12px;
+  font-size: 14px;
+  white-space: nowrap;
 }
 .btn:hover {
   transform: translateY(-1px);
