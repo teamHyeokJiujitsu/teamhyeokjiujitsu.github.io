@@ -191,14 +191,20 @@ img { max-width: 100%; height: auto; display: block; }
 .card-top {
   display: flex;
   justify-content: space-between;
-  gap: 12px;
+  gap: 16px;
   align-items: flex-start;
+}
+.card-main {
+  flex: 1;
+  min-width: 0;
 }
 .card-actions {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   gap: 6px;
+  flex: 0 0 auto;
+  min-width: 120px;
 }
 .event-quick {
   list-style: none;
@@ -297,7 +303,11 @@ img { max-width: 100%; height: auto; display: block; }
   color: #fff;
 }
 
-.card-title { margin: 0 0 12px; font-size: 20px; }
+.card-title {
+  margin: 0 0 10px;
+  font-size: 20px;
+  word-break: keep-all;
+}
 .card-meta { margin-top: 4px; display: flex; flex-wrap: wrap; gap: 8px; color: var(--muted); font-size: 14px; }
 .meta-item { display: inline-flex; align-items: center; gap: 4px; }
 .meta-item svg { width: 14px; height: 14px; stroke: currentColor; }
@@ -646,6 +656,11 @@ img { max-width: 100%; height: auto; display: block; }
   font-weight: 600;
   color: var(--text);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.btn-small {
+  padding: 8px 12px;
+  font-size: 14px;
+  white-space: nowrap;
 }
 .btn:hover {
   transform: translateY(-1px);

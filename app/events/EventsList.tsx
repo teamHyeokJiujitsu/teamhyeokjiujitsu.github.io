@@ -369,7 +369,7 @@ export default function EventsList({
               style={{ animationDelay: `${idx * 0.1}s` }}
             >
               <header className="card-top">
-                <div>
+                <div className="card-main">
                   <h3 className="card-title" style={{ marginBottom: 6 }}>
                     <Link href={`/events/${e.slug}/`}>{e.title}</Link>
                   </h3>
