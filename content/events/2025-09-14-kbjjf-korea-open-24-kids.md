@@ -1,5 +1,5 @@
 ---
-title: "KBJJF KOREA OPEN No.24 성인 (고등,성인)"
+title: "KBJJF KOREA OPEN No.24 키즈 (초등,중등)"
 date: "2025-09-14"
 city: "서울 성북"
 venue: "성북구민체육관"
