@@ -1,15 +1,15 @@
 ---
-title: "제3회 퀸즈컴뱃 여성주짓수 대회 (with 흑장미클럽)"
+title: "제18회 부산오픈 주짓수 챔피언십"
 date: "2025-12-13"
-city: "서울 도봉"
-venue: "창동문화체육센터"
-organizer: "퀸즈컴뱃"
+city: "부산"
+venue: "부산과학기술대학교 실내체육관"
+organizer: "부산오픈"
 tags: ["gi","spotlite"]
 registrationUrl: "https://spotlite.co.kr/jiujitsu/?page=2"
 sourceUrl: "https://spotlite.co.kr/jiujitsu/?page=2"
 ---
 
-- 등록 마감: 2025-12-05
+- 등록 마감: 2025-11-21
 - 계체: 정보 없음
 
 공식 안내 페이지를 확인하세요.

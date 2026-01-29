@@ -1,12 +1,12 @@
 ---
 title: "제4회 양주시장배 주짓수대회"
 date: "2025-10-11"
-city: "경기 양주"
+city: "양주"
 venue: "옥정체육공원"
 organizer: "양주시 체육회"
 tags: ["gi","spotlite"]
-registrationUrl: "https://spotlite.co.kr/jiujitsu/298/"
-sourceUrl: "https://spotlite.co.kr/jiujitsu/298/"
+registrationUrl: "https://spotlite.co.kr/jiujitsu/?page=2"
+sourceUrl: "https://spotlite.co.kr/jiujitsu/?page=2"
 ---
 
 - 등록 마감: 2025-10-01
