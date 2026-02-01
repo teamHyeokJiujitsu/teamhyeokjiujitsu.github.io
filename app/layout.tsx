@@ -7,6 +7,7 @@ import FancyCursor from '@/components/FancyCursor';
 import CursorToggle from '@/components/CursorToggle';
 import ThemeToggle from '@/components/ThemeToggle';
 import AdBanner from '@/components/AdBanner';
+import AdSenseBanner from '@/components/AdSenseBanner';
 
 const notoSans = Noto_Sans_KR({
   subsets: ['latin'],
@@ -47,6 +48,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <div className="small">© {new Date().getFullYear()} BJJ 대회 정보</div>
           </div>
         </footer>
+        <AdSenseBanner />
         <Link href="/rules" className="rulebook-tab">
           룰 북 보러가기!
         </Link>

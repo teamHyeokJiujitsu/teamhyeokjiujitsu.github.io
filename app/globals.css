@@ -155,6 +155,22 @@ img { max-width: 100%; height: auto; display: block; }
   border: 1px solid rgba(37, 99, 235, 0.3);
 }
 
+.adsense-banner {
+  width: min(96vw, 860px);
+  margin: 24px auto 0;
+  padding: 12px;
+  border: 1px dashed var(--border);
+  border-radius: 12px;
+  text-align: center;
+  color: var(--muted);
+}
+.adsense-banner__loading {
+  display: block;
+  margin-top: 8px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
 .grid { display: grid; grid-template-columns: repeat(1, 1fr); gap: 16px; }
 @media (min-width: 720px) {
   .grid { grid-template-columns: repeat(2, 1fr); }
