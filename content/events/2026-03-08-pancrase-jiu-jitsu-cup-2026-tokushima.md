@@ -1,5 +1,5 @@
 ---
-title: "PANCRASE JIU-JITSU CUP 2026 TOKUSHIMA"
+title: "PANCRASE 주짓수컵 2026 도쿠시마"
 date: "2026-03-08"
 city: "鳴門市"
 venue: "ソイジョイ武道館"

@@ -1,5 +1,5 @@
 ---
-title: "PANCRASE JIU-JITSU CUP 2026 EAST"
+title: "PANCRASE 주짓수컵 2026 이스트"
 date: "2026-05-17"
 city: "墨田区"
 venue: "ひがしんアリーナ（墨田区総合体育館） 武道場"

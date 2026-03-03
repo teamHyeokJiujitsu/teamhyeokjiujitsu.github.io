@@ -1,5 +1,5 @@
 ---
-title: "PANCRASE JIU-JITSU CUP 2026 WEST"
+title: "PANCRASE 주짓수컵 2026 웨스트"
 date: "2026-09-26"
 city: ""
 venue: "だいしん大浜武道館"
