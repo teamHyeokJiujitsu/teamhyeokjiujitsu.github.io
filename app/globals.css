@@ -89,6 +89,9 @@ img { max-width: 100%; height: auto; display: block; }
   transform: translateX(-50%);
   width: min(96vw, 860px);
   z-index: 20;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 @media (min-width: 960px) {
   .ad-banner {
@@ -98,6 +101,31 @@ img { max-width: 100%; height: auto; display: block; }
 .ad-banner__frame {
   border-radius: 14px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16);
+}
+.ad-banner__disclosure {
+  margin: 0;
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: rgba(15, 23, 42, 0.66);
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 9px;
+  line-height: 1.35;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.ad-banner__disclosure p {
+  margin: 0;
+}
+
+.ad-banner__disclosure p + p {
+  margin-top: 3px;
+}
+
+.ad-banner__disclosure a {
+  margin-left: 2px;
+  color: #93c5fd;
+  text-decoration: underline;
+  text-underline-offset: 1px;
 }
 .ad-banner--warning {
   position: fixed;
