@@ -35,6 +35,27 @@ export default async function EventDetailPage({ params }: Props) {
 
   const rawHtml = await getEventHtmlBySlug(slug);
   const html = DOMPurify.sanitize(rawHtml);
+  const eventUrl = `https://jiujitsu.teamhyeok.com/events/${slug}/`;
+
+  const eventLocation =
+    meta.city || meta.venue
+      ? {
+          '@type': 'Place',
+          name: meta.venue || meta.city,
+          address: {
+            '@type': 'PostalAddress',
+            addressLocality: meta.city || undefined,
+            addressCountry: 'KR',
+          },
+        }
+      : {
+          '@type': 'Place',
+          name: '대한민국',
+          address: {
+            '@type': 'PostalAddress',
+            addressCountry: 'KR',
+          },
+        };
 
   const eventJsonLd = {
     '@context': 'https://schema.org',
@@ -43,22 +64,11 @@ export default async function EventDetailPage({ params }: Props) {
     startDate: isValidDate ? meta.date : undefined,
     description: meta.excerpt || undefined,
     image: meta.cover || undefined,
-    url: meta.registrationUrl || undefined,
+    url: eventUrl,
     organizer: meta.organizer
       ? { '@type': 'Organization', name: meta.organizer }
       : undefined,
-    location:
-      meta.city || meta.venue
-        ? {
-            '@type': 'Place',
-            name: meta.venue || meta.city,
-            address: {
-              '@type': 'PostalAddress',
-              addressLocality: meta.city || undefined,
-              addressCountry: 'KR',
-            },
-          }
-        : undefined,
+    location: eventLocation,
     eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
     eventStatus: 'https://schema.org/EventScheduled',
   };
