@@ -20,7 +20,12 @@ export default function Page() {
         <span className="hero-orb orb1" />
         <span className="hero-orb orb2" />
         <span className="hero-orb orb3" />
-        <h1 className="home-title hero-title">주짓수 대회 일정 (2026)</h1>
+        <div className="hero-title-row">
+          <h1 className="home-title hero-title">주짓수 대회 일정 (2026)</h1>
+          <p className="hero-economic-note">
+            <strong>경제적 이해 고지</strong> · 이 페이지에는 제휴 링크가 포함될 수 있으며, 이에 따른 수수료를 제공받을 수 있습니다.
+          </p>
+        </div>
         <p className="home-intro hero-intro">
           국내 주짓수 대회를 한 번에 확인하세요.
         </p>
