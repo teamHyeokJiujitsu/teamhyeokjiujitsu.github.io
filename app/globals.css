@@ -89,9 +89,6 @@ img { max-width: 100%; height: auto; display: block; }
   transform: translateX(-50%);
   width: min(96vw, 860px);
   z-index: 20;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
 }
 @media (min-width: 960px) {
   .ad-banner {
@@ -102,9 +99,17 @@ img { max-width: 100%; height: auto; display: block; }
   border-radius: 14px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16);
 }
+.ad-banner__header {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+
 .ad-banner__disclosure {
   margin: 0;
-  padding: 7px 10px;
+  padding: 6px 8px;
   border-radius: 10px;
   background: rgba(15, 23, 42, 0.62);
   color: rgba(255, 255, 255, 0.9);
@@ -114,6 +119,7 @@ img { max-width: 100%; height: auto; display: block; }
   display: flex;
   align-items: center;
   gap: 6px;
+  max-width: min(520px, 72%);
 }
 
 .ad-banner__disclosure-label {
@@ -158,11 +164,12 @@ img { max-width: 100%; height: auto; display: block; }
 
 .ad-banner__cta {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 12px;
+  gap: 10px;
   text-decoration: none;
-  padding: 14px 20px;
+  padding: 12px 20px 14px;
   min-height: 104px;
   border: 1px solid var(--border);
   background: linear-gradient(135deg, #fff7e6, #f6fbff);
@@ -825,5 +832,17 @@ img { max-width: 100%; height: auto; display: block; }
   .animated-card {
     opacity: 1;
     transform: none;
+  }
+}
+
+
+@media (max-width: 680px) {
+  .ad-banner__header {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .ad-banner__disclosure {
+    max-width: 100%;
   }
 }
