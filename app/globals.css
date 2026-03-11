@@ -401,6 +401,27 @@ img { max-width: 100%; height: auto; display: block; }
   line-height: 1.2;
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
+
+.hero-title-row {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.hero-economic-note {
+  margin: 8px 0 0;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: rgba(15, 23, 42, 0.28);
+}
 .hero-intro {
   position: relative;
   z-index: 1;
@@ -840,6 +861,11 @@ img { max-width: 100%; height: auto; display: block; }
   .ad-banner__header {
     flex-direction: column;
     align-items: center;
+  }
+
+  .hero-economic-note {
+    font-size: 11px;
+    max-width: 100%;
   }
 
   .ad-banner__disclosure {
