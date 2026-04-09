@@ -41,18 +41,6 @@ export default function Page() {
           </Link>
         </div>
 
-        <div className="card hero-business-card">
-          <h2>비즈니스 문의</h2>
-          <p>
-            대회 등록/제휴/광고 문의는 메일로 편하게 연락해 주세요.
-          </p>
-          <div className="hero-business-contact">
-            <span className="hero-business-label">문의 메일</span>
-            <a href="mailto:cksgurwkd12@naver.com" className="hero-business-mail">
-              cksgurwkd12@naver.com
-            </a>
-          </div>
-        </div>
         <div className="card" style={{ marginTop: 20 }}>
           <h2 style={{ marginBottom: 8 }}>8월 주요 대회 안내</h2>
           <p style={{ marginBottom: 10 }}>
@@ -63,6 +51,16 @@ export default function Page() {
             IBJJF 서울 오픈 바로가기
           </Link>
         </div>
+      </section>
+      <section className="business-compact" aria-label="비즈니스 문의">
+        <p className="business-compact-title">비즈니스 문의</p>
+        <p className="business-compact-copy">
+          대회 등록/제휴/광고 문의:
+          {' '}
+          <a href="mailto:cksgurwkd12@naver.com" className="business-compact-mail">
+            cksgurwkd12@naver.com
+          </a>
+        </p>
       </section>
       <section className="card" style={{ marginTop: 24 }}>
         <h2 style={{ marginBottom: 12 }}>주요 키워드로 빠르게 찾기</h2>

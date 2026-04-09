@@ -436,65 +436,33 @@ img { max-width: 100%; height: auto; display: block; }
   justify-content: center;
 }
 
-.hero-business-card {
-  margin-top: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  background: rgba(15, 23, 42, 0.88);
-  padding: 22px 22px 14px;
+.business-compact {
+  margin: -10px 0 26px;
+  text-align: center;
 }
 
-.hero-business-card h2 {
+.business-compact-title {
   margin: 0;
-  font-size: clamp(24px, 3vw, 36px);
-}
-
-.hero-business-card p {
-  margin: 10px 0 0;
-  color: rgba(255, 255, 255, 0.9);
-  font-size: clamp(15px, 1.8vw, 20px);
-}
-
-.hero-business-contact {
-  margin: 18px -22px -14px;
-  padding: 12px 18px;
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
-  background: linear-gradient(
-    90deg,
-    rgba(99, 102, 241, 0.22),
-    rgba(236, 72, 153, 0.28)
-  );
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.hero-business-label {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 700;
-  letter-spacing: 0.4px;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--text);
 }
 
-.hero-business-mail {
-  display: inline-flex;
-  align-items: center;
-  padding: 8px 12px;
-  border-radius: 10px;
-  font-weight: 700;
-  font-size: clamp(16px, 2vw, 30px);
-  color: #fff;
-  background: rgba(15, 23, 42, 0.45);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+.business-compact-copy {
+  margin: 4px 0 0;
+  font-size: 15px;
+  color: var(--muted);
 }
 
-.hero-business-mail:hover {
-  transform: translateY(-1px);
-  background: rgba(15, 23, 42, 0.62);
-  border-color: rgba(255, 255, 255, 0.48);
+.business-compact-mail {
+  color: var(--text);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.business-compact-mail:hover {
+  color: var(--primary);
 }
 
 .hero-orb {
@@ -929,19 +897,15 @@ img { max-width: 100%; height: auto; display: block; }
     max-width: 100%;
   }
 
-  .hero-business-card {
-    padding: 18px 16px 10px;
+  .business-compact {
+    margin-top: -4px;
+    margin-bottom: 20px;
   }
 
-  .hero-business-contact {
-    margin: 14px -16px -10px;
-    padding: 10px 14px;
-  }
-
-  .hero-business-mail {
-    width: 100%;
-    justify-content: center;
-    word-break: break-all;
+  .business-compact-copy {
+    font-size: 14px;
+    padding: 0 8px;
+    line-height: 1.5;
   }
 
   .ad-banner__disclosure {
