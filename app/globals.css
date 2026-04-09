@@ -436,6 +436,35 @@ img { max-width: 100%; height: auto; display: block; }
   justify-content: center;
 }
 
+.business-compact {
+  margin: -10px 0 26px;
+  text-align: center;
+}
+
+.business-compact-title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.business-compact-copy {
+  margin: 4px 0 0;
+  font-size: 15px;
+  color: var(--muted);
+}
+
+.business-compact-mail {
+  color: var(--text);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.business-compact-mail:hover {
+  color: var(--primary);
+}
+
 .hero-orb {
   position: absolute;
   border-radius: 50%;
@@ -866,6 +895,17 @@ img { max-width: 100%; height: auto; display: block; }
   .hero-economic-note {
     font-size: 11px;
     max-width: 100%;
+  }
+
+  .business-compact {
+    margin-top: -4px;
+    margin-bottom: 20px;
+  }
+
+  .business-compact-copy {
+    font-size: 14px;
+    padding: 0 8px;
+    line-height: 1.5;
   }
 
   .ad-banner__disclosure {
