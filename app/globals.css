@@ -12,6 +12,7 @@ html { scroll-behavior: smooth; }
   --hover: #e5e7eb;
   --header-bg: rgba(255, 255, 255, 0.8);
   --hero-gradient: radial-gradient(circle at 20% 0%, #334155 0%, #0f172a 42%, #020617 100%);
+  --page-backdrop: linear-gradient(180deg, #f8fafc 0%, #eef2f7 36%, #e2e8f0 100%);
 }
 [data-theme="dark"] {
   --bg: #0f172a;
@@ -23,10 +24,11 @@ html { scroll-behavior: smooth; }
   --hover: #334155;
   --header-bg: rgba(15, 23, 42, 0.8);
   --hero-gradient: radial-gradient(circle at 20% 0%, #334155 0%, #0f172a 42%, #020617 100%);
+  --page-backdrop: #0f172a;
 }
 body {
   color: var(--text);
-  background: var(--bg);
+  background: var(--page-backdrop);
   line-height: 1.6;
   padding-bottom: 80px;
 }
