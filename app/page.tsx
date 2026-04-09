@@ -1,5 +1,6 @@
 import { Suspense } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { getAllEventsMeta } from '@/lib/content';
 import EventsList from './events/EventsList';
 import EventsListSkeleton from './events/EventsListSkeleton';
@@ -41,26 +42,51 @@ export default function Page() {
           </Link>
         </div>
 
-
-        <div className="card" style={{ marginTop: 16, border: '1px solid rgba(255,255,255,0.25)' }}>
-          <h2 style={{ marginBottom: 8 }}>비즈니스 문의</h2>
-          <p style={{ marginBottom: 8 }}>
-            대회 등록/제휴/광고 문의는 아래 메일로 연락 주세요.
-          </p>
-          <a href="mailto:cksgurwkd12@naver.com" className="btn btn-urgent">
-            cksgurwkd12@naver.com
-          </a>
-        </div>
-        <div className="card" style={{ marginTop: 20 }}>
+        <div className="card august-highlight" style={{ marginTop: 20 }}>
           <h2 style={{ marginBottom: 8 }}>8월 주요 대회 안내</h2>
           <p style={{ marginBottom: 10 }}>
             <strong>IBJJF Seoul Open Gi & No-Gi 2026</strong>가 8월 15일(토)~16일(일) 서울
             서수원칠보체육관에서 열립니다.
           </p>
-          <Link href="/events/2026-08-15-ibjjf-seoul-open-gi-nogi" className="btn btn-primary">
-            IBJJF 서울 오픈 바로가기
-          </Link>
+          <div className="august-highlight-media" aria-label="8월 주요 안내 이미지">
+            <div className="august-highlight-image">
+              <Image
+                src="/advertise1.png"
+                alt="8월 주요 대회 광고 이미지 1"
+                width={960}
+                height={540}
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
+            </div>
+            <div className="august-highlight-image">
+              <Image
+                src="/advertise2.jpg"
+                alt="8월 주요 대회 광고 이미지 2"
+                width={960}
+                height={540}
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
+            </div>
+          </div>
+          <a
+            href="https://www.instagram.com/p/DW4zMEtDD0W/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-primary"
+          >
+            IBJJF 접수 인스타 바로가기
+          </a>
         </div>
+      </section>
+      <section className="business-compact" aria-label="비즈니스 문의">
+        <p className="business-compact-title">비즈니스 문의</p>
+        <p className="business-compact-copy">
+          대회 등록/제휴/광고 문의:
+          {' '}
+          <a href="mailto:cksgurwkd12@naver.com" className="business-compact-mail">
+            cksgurwkd12@naver.com
+          </a>
+        </p>
       </section>
       <section className="card" style={{ marginTop: 24 }}>
         <h2 style={{ marginBottom: 12 }}>주요 키워드로 빠르게 찾기</h2>
