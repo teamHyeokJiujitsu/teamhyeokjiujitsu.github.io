@@ -43,7 +43,7 @@ export default function Page() {
         </div>
 
         <div className="card august-highlight" style={{ marginTop: 20 }}>
-          <h2 style={{ marginBottom: 8 }}>8월 주요 대회 안내</h2>
+          <h2 style={{ marginBottom: 8 }}>주요 대회 안내</h2>
           <p style={{ marginBottom: 10 }}>
             <strong>IBJJF Seoul Open Gi & No-Gi 2026</strong>가 8월 15일(토)~16일(일) 서울
             서수원칠보체육관에서 열립니다.
