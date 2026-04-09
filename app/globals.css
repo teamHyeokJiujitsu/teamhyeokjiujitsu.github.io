@@ -550,14 +550,17 @@ img { max-width: 100%; height: auto; display: block; }
 
 .august-highlight .btn-primary {
   border-radius: 0;
-  border: 1px solid rgba(30, 64, 175, 0.38);
-  background: #1d4ed8;
+  border: 2px solid #0b1324;
+  background: linear-gradient(135deg, #1d4ed8 0%, #6d28d9 56%, #06b6d4 100%);
   color: #f8fafc;
-  box-shadow: none;
+  box-shadow: 6px 6px 0 #0b1324;
+  letter-spacing: 0.3px;
+  font-weight: 700;
 }
 
 .august-highlight .btn-primary:hover {
-  transform: translateY(-1px);
+  transform: translate(-2px, -2px);
+  box-shadow: 9px 9px 0 #0b1324;
 }
 
 [data-theme="dark"] .august-highlight {
