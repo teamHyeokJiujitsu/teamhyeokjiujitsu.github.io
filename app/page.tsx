@@ -41,15 +41,17 @@ export default function Page() {
           </Link>
         </div>
 
-
-        <div className="card" style={{ marginTop: 16, border: '1px solid rgba(255,255,255,0.25)' }}>
-          <h2 style={{ marginBottom: 8 }}>비즈니스 문의</h2>
-          <p style={{ marginBottom: 8 }}>
-            대회 등록/제휴/광고 문의는 아래 메일로 연락 주세요.
+        <div className="card hero-business-card">
+          <h2>비즈니스 문의</h2>
+          <p>
+            대회 등록/제휴/광고 문의는 메일로 편하게 연락해 주세요.
           </p>
-          <a href="mailto:cksgurwkd12@naver.com" className="btn btn-urgent">
-            cksgurwkd12@naver.com
-          </a>
+          <div className="hero-business-contact">
+            <span className="hero-business-label">문의 메일</span>
+            <a href="mailto:cksgurwkd12@naver.com" className="hero-business-mail">
+              cksgurwkd12@naver.com
+            </a>
+          </div>
         </div>
         <div className="card" style={{ marginTop: 20 }}>
           <h2 style={{ marginBottom: 8 }}>8월 주요 대회 안내</h2>

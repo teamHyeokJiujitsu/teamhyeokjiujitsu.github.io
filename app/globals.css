@@ -436,6 +436,67 @@ img { max-width: 100%; height: auto; display: block; }
   justify-content: center;
 }
 
+.hero-business-card {
+  margin-top: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(15, 23, 42, 0.88);
+  padding: 22px 22px 14px;
+}
+
+.hero-business-card h2 {
+  margin: 0;
+  font-size: clamp(24px, 3vw, 36px);
+}
+
+.hero-business-card p {
+  margin: 10px 0 0;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: clamp(15px, 1.8vw, 20px);
+}
+
+.hero-business-contact {
+  margin: 18px -22px -14px;
+  padding: 12px 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  background: linear-gradient(
+    90deg,
+    rgba(99, 102, 241, 0.22),
+    rgba(236, 72, 153, 0.28)
+  );
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.hero-business-label {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.hero-business-mail {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: clamp(16px, 2vw, 30px);
+  color: #fff;
+  background: rgba(15, 23, 42, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+
+.hero-business-mail:hover {
+  transform: translateY(-1px);
+  background: rgba(15, 23, 42, 0.62);
+  border-color: rgba(255, 255, 255, 0.48);
+}
+
 .hero-orb {
   position: absolute;
   border-radius: 50%;
@@ -866,6 +927,21 @@ img { max-width: 100%; height: auto; display: block; }
   .hero-economic-note {
     font-size: 11px;
     max-width: 100%;
+  }
+
+  .hero-business-card {
+    padding: 18px 16px 10px;
+  }
+
+  .hero-business-contact {
+    margin: 14px -16px -10px;
+    padding: 10px 14px;
+  }
+
+  .hero-business-mail {
+    width: 100%;
+    justify-content: center;
+    word-break: break-all;
   }
 
   .ad-banner__disclosure {
