@@ -468,39 +468,55 @@ img { max-width: 100%; height: auto; display: block; }
 }
 
 .august-highlight {
-  border: 1px solid rgba(148, 163, 184, 0.35);
-  background: linear-gradient(160deg, rgba(15, 23, 42, 0.9), rgba(30, 41, 59, 0.88));
-  color: #e2e8f0;
+  border: 2px solid #0f172a;
+  border-radius: 6px;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  color: #0f172a;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.18);
 }
 
 .august-highlight h2,
 .august-highlight strong {
-  color: #f8fafc;
+  color: #020617;
 }
 
 .august-highlight-media {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
-  margin: 14px 0 16px;
+  gap: 12px;
+  margin: 14px 0 18px;
 }
 
 .august-highlight-image {
   overflow: hidden;
-  border-radius: 12px;
-  border: 1px solid rgba(148, 163, 184, 0.3);
-  box-shadow: 0 10px 20px rgba(2, 6, 23, 0.28);
+  border-radius: 0;
+  border: 2px solid #0f172a;
+  background: #fff;
+  box-shadow: 6px 6px 0 #0f172a;
 }
 
 .august-highlight-image img {
   width: 100%;
-  height: 100%;
+  height: 260px;
   object-fit: cover;
-  transition: transform 0.25s ease;
+  transition: transform 0.2s ease;
 }
 
 .august-highlight-image:hover img {
-  transform: scale(1.02);
+  transform: scale(1.03);
+}
+
+.august-highlight .btn-primary {
+  border-radius: 0;
+  border: 2px solid #020617;
+  background: linear-gradient(135deg, #0f172a, #2563eb 55%, #22d3ee);
+  color: #f8fafc;
+  box-shadow: 6px 6px 0 rgba(2, 6, 23, 0.9);
+}
+
+.august-highlight .btn-primary:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 9px 9px 0 rgba(2, 6, 23, 0.9);
 }
 
 .hero-orb {
@@ -950,6 +966,10 @@ img { max-width: 100%; height: auto; display: block; }
     grid-template-columns: 1fr;
     gap: 8px;
     margin: 12px 0 14px;
+  }
+
+  .august-highlight-image img {
+    height: 220px;
   }
 
   .ad-banner__disclosure {
