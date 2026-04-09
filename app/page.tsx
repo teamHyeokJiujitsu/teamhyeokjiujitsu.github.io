@@ -68,9 +68,14 @@ export default function Page() {
               />
             </div>
           </div>
-          <Link href="/events/2026-08-15-ibjjf-seoul-open-gi-nogi" className="btn btn-primary">
-            IBJJF 서울 오픈 바로가기
-          </Link>
+          <a
+            href="https://www.instagram.com/p/DW4zMEtDD0W/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-primary"
+          >
+            IBJJF 접수 인스타 바로가기
+          </a>
         </div>
       </section>
       <section className="business-compact" aria-label="비즈니스 문의">
