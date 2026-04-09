@@ -30,7 +30,7 @@ export default function Page() {
           국내 주짓수 대회를 한 번에 확인하세요.
         </p>
         <p className="home-intro" style={{ marginTop: 8 }}>
-          <strong>최종 업데이트: 2026-01-15</strong>
+          <strong>최종 업데이트: 2026-04-09</strong>
         </p>
         <div className="actions">
           <Link href="#events" className="btn btn-primary">
@@ -38,6 +38,27 @@ export default function Page() {
           </Link>
           <Link href="/events/closing" className="btn btn-urgent">
             얼마 남지 않은 대회
+          </Link>
+        </div>
+
+
+        <div className="card" style={{ marginTop: 16, border: '1px solid rgba(255,255,255,0.25)' }}>
+          <h2 style={{ marginBottom: 8 }}>비즈니스 문의</h2>
+          <p style={{ marginBottom: 8 }}>
+            대회 등록/제휴/광고 문의는 아래 메일로 연락 주세요.
+          </p>
+          <a href="mailto:cksgurwkd12@naver.com" className="btn btn-urgent">
+            cksgurwkd12@naver.com
+          </a>
+        </div>
+        <div className="card" style={{ marginTop: 20 }}>
+          <h2 style={{ marginBottom: 8 }}>8월 주요 대회 안내</h2>
+          <p style={{ marginBottom: 10 }}>
+            <strong>IBJJF Seoul Open Gi & No-Gi 2026</strong>가 8월 15일(토)~16일(일) 서울
+            서수원칠보체육관에서 열립니다.
+          </p>
+          <Link href="/events/2026-08-15-ibjjf-seoul-open-gi-nogi" className="btn btn-primary">
+            IBJJF 서울 오픈 바로가기
           </Link>
         </div>
       </section>
