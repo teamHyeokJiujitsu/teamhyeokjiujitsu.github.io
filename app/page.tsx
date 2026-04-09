@@ -1,5 +1,6 @@
 import { Suspense } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { getAllEventsMeta } from '@/lib/content';
 import EventsList from './events/EventsList';
 import EventsListSkeleton from './events/EventsListSkeleton';
@@ -41,12 +42,32 @@ export default function Page() {
           </Link>
         </div>
 
-        <div className="card" style={{ marginTop: 20 }}>
+        <div className="card august-highlight" style={{ marginTop: 20 }}>
           <h2 style={{ marginBottom: 8 }}>8월 주요 대회 안내</h2>
           <p style={{ marginBottom: 10 }}>
             <strong>IBJJF Seoul Open Gi & No-Gi 2026</strong>가 8월 15일(토)~16일(일) 서울
             서수원칠보체육관에서 열립니다.
           </p>
+          <div className="august-highlight-media" aria-label="8월 주요 안내 이미지">
+            <div className="august-highlight-image">
+              <Image
+                src="/advertise1.png"
+                alt="8월 주요 대회 광고 이미지 1"
+                width={960}
+                height={540}
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
+            </div>
+            <div className="august-highlight-image">
+              <Image
+                src="/advertise2.jpg"
+                alt="8월 주요 대회 광고 이미지 2"
+                width={960}
+                height={540}
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
+            </div>
+          </div>
           <Link href="/events/2026-08-15-ibjjf-seoul-open-gi-nogi" className="btn btn-primary">
             IBJJF 서울 오픈 바로가기
           </Link>

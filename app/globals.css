@@ -11,7 +11,7 @@ html { scroll-behavior: smooth; }
   --surface: #fff;
   --hover: #e5e7eb;
   --header-bg: rgba(255, 255, 255, 0.8);
-  --hero-gradient: linear-gradient(-45deg, #6366f1, #ec4899, #f97316, #23d5ab);
+  --hero-gradient: radial-gradient(circle at 20% 0%, #334155 0%, #0f172a 42%, #020617 100%);
 }
 [data-theme="dark"] {
   --bg: #0f172a;
@@ -22,7 +22,7 @@ html { scroll-behavior: smooth; }
   --surface: #1e293b;
   --hover: #334155;
   --header-bg: rgba(15, 23, 42, 0.8);
-  --hero-gradient: linear-gradient(-45deg, #312e81, #4338ca, #4c1d95, #2563eb);
+  --hero-gradient: radial-gradient(circle at 20% 0%, #334155 0%, #0f172a 42%, #020617 100%);
 }
 body {
   color: var(--text);
@@ -389,9 +389,11 @@ img { max-width: 100%; height: auto; display: block; }
   padding: 80px 20px;
   text-align: center;
   background: var(--hero-gradient);
-  background-size: 400% 400%;
+  background-size: 140% 140%;
   color: #fff;
   margin-bottom: 40px;
+  border: 1px solid rgba(148, 163, 184, 0.28);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 18px 48px rgba(2, 6, 23, 0.45);
 }
 .hero-title {
   position: relative;
@@ -463,6 +465,42 @@ img { max-width: 100%; height: auto; display: block; }
 
 .business-compact-mail:hover {
   color: var(--primary);
+}
+
+.august-highlight {
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  background: linear-gradient(160deg, rgba(15, 23, 42, 0.9), rgba(30, 41, 59, 0.88));
+  color: #e2e8f0;
+}
+
+.august-highlight h2,
+.august-highlight strong {
+  color: #f8fafc;
+}
+
+.august-highlight-media {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin: 14px 0 16px;
+}
+
+.august-highlight-image {
+  overflow: hidden;
+  border-radius: 12px;
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  box-shadow: 0 10px 20px rgba(2, 6, 23, 0.28);
+}
+
+.august-highlight-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.25s ease;
+}
+
+.august-highlight-image:hover img {
+  transform: scale(1.02);
 }
 
 .hero-orb {
@@ -906,6 +944,12 @@ img { max-width: 100%; height: auto; display: block; }
     font-size: 14px;
     padding: 0 8px;
     line-height: 1.5;
+  }
+
+  .august-highlight-media {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    margin: 12px 0 14px;
   }
 
   .ad-banner__disclosure {
