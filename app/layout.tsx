@@ -49,9 +49,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </div>
         </footer>
         <AdSenseBanner />
-        <Link href="/rules" className="rulebook-tab">
-          룰 북 보러가기!
-        </Link>
         <AdBanner />
       </body>
     </html>
