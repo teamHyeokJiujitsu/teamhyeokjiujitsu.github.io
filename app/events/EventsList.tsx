@@ -43,6 +43,18 @@ export default function EventsList({
   const month = searchParams.get('month') || '';
   const showPast = searchParams.get('past') === '1';
   const [query, setQuery] = useState('');
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const media = window.matchMedia('(max-width: 680px)');
+    const apply = () => setIsMobile(media.matches);
+    apply();
+
+    media.addEventListener('change', apply);
+    return () => media.removeEventListener('change', apply);
+  }, []);
 
   /**
    * 탭(태그) 목록은 이벤트에 등장한 태그를 기반으로 생성한다.
@@ -77,10 +89,12 @@ export default function EventsList({
    * 3) 월 선택
    * 4) 검색어 (월/텍스트 모두 지원)
    */
+  const effectiveShowPast = isMobile ? false : showPast;
+
   const dateFiltered = useMemo(
     () =>
-      showPast ? events : events.filter(e => new Date(e.date) >= today),
-    [events, showPast, today],
+      effectiveShowPast ? events : events.filter(e => new Date(e.date) >= today),
+    [effectiveShowPast, events, today],
   );
 
   const regionFiltered = useMemo(
@@ -129,18 +143,20 @@ export default function EventsList({
   );
 
   const currentIndex = useMemo(
-    () => Math.max(0, tabsWithData.findIndex(t => t.key === tag)),
-    [tabsWithData, tag],
+    () => Math.max(0, tabsWithData.findIndex(t => t.key === (isMobile ? undefined : tag))),
+    [isMobile, tabsWithData, tag],
   );
 
   useEffect(() => {
+    if (isMobile) return;
+
     if (tag && !tabsWithData.some(t => t.key === tag)) {
       const params = new URLSearchParams(Array.from(searchParams.entries()));
       params.delete('tag');
       const queryString = params.toString();
       router.push(`${basePath}${queryString ? `?${queryString}` : ''}`);
     }
-  }, [basePath, router, searchParams, tag, tabsWithData]);
+  }, [basePath, isMobile, router, searchParams, tag, tabsWithData]);
 
   /** 기본으로 노출할 탭 수 (이후에는 더보기/접기 버튼으로 토글). */
   const SHOW_LIMIT = 6;
@@ -193,14 +209,16 @@ export default function EventsList({
   }, []);
 
   const items = useMemo(() => {
-    const pool = tag ? searchFiltered.filter(e => e.tags?.includes(tag)) : searchFiltered;
+    const pool = !isMobile && tag
+      ? searchFiltered.filter(e => e.tags?.includes(tag))
+      : searchFiltered;
     return [...pool].sort((a, b) => {
       if (!a.date && !b.date) return 0;
       if (!a.date) return 1;
       if (!b.date) return -1;
       return a.date.localeCompare(b.date);
     });
-  }, [searchFiltered, tag]);
+  }, [isMobile, searchFiltered, tag]);
 
   const updateSearchParam = useCallback(
     (key: string, value: string | undefined) => {
@@ -274,73 +292,77 @@ export default function EventsList({
           available={dateFiltered}
           basePath={basePath}
         />
-        <label className="past-toggle">
-          <input
-            type="checkbox"
-            checked={showPast}
-            onChange={e => togglePast(e.target.checked)}
-          />
-          <span className="switch" aria-hidden="true"></span>
-          <span>날짜 지난 시합 일정도 보기</span>
-        </label>
+        {!isMobile && (
+          <label className="past-toggle">
+            <input
+              type="checkbox"
+              checked={showPast}
+              onChange={e => togglePast(e.target.checked)}
+            />
+            <span className="switch" aria-hidden="true"></span>
+            <span>날짜 지난 시합 일정도 보기</span>
+          </label>
+        )}
       </div>
 
       {/* 태그 탭 목록 */}
-      <div className="tabs-wrapper">
-        <button
-          className="tab-scroll left"
-          onClick={() => scrollTabs(-1)}
-          disabled={!canScrollLeft}
-          aria-label="이전 탭"
-        >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M15 6l-6 6 6 6" />
-          </svg>
-        </button>
-        <div className="tabs" role="tablist" ref={tabsContainerRef}>
-          {visibleTabs.map(({ key, label, idx, count }) => (
-            key === '__more' || key === '__less' ? (
-              <button
-                key={key}
-                className="tab"
-                onClick={() => setShowAllTabs(key === '__more')}
-              >
-                {label}
-              </button>
-            ) : (
-              <button
-                key={key ?? 'all'}
-                ref={el => {
-                  if (idx >= 0) {
-                    tabRefs.current[idx] = el;
-                  }
-                }}
-                role="tab"
-                aria-selected={idx === currentIndex}
-                tabIndex={idx === currentIndex ? 0 : -1}
-                className={`tab${idx === currentIndex ? ' active' : ''}`}
-                onClick={() => selectTab(idx)}
-                onKeyDown={e => handleKeyDown(e, idx)}
-              >
-                {label}
-                {typeof count === 'number' && (
-                  <span className="tab-count">{count}</span>
-                )}
-              </button>
-            )
-          ))}
+      {!isMobile && (
+        <div className="tabs-wrapper">
+          <button
+            className="tab-scroll left"
+            onClick={() => scrollTabs(-1)}
+            disabled={!canScrollLeft}
+            aria-label="이전 탭"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M15 6l-6 6 6 6" />
+            </svg>
+          </button>
+          <div className="tabs" role="tablist" ref={tabsContainerRef}>
+            {visibleTabs.map(({ key, label, idx, count }) => (
+              key === '__more' || key === '__less' ? (
+                <button
+                  key={key}
+                  className="tab"
+                  onClick={() => setShowAllTabs(key === '__more')}
+                >
+                  {label}
+                </button>
+              ) : (
+                <button
+                  key={key ?? 'all'}
+                  ref={el => {
+                    if (idx >= 0) {
+                      tabRefs.current[idx] = el;
+                    }
+                  }}
+                  role="tab"
+                  aria-selected={idx === currentIndex}
+                  tabIndex={idx === currentIndex ? 0 : -1}
+                  className={`tab${idx === currentIndex ? ' active' : ''}`}
+                  onClick={() => selectTab(idx)}
+                  onKeyDown={e => handleKeyDown(e, idx)}
+                >
+                  {label}
+                  {typeof count === 'number' && (
+                    <span className="tab-count">{count}</span>
+                  )}
+                </button>
+              )
+            ))}
+          </div>
+          <button
+            className="tab-scroll right"
+            onClick={() => scrollTabs(1)}
+            disabled={!canScrollRight}
+            aria-label="다음 탭"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M9 18l6-6-6-6" />
+            </svg>
+          </button>
         </div>
-        <button
-          className="tab-scroll right"
-          onClick={() => scrollTabs(1)}
-          disabled={!canScrollRight}
-          aria-label="다음 탭"
-        >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M9 18l6-6-6-6" />
-          </svg>
-        </button>
-      </div>
+      )}
 
       {/* 대회 카드 목록 */}
       <div className="grid">

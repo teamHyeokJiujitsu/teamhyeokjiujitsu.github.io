@@ -1154,6 +1154,25 @@ img { max-width: 100%; height: auto; display: block; }
     justify-content: flex-start;
   }
 
+  .filters .month-filter {
+    width: 100%;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 4px;
+    gap: 6px;
+    scrollbar-width: none;
+  }
+
+  .filters .month-filter::-webkit-scrollbar {
+    display: none;
+  }
+
+  .filters .month-filter .month-option {
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+
   .august-highlight-media {
     grid-template-columns: 1fr;
     gap: 8px;
