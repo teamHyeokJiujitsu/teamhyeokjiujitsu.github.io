@@ -1020,6 +1020,10 @@ img { max-width: 100%; height: auto; display: block; }
 
 
 @media (max-width: 680px) {
+  body {
+    padding-bottom: 148px;
+  }
+
   .header {
     position: static;
     background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.88));
@@ -1029,7 +1033,7 @@ img { max-width: 100%; height: auto; display: block; }
   }
 
   .header .container {
-    padding: 10px 14px;
+    padding: max(10px, env(safe-area-inset-top)) 14px 10px;
   }
 
   .nav {
@@ -1040,16 +1044,21 @@ img { max-width: 100%; height: auto; display: block; }
   }
 
   .logo {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 700;
     letter-spacing: -0.4px;
     line-height: 1.2;
+    white-space: nowrap;
   }
 
   .theme-toggle {
     margin-left: 0;
     font-size: 12px;
     padding: 6px 12px;
+  }
+
+  .cursor-toggle {
+    display: none;
   }
 
   .ad-banner {
@@ -1081,6 +1090,37 @@ img { max-width: 100%; height: auto; display: block; }
   .hero-economic-note {
     font-size: 11px;
     max-width: 100%;
+  }
+
+  .hero {
+    padding: 52px 16px;
+    margin-bottom: 24px;
+    border-radius: 14px;
+  }
+
+  .hero-title {
+    font-size: clamp(28px, 8vw, 42px);
+    line-height: 1.25;
+  }
+
+  .hero-intro {
+    font-size: 15px;
+    line-height: 1.55;
+  }
+
+  .hero .actions {
+    width: 100%;
+    max-width: 460px;
+    margin: 18px auto 0;
+    gap: 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .hero .actions .btn {
+    width: 100%;
+    text-align: center;
+    padding: 10px 12px;
   }
 
   .business-compact {
