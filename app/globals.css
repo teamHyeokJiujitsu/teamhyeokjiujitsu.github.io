@@ -1023,6 +1023,34 @@ img { max-width: 100%; height: auto; display: block; }
 @media (max-width: 680px) {
   .header {
     position: static;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.88));
+    border-bottom: 1px solid rgba(148, 163, 184, 0.22);
+    box-shadow: 0 6px 16px rgba(15, 23, 42, 0.06);
+    backdrop-filter: blur(8px);
+  }
+
+  .header .container {
+    padding: 10px 14px;
+  }
+
+  .nav {
+    min-height: 56px;
+    padding: 0;
+    gap: 10px;
+    justify-content: space-between;
+  }
+
+  .logo {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.4px;
+    line-height: 1.2;
+  }
+
+  .theme-toggle {
+    margin-left: 0;
+    font-size: 12px;
+    padding: 6px 12px;
   }
 
   .ad-banner {
