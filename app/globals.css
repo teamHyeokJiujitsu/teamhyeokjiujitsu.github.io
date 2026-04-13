@@ -1021,9 +1021,34 @@ img { max-width: 100%; height: auto; display: block; }
 
 
 @media (max-width: 680px) {
+  .header {
+    position: static;
+  }
+
+  .ad-banner {
+    width: min(92vw, 860px);
+    bottom: 12px;
+  }
+
+  .ad-banner__cta {
+    flex-direction: row;
+    min-height: 72px;
+    gap: 12px;
+    padding: 10px 14px;
+  }
+
+  .ad-banner__brand {
+    font-size: 23px;
+    line-height: 1;
+  }
+
+  .ad-banner__text {
+    font-size: 14px;
+    padding: 6px 10px;
+  }
+
   .ad-banner__header {
-    flex-direction: column;
-    align-items: center;
+    width: auto;
   }
 
   .hero-economic-note {
