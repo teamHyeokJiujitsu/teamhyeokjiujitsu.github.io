@@ -29,6 +29,7 @@ export type EventMeta = BaseMeta & {
   registrationUrl?: string;
   organizer?: string;
   sourceUrl?: string;
+  regDeadline?: string;
 };
 
 function readDir(dir: string) {
@@ -80,6 +81,7 @@ export function getAllEventsMeta(): EventMeta[] {
       registrationUrl: String(data.registrationUrl || ''),
       organizer: String(data.organizer || ''),
       sourceUrl: String(data.sourceUrl || ''),
+      regDeadline: data.regDeadline ? String(data.regDeadline) : undefined,
     } as EventMeta;
   });
   return items.sort((a, b) => {

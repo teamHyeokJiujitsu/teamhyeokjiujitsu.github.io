@@ -373,6 +373,32 @@ export default function EventsList({
           const organizerLabel = e.organizer || '주최 정보 확인 중';
           const ruleLabel = tagSet.includes('adcc') ? 'ADCC 룰 (공식 확인 권장)' : '체급·룰 안내 확인 중';
 
+          // D-day 계산
+          let ddayLabel = '';
+          let ddayClass = '';
+          if (e.regDeadline) {
+            const deadline = new Date(e.regDeadline);
+            deadline.setHours(23, 59, 59);
+            const diffMs = deadline.getTime() - today.getTime();
+            const diffDays = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+            if (diffDays < 0) {
+              ddayLabel = '마감';
+              ddayClass = 'badge--dday-closed';
+            } else if (diffDays === 0) {
+              ddayLabel = '오늘 마감';
+              ddayClass = 'badge--dday-urgent';
+            } else if (diffDays <= 7) {
+              ddayLabel = `마감 D-${diffDays}`;
+              ddayClass = 'badge--dday-urgent';
+            } else if (diffDays <= 14) {
+              ddayLabel = `마감 D-${diffDays}`;
+              ddayClass = 'badge--dday-warn';
+            } else {
+              ddayLabel = `마감 D-${diffDays}`;
+              ddayClass = 'badge--dday-normal';
+            }
+          }
+
           return (
             <article
               key={e.slug}
@@ -383,6 +409,9 @@ export default function EventsList({
                 <div className="card-main">
                   <h3 className="card-title" style={{ marginBottom: 6 }}>
                     <Link href={`/events/${e.slug}/`}>{e.title}</Link>
+                    {ddayLabel && (
+                      <span className={`badge ${ddayClass}`}>{ddayLabel}</span>
+                    )}
                   </h3>
                   <div className="card-meta">
                     <span className="meta-item">

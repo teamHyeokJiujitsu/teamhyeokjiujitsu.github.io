@@ -185,6 +185,14 @@ img{max-width:100%;height:auto;display:block}
 .badge--warning{background:#fff3cd;color:#856404}
 [data-theme="dark"] .badge--warning{background:#332701;color:#ffc107}
 
+/* D-day badges */
+.badge--dday-urgent{background:#e03131;color:#fff;font-weight:700;animation:ddayPulse 2s ease-in-out infinite}
+.badge--dday-warn{background:#e8590c;color:#fff;font-weight:700}
+.badge--dday-normal{background:var(--tag-bg);color:var(--tag-color);font-weight:600}
+.badge--dday-closed{background:var(--tag-bg);color:var(--muted);font-weight:500;text-decoration:line-through;opacity:.6}
+.card-title .badge{margin-left:8px;vertical-align:middle;font-size:10px;padding:2px 8px;border-radius:3px;letter-spacing:0;text-transform:none}
+@keyframes ddayPulse{0%,100%{opacity:1}50%{opacity:.7}}
+
 /* ===== EVENT QUICK ===== */
 .event-quick{list-style:none;padding:10px 0 0;margin:10px 0 0;display:flex;flex-direction:column;gap:3px;color:var(--muted);font-size:12px;border-top:1px solid var(--border)}
 .event-quick a{color:var(--accent);text-decoration:underline;text-underline-offset:2px}
