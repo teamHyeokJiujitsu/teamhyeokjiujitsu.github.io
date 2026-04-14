@@ -292,17 +292,6 @@ export default function EventsList({
           available={dateFiltered}
           basePath={basePath}
         />
-        {!isMobile && (
-          <label className="past-toggle">
-            <input
-              type="checkbox"
-              checked={showPast}
-              onChange={e => togglePast(e.target.checked)}
-            />
-            <span className="switch" aria-hidden="true"></span>
-            <span>날짜 지난 시합 일정도 보기</span>
-          </label>
-        )}
       </div>
 
       {/* 태그 탭 목록 */}

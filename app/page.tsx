@@ -42,51 +42,36 @@ export default function Page() {
           </Link>
         </div>
 
-        <div className="card august-highlight" style={{ marginTop: 20 }}>
-          <h2 style={{ marginBottom: 8 }}>주요 대회 안내</h2>
-          <p style={{ marginBottom: 10 }}>
-            <strong>IBJJF Seoul Open Gi & No-Gi 2026</strong>가 8월 15일(토)~16일(일) 서울
-            서수원칠보체육관에서 열립니다.
-          </p>
-          <div className="august-highlight-media" aria-label="8월 주요 안내 이미지">
-            <div className="august-highlight-image">
-              <Image
-                src="/advertise1.png"
-                alt="8월 주요 대회 광고 이미지 1"
-                width={960}
-                height={540}
-                sizes="(max-width: 768px) 100vw, 50vw"
-              />
-            </div>
-            <div className="august-highlight-image">
-              <Image
-                src="/advertise2.jpg"
-                alt="8월 주요 대회 광고 이미지 2"
-                width={960}
-                height={540}
-                sizes="(max-width: 768px) 100vw, 50vw"
-              />
-            </div>
-          </div>
+      </section>
+      <section className="highlight-banner">
+        <div className="highlight-banner-bg">
+          <Image
+            src="/advertise2.jpg"
+            alt="8월 주요 대회 광고 이미지"
+            width={1920}
+            height={800}
+            sizes="100vw"
+            priority
+          />
+          <div className="highlight-banner-overlay" />
+        </div>
+        <div className="highlight-banner-content">
+          <p className="highlight-banner-label">주요 대회 안내</p>
+          <h2 className="highlight-banner-title">IBJJF Seoul Open<br />Gi &amp; No-Gi 2026</h2>
+          <p className="highlight-banner-detail">8월 15일(토)~16일(일) · 서울 서수원칠보체육관</p>
           <a
             href="https://www.instagram.com/p/DW4zMEtDD0W/"
             target="_blank"
             rel="noopener noreferrer"
-            className="btn btn-primary"
+            className="highlight-banner-cta"
           >
-            IBJJF 접수 인스타 바로가기
+            접수 바로가기
           </a>
+          <p className="highlight-banner-biz">
+            대회 등록/제휴/광고 문의{' '}
+            <a href="mailto:cksgurwkd12@naver.com">cksgurwkd12@naver.com</a>
+          </p>
         </div>
-      </section>
-      <section className="business-compact" aria-label="비즈니스 문의">
-        <p className="business-compact-title">비즈니스 문의</p>
-        <p className="business-compact-copy">
-          대회 등록/제휴/광고 문의:
-          {' '}
-          <a href="mailto:cksgurwkd12@naver.com" className="business-compact-mail">
-            cksgurwkd12@naver.com
-          </a>
-        </p>
       </section>
       <section className="card" style={{ marginTop: 24 }}>
         <h2 style={{ marginBottom: 12 }}>주요 키워드로 빠르게 찾기</h2>
