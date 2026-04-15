@@ -409,10 +409,12 @@ export default function EventsList({
                 <div className="card-main">
                   <h3 className="card-title" style={{ marginBottom: 6 }}>
                     <Link href={`/events/${e.slug}/`}>{e.title}</Link>
-                    {ddayLabel && (
-                      <span className={`badge ${ddayClass}`}>{ddayLabel}</span>
-                    )}
                   </h3>
+                  {ddayLabel && (
+                    <div className="card-dday">
+                      <span className={`badge ${ddayClass}`}>{ddayLabel}</span>
+                    </div>
+                  )}
                   <div className="card-meta">
                     <span className="meta-item">
                       <svg viewBox="0 0 24 24" fill="none" strokeWidth="2" aria-hidden="true">
