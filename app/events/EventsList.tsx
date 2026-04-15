@@ -443,17 +443,12 @@ export default function EventsList({
                     )}
                   </div>
                 </div>
-                <div className="card-actions">
-                  <Link href={`/events/${e.slug}/`} className="btn btn-small">
-                    자세히 보기
-                  </Link>
-                  <div className="card-tags">
-                    {e.tags?.map(t => (
-                      <span key={t} className="badge badge--tag">
-                        {formatTagLabel(t)}
-                      </span>
-                    ))}
-                  </div>
+                <div className="card-tags">
+                  {e.tags?.map(t => (
+                    <span key={t} className="badge badge--tag">
+                      {formatTagLabel(t)}
+                    </span>
+                  ))}
                 </div>
               </header>
 
