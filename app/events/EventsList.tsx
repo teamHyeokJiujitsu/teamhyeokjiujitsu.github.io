@@ -267,6 +267,27 @@ export default function EventsList({
     [selectTab, tabsWithData],
   );
 
+  // 모바일 스크롤 시 카드 부각 효과
+  const gridRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (!isMobile || typeof IntersectionObserver === 'undefined') return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('card--visible');
+          } else {
+            entry.target.classList.remove('card--visible');
+          }
+        });
+      },
+      { threshold: 0.3 },
+    );
+    const cards = gridRef.current?.querySelectorAll('.card');
+    cards?.forEach((card) => observer.observe(card));
+    return () => observer.disconnect();
+  }, [isMobile, items]);
+
   const formatTagLabel = useCallback((value: string) => {
     const normalized = value.toLowerCase();
     if (normalized === 'gi') return 'GI';
@@ -354,7 +375,7 @@ export default function EventsList({
       )}
 
       {/* 대회 카드 목록 */}
-      <div className="grid">
+      <div className="grid" ref={gridRef}>
         {items.map((e, idx) => {
           const parsed = e.date ? new Date(e.date) : null;
           const isValid = parsed && !Number.isNaN(parsed.getTime());
