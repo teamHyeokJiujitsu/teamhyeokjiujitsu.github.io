@@ -267,25 +267,30 @@ export default function EventsList({
     [selectTab, tabsWithData],
   );
 
-  // 모바일 스크롤 시 카드 부각 효과
+  // 모바일: 아이폰 피커 휠 스타일 — 화면 중앙 카드가 크고, 멀어질수록 작아짐
   const gridRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    if (!isMobile || typeof IntersectionObserver === 'undefined') return;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('card--visible');
-          } else {
-            entry.target.classList.remove('card--visible');
-          }
-        });
-      },
-      { threshold: 0.3 },
-    );
-    const cards = gridRef.current?.querySelectorAll('.card');
-    cards?.forEach((card) => observer.observe(card));
-    return () => observer.disconnect();
+    if (!isMobile) return;
+    const handleScroll = () => {
+      const cards = gridRef.current?.querySelectorAll('.card') as NodeListOf<HTMLElement> | undefined;
+      if (!cards) return;
+      const viewH = window.innerHeight;
+      const center = viewH * 0.45;
+      cards.forEach((card) => {
+        const rect = card.getBoundingClientRect();
+        const cardCenter = rect.top + rect.height / 2;
+        const dist = Math.abs(cardCenter - center);
+        const maxDist = viewH * 0.6;
+        const ratio = Math.max(0, 1 - dist / maxDist);
+        const s = 0.88 + ratio * 0.12;
+        const o = 0.4 + ratio * 0.6;
+        card.style.transform = `scale(${s})`;
+        card.style.opacity = String(o);
+      });
+    };
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
   }, [isMobile, items]);
 
   const formatTagLabel = useCallback((value: string) => {
