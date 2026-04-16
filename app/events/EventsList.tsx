@@ -267,30 +267,42 @@ export default function EventsList({
     [selectTab, tabsWithData],
   );
 
-  // 모바일: 아이폰 피커 휠 스타일 — 화면 중앙 카드가 크고, 멀어질수록 작아짐
+  // 모바일: 아이폰 피커 휠 — 화면 중앙 카드가 크게, 멀어질수록 급격히 작아짐
   const gridRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (!isMobile) return;
-    const handleScroll = () => {
+    let rafId: number | null = null;
+    const apply = () => {
+      rafId = null;
       const cards = gridRef.current?.querySelectorAll('.card') as NodeListOf<HTMLElement> | undefined;
       if (!cards) return;
       const viewH = window.innerHeight;
-      const center = viewH * 0.45;
+      const center = viewH * 0.5;
       cards.forEach((card) => {
         const rect = card.getBoundingClientRect();
         const cardCenter = rect.top + rect.height / 2;
         const dist = Math.abs(cardCenter - center);
-        const maxDist = viewH * 0.6;
-        const ratio = Math.max(0, 1 - dist / maxDist);
-        const s = 0.88 + ratio * 0.12;
-        const o = 0.4 + ratio * 0.6;
+        const maxDist = viewH * 0.45;
+        const ratio = Math.max(0, Math.min(1, 1 - dist / maxDist));
+        const eased = ratio * ratio * (3 - 2 * ratio); // smoothstep
+        const s = 0.78 + eased * 0.22;
+        const o = 0.25 + eased * 0.75;
         card.style.transform = `scale(${s})`;
         card.style.opacity = String(o);
+        card.style.zIndex = String(Math.round(ratio * 10));
       });
     };
-    handleScroll();
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    const onScroll = () => {
+      if (rafId === null) rafId = requestAnimationFrame(apply);
+    };
+    apply();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+      if (rafId !== null) cancelAnimationFrame(rafId);
+    };
   }, [isMobile, items]);
 
   const formatTagLabel = useCallback((value: string) => {
