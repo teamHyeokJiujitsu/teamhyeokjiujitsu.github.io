@@ -295,7 +295,7 @@ export default function EventsList({
         card.style.transform = `scale(${s})`;
         card.style.opacity = String(o);
         card.style.zIndex = String(Math.round(ratio * 10));
-        card.style.borderLeftColor = ratio > 0.85 ? 'var(--accent)' : 'transparent';
+        card.style.borderLeftColor = ratio > 0.7 ? 'var(--accent)' : 'transparent';
       });
     };
 
