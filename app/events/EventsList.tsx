@@ -272,8 +272,10 @@ export default function EventsList({
   useEffect(() => {
     if (!isMobile) return;
     let rafId: number | null = null;
+    let lastY = -1;
+    let idleFrames = 0;
+
     const apply = () => {
-      rafId = null;
       const cards = gridRef.current?.querySelectorAll('.card') as NodeListOf<HTMLElement> | undefined;
       if (!cards) return;
       const viewH = window.innerHeight;
@@ -284,7 +286,7 @@ export default function EventsList({
         const dist = Math.abs(cardCenter - center);
         const maxDist = viewH * 0.45;
         const ratio = Math.max(0, Math.min(1, 1 - dist / maxDist));
-        const eased = ratio * ratio * (3 - 2 * ratio); // smoothstep
+        const eased = ratio * ratio * (3 - 2 * ratio);
         const s = 0.78 + eased * 0.22;
         const o = 0.25 + eased * 0.75;
         card.style.transform = `scale(${s})`;
@@ -292,15 +294,42 @@ export default function EventsList({
         card.style.zIndex = String(Math.round(ratio * 10));
       });
     };
-    const onScroll = () => {
-      if (rafId === null) rafId = requestAnimationFrame(apply);
+
+    const loop = () => {
+      apply();
+      const y = window.scrollY;
+      if (Math.abs(y - lastY) < 0.5) {
+        idleFrames++;
+        if (idleFrames > 8) {
+          rafId = null;
+          return;
+        }
+      } else {
+        idleFrames = 0;
+      }
+      lastY = y;
+      rafId = requestAnimationFrame(loop);
     };
+
+    const kick = () => {
+      idleFrames = 0;
+      lastY = window.scrollY;
+      if (rafId === null) rafId = requestAnimationFrame(loop);
+    };
+
     apply();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll);
+    window.addEventListener('scroll', kick, { passive: true });
+    window.addEventListener('touchstart', kick, { passive: true });
+    window.addEventListener('touchmove', kick, { passive: true });
+    window.addEventListener('resize', kick);
+    document.addEventListener('scroll', kick, { passive: true, capture: true });
+
     return () => {
-      window.removeEventListener('scroll', onScroll);
-      window.removeEventListener('resize', onScroll);
+      window.removeEventListener('scroll', kick);
+      window.removeEventListener('touchstart', kick);
+      window.removeEventListener('touchmove', kick);
+      window.removeEventListener('resize', kick);
+      document.removeEventListener('scroll', kick, true);
       if (rafId !== null) cancelAnimationFrame(rafId);
     };
   }, [isMobile, items]);
