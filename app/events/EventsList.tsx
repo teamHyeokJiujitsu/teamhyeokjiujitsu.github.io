@@ -458,8 +458,17 @@ export default function EventsList({
           return (
             <article
               key={e.slug}
-              className="card animated-card"
-              style={{ animationDelay: `${idx * 0.1}s` }}
+              className="card animated-card card-link"
+              style={{ animationDelay: `${idx * 0.1}s`, cursor: 'pointer' }}
+              onClick={(ev) => {
+                if ((ev.target as HTMLElement).closest('a')) return;
+                router.push(`/events/${e.slug}/`);
+              }}
+              role="link"
+              tabIndex={0}
+              onKeyDown={(ev) => {
+                if (ev.key === 'Enter') router.push(`/events/${e.slug}/`);
+              }}
             >
               <header className="card-top">
                 <div className="card-main">
@@ -517,7 +526,7 @@ export default function EventsList({
                 <li>
                   <strong>참가 링크:</strong>{' '}
                   {e.registrationUrl ? (
-                    <a href={e.registrationUrl} target="_blank" rel="noopener noreferrer">
+                    <a href={e.registrationUrl} target="_blank" rel="noopener noreferrer" onClick={(ev) => ev.stopPropagation()}>
                       접수 페이지 바로가기
                     </a>
                   ) : (
@@ -533,7 +542,7 @@ export default function EventsList({
                 <li>
                   <strong>출처:</strong>{' '}
                   {e.sourceUrl ? (
-                    <a href={e.sourceUrl} target="_blank" rel="noopener noreferrer">
+                    <a href={e.sourceUrl} target="_blank" rel="noopener noreferrer" onClick={(ev) => ev.stopPropagation()}>
                       공식/주최 확인
                     </a>
                   ) : (

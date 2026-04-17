@@ -176,6 +176,8 @@ img{max-width:100%;height:auto;display:block}
   box-shadow:none;transition:all .2s ease;overflow:hidden;position:relative;
   border-left:2px solid transparent;
 }
+.card-link{display:block;color:inherit;text-decoration:none}
+.card-link:hover{color:inherit}
 .card::before{display:none}
 .card:hover{background:var(--hover);border-left-color:var(--accent)}
 
