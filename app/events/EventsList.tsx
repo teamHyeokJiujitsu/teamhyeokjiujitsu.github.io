@@ -270,69 +270,57 @@ export default function EventsList({
   // 모바일: 아이폰 피커 휠 — 화면 중앙 카드가 크게, 멀어질수록 급격히 작아짐
   const gridRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    if (!isMobile) return;
+    if (typeof window === 'undefined') return;
+    // CSS scroll-driven animation 지원 시 JS 생략
+    if (typeof CSS !== 'undefined' && CSS.supports?.('animation-timeline: view()')) return;
+    if (!window.matchMedia('(max-width: 680px)').matches) return;
+
     let rafId: number | null = null;
-    let lastY = -1;
-    let idleFrames = 0;
 
     const apply = () => {
-      const cards = gridRef.current?.querySelectorAll('.card') as NodeListOf<HTMLElement> | undefined;
-      if (!cards) return;
+      rafId = null;
+      const cards = document.querySelectorAll<HTMLElement>('.grid .card');
+      if (!cards.length) return;
       const viewH = window.innerHeight;
       const center = viewH * 0.5;
+      const maxDist = viewH * 0.45;
       cards.forEach((card) => {
         const rect = card.getBoundingClientRect();
         const cardCenter = rect.top + rect.height / 2;
         const dist = Math.abs(cardCenter - center);
-        const maxDist = viewH * 0.45;
         const ratio = Math.max(0, Math.min(1, 1 - dist / maxDist));
         const eased = ratio * ratio * (3 - 2 * ratio);
         const s = 0.78 + eased * 0.22;
-        const o = 0.25 + eased * 0.75;
+        const o = 0.3 + eased * 0.7;
         card.style.transform = `scale(${s})`;
         card.style.opacity = String(o);
         card.style.zIndex = String(Math.round(ratio * 10));
       });
     };
 
-    const loop = () => {
-      apply();
-      const y = window.scrollY;
-      if (Math.abs(y - lastY) < 0.5) {
-        idleFrames++;
-        if (idleFrames > 8) {
-          rafId = null;
-          return;
-        }
-      } else {
-        idleFrames = 0;
-      }
-      lastY = y;
-      rafId = requestAnimationFrame(loop);
+    const schedule = () => {
+      if (rafId === null) rafId = requestAnimationFrame(apply);
     };
 
-    const kick = () => {
-      idleFrames = 0;
-      lastY = window.scrollY;
-      if (rafId === null) rafId = requestAnimationFrame(loop);
-    };
+    // 여러 이벤트 소스에서 강제 업데이트
+    window.addEventListener('scroll', schedule, { passive: true });
+    window.addEventListener('touchmove', schedule, { passive: true });
+    window.addEventListener('resize', schedule);
+    document.addEventListener('scroll', schedule, { passive: true, capture: true });
 
-    apply();
-    window.addEventListener('scroll', kick, { passive: true });
-    window.addEventListener('touchstart', kick, { passive: true });
-    window.addEventListener('touchmove', kick, { passive: true });
-    window.addEventListener('resize', kick);
-    document.addEventListener('scroll', kick, { passive: true, capture: true });
+    // 초기 + 짧은 간격 반복 호출로 관성 스크롤 대응
+    schedule();
+    const interval = window.setInterval(schedule, 100);
 
     return () => {
-      window.removeEventListener('scroll', kick);
-      window.removeEventListener('touchstart', kick);
-      window.removeEventListener('touchmove', kick);
-      window.removeEventListener('resize', kick);
-      document.removeEventListener('scroll', kick, true);
+      window.removeEventListener('scroll', schedule);
+      window.removeEventListener('touchmove', schedule);
+      window.removeEventListener('resize', schedule);
+      document.removeEventListener('scroll', schedule, true);
+      window.clearInterval(interval);
       if (rafId !== null) cancelAnimationFrame(rafId);
     };
-  }, [isMobile, items]);
+  }, []);
 
   const formatTagLabel = useCallback((value: string) => {
     const normalized = value.toLowerCase();
