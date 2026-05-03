@@ -1,6 +1,8 @@
 name: Deploy to GitHub Pages
 on:
   push: { branches: [ main ] }
+  schedule:
+    - cron: '0 18 * * *'   # 매일 18:00 UTC = 한국 03:00 — 정적 sitemap·콘텐츠 fresh 유지
   workflow_dispatch:
 
 permissions:
