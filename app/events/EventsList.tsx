@@ -12,6 +12,8 @@ import {
 } from 'react';
 import RegionFilter from './RegionFilter';
 import MonthFilter from './MonthFilter';
+import FavoriteButton from '@/components/FavoriteButton';
+import { useFavorites } from '@/lib/useFavorites';
 import type { EventMeta } from '@/lib/content';
 
 interface Tab {
@@ -43,7 +45,16 @@ export default function EventsList({
   const month = searchParams.get('month') || '';
   const showPast = searchParams.get('past') === '1';
   const [query, setQuery] = useState('');
+  const [debouncedQuery, setDebouncedQuery] = useState('');
+  const [favoritesOnly, setFavoritesOnly] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const { has: isFavorite, toggle: toggleFavorite, count: favoriteCount, hydrated: favsHydrated } = useFavorites();
+
+  // 검색어 디바운스 (180ms)
+  useEffect(() => {
+    const t = setTimeout(() => setDebouncedQuery(query), 180);
+    return () => clearTimeout(t);
+  }, [query]);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -109,9 +120,9 @@ export default function EventsList({
   );
 
   const searchFiltered = useMemo(() => {
-    if (!query) return monthFiltered;
+    if (!debouncedQuery) return monthFiltered;
 
-    const trimmed = query.trim();
+    const trimmed = debouncedQuery.trim();
     const monthMatch = trimmed.match(/^(\d{1,2})월$/);
 
     if (monthMatch) {
@@ -120,8 +131,25 @@ export default function EventsList({
     }
 
     const lowered = trimmed.toLowerCase();
-    return monthFiltered.filter(e => e.title.toLowerCase().includes(lowered));
-  }, [monthFiltered, query]);
+    return monthFiltered.filter(e => {
+      const haystack = [
+        e.title,
+        e.city,
+        e.venue,
+        e.organizer,
+        ...(e.tags ?? []),
+      ]
+        .filter(Boolean)
+        .join(' ')
+        .toLowerCase();
+      return haystack.includes(lowered);
+    });
+  }, [monthFiltered, debouncedQuery]);
+
+  const favoritesFiltered = useMemo(
+    () => (favoritesOnly ? searchFiltered.filter(e => isFavorite(e.slug)) : searchFiltered),
+    [favoritesOnly, isFavorite, searchFiltered],
+  );
 
   /**
    * 각 탭별로 필터 후 남는 개수를 계산하고, 탭 배열에 결합한다.
@@ -129,10 +157,10 @@ export default function EventsList({
    */
   const tabsWithCounts: Tab[] = useMemo(() => {
     const counts = tabs.map(({ key }) =>
-      key ? searchFiltered.filter(e => e.tags?.includes(key)).length : searchFiltered.length,
+      key ? favoritesFiltered.filter(e => e.tags?.includes(key)).length : favoritesFiltered.length,
     );
     return tabs.map((t, idx) => ({ ...t, idx, count: counts[idx] }));
-  }, [searchFiltered, tabs]);
+  }, [favoritesFiltered, tabs]);
 
   const tabsWithData = useMemo(
     () =>
@@ -210,15 +238,15 @@ export default function EventsList({
 
   const items = useMemo(() => {
     const pool = !isMobile && tag
-      ? searchFiltered.filter(e => e.tags?.includes(tag))
-      : searchFiltered;
+      ? favoritesFiltered.filter(e => e.tags?.includes(tag))
+      : favoritesFiltered;
     return [...pool].sort((a, b) => {
       if (!a.date && !b.date) return 0;
       if (!a.date) return 1;
       if (!b.date) return -1;
       return a.date.localeCompare(b.date);
     });
-  }, [isMobile, searchFiltered, tag]);
+  }, [isMobile, favoritesFiltered, tag]);
 
   const updateSearchParam = useCallback(
     (key: string, value: string | undefined) => {
@@ -334,21 +362,71 @@ export default function EventsList({
     <>
       {/* 필터 컨트롤 모음 */}
       <div className="filters">
-        <input
-          type="text"
-          className="event-search"
-          value={query}
-          onChange={e => setQuery(e.target.value)}
-          placeholder="대회 검색..."
-          aria-label="대회 검색"
-        />
+        <div className="event-search-wrap">
+          <svg className="event-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+            <circle cx="11" cy="11" r="7" />
+            <path d="M21 21l-4.35-4.35" />
+          </svg>
+          <input
+            type="text"
+            className="event-search"
+            value={query}
+            onChange={e => setQuery(e.target.value)}
+            placeholder="대회·지역·주최·태그 검색"
+            aria-label="대회 검색"
+          />
+          {query && (
+            <button
+              type="button"
+              className="event-search-clear"
+              onClick={() => setQuery('')}
+              aria-label="검색어 지우기"
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" aria-hidden="true">
+                <path d="M6 6l12 12M18 6L6 18" />
+              </svg>
+            </button>
+          )}
+        </div>
         <RegionFilter events={dateFiltered} basePath={basePath} />
         <MonthFilter
           events={events}
           available={dateFiltered}
           basePath={basePath}
         />
+        {favsHydrated && (
+          <button
+            type="button"
+            className={`fav-toggle${favoritesOnly ? ' fav-toggle--on' : ''}`}
+            onClick={() => setFavoritesOnly(v => !v)}
+            aria-pressed={favoritesOnly}
+            disabled={!favoritesOnly && favoriteCount === 0}
+            title={favoriteCount === 0 ? '즐겨찾기한 대회가 없습니다' : undefined}
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill={favoritesOnly ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" aria-hidden="true">
+              <path d="M12 17.27l5.18 3.04-1.37-5.88L20.5 9.49l-6.04-.51L12 3.5l-2.46 5.48-6.04.51 4.69 4.94-1.37 5.88z" />
+            </svg>
+            <span>즐겨찾기{favoriteCount > 0 ? ` ${favoriteCount}` : ''}</span>
+          </button>
+        )}
       </div>
+
+      {(debouncedQuery || favoritesOnly) && (
+        <p className="filter-summary" role="status" aria-live="polite">
+          {favoritesOnly && '즐겨찾기 '}
+          {debouncedQuery && (
+            <>
+              <strong>&quot;{debouncedQuery}&quot;</strong> 검색{' '}
+            </>
+          )}
+          결과 <strong>{items.length}</strong>건
+          {items.length === 0 && (
+            <button type="button" className="filter-summary__reset" onClick={() => { setQuery(''); setFavoritesOnly(false); }}>
+              초기화
+            </button>
+          )}
+        </p>
+      )}
 
       {/* 태그 탭 목록 */}
       {!isMobile && (
@@ -474,6 +552,10 @@ export default function EventsList({
                 <div className="card-main">
                   <h3 className="card-title" style={{ marginBottom: 6 }}>
                     <Link href={`/events/${e.slug}/`}>{e.title}</Link>
+                    <FavoriteButton
+                      active={isFavorite(e.slug)}
+                      onToggle={() => toggleFavorite(e.slug)}
+                    />
                   </h3>
                   {ddayLabel && (
                     <div className="card-dday">
