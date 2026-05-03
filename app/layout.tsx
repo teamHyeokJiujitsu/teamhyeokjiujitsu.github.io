@@ -4,12 +4,14 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 import ThemeToggle from '@/components/ThemeToggle';
 import AdBanner from '@/components/AdBanner';
+import GoogleAnalytics from '@/components/GoogleAnalytics';
 
 const notoSans = Noto_Sans_KR({
   subsets: ['latin'],
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://teamhyeokjiujitsu.github.io'),
   title: 'BJJ 대회 일정',
   description: '주짓수 대회 일정을 한 곳에서!',
 };
@@ -17,7 +19,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ko">
-      <head />
+      <head>
+        <GoogleAnalytics />
+      </head>
       <body className={notoSans.className}>
         <a href="#main" className="skip-link">본문 바로가기</a>
         <header className="header">
