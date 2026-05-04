@@ -27,7 +27,10 @@ jobs:
           else
             npm install
           fi
-      - run: npm run build                 # out/가 생성되어야 함 (Next.js는 output:'export')
+      - name: Build
+        env:
+          NEXT_PUBLIC_GA_MEASUREMENT_ID: G-J7GYLYSMN6
+        run: npm run build                   # out/가 생성되어야 함 (Next.js는 output:'export')
       - run: |
           ls -la out
           test -f out/index.html
