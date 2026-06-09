@@ -48,7 +48,7 @@ async function checkOne(url) {
       method: 'HEAD',
       signal: controller.signal,
       redirect: 'follow',
-      headers: { 'User-Agent': 'Mozilla/5.0 (LinkChecker; +https://teamhyeokjiujitsu.github.io)' },
+      headers: { 'User-Agent': 'Mozilla/5.0 (LinkChecker; +https://jiujitsu.teamhyeok.com)' },
     }).catch(() => null);
     // HEAD 거부하는 서버 대비 GET 재시도
     if (!res || res.status === 405 || res.status === 403) {
@@ -56,7 +56,7 @@ async function checkOne(url) {
         method: 'GET',
         signal: controller.signal,
         redirect: 'follow',
-        headers: { 'User-Agent': 'Mozilla/5.0 (LinkChecker; +https://teamhyeokjiujitsu.github.io)' },
+        headers: { 'User-Agent': 'Mozilla/5.0 (LinkChecker; +https://jiujitsu.teamhyeok.com)' },
       });
     }
     return { ok: res.status >= 200 && res.status < 400, status: res.status };

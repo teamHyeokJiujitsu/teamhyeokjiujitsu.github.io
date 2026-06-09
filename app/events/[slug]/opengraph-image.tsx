@@ -101,7 +101,7 @@ export default async function Image({ params }: Props) {
             ))}
           </div>
           <div style={{ fontSize: 20, color: '#94a3b8', fontWeight: 500 }}>
-            teamhyeokjiujitsu.github.io
+            jiujitsu.teamhyeok.com
           </div>
         </div>
       </div>

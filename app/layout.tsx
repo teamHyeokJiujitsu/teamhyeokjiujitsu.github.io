@@ -11,7 +11,7 @@ const notoSans = Noto_Sans_KR({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://teamhyeokjiujitsu.github.io'),
+  metadataBase: new URL('https://jiujitsu.teamhyeok.com'),
   title: 'BJJ 대회 일정',
   description: '주짓수 대회 일정을 한 곳에서!',
 };

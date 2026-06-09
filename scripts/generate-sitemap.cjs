@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const matter = require('gray-matter');
 
-const baseUrl = 'https://teamhyeokjiujitsu.github.io';
+const baseUrl = 'https://jiujitsu.teamhyeok.com';
 const today = new Date().toISOString().split('T')[0];
 
 function escapeXml(value) {
