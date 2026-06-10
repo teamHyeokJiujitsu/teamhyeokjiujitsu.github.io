@@ -22,6 +22,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: meta.title,
     description: meta.excerpt || `${meta.title} 대회 정보`,
     keywords: meta.tags || [],
+    // 날짜 미정(주최사 안내성 thin page)은 색인에서 제외하되 링크는 따라가도록
+    ...(meta.date ? {} : { robots: { index: false, follow: true } }),
   };
 }
 

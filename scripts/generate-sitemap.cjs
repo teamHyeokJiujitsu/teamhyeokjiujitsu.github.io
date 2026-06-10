@@ -69,12 +69,15 @@ function collectMarkdownEntries(section, basePath) {
       const raw = fs.readFileSync(filePath, 'utf8');
       const { data } = matter(raw);
       const frontMatterDate = normalizeDate(data.lastmod || data.date);
+      // 날짜 없는 항목(주최사 안내성 placeholder)은 사이트맵에서 제외
+      if (!normalizeDate(data.date)) return null;
       const fallbackDate = normalizeDate(fs.statSync(filePath).mtime);
       return {
         path: `${basePath}${slug}/`,
         lastmod: frontMatterDate || fallbackDate || today,
       };
-    });
+    })
+    .filter(Boolean);
 }
 
 const entriesMap = new Map();
