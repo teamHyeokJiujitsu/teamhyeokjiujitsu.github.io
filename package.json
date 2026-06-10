@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "sitemap": "node scripts/generate-sitemap.cjs",
-    "prebuild": "npm run sitemap",
+    "feed": "node scripts/generate-feed.cjs",
+    "prebuild": "npm run sitemap && npm run feed",
     "check:structured-data": "node scripts/validate-event-structured-data.cjs",
     "check:links": "node scripts/check-external-links.cjs"
   },
