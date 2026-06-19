@@ -1,9 +1,6 @@
-import { getAllEventsMeta, getEventHtmlBySlug } from '@/lib/content';
+import { getAllEventsMeta } from '@/lib/content';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
-import DOMPurify from 'isomorphic-dompurify';
-import AddToCalendar from '@/components/AddToCalendar';
-import { buildEventJsonLd } from '@/lib/eventJsonLd';
 
 export const dynamicParams = false;
 
@@ -11,7 +8,8 @@ export function generateStaticParams() {
   return getAllEventsMeta().map(e => ({ slug: e.slug }));
 }
 
-// ✅ Next 15: params는 Promise여서 await 필요
+const yusulgaUrl = (slug: string) => `https://yusulga.com/t/${slug}`;
+
 type Props = { params: Promise<{ slug: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -21,9 +19,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: meta.title,
     description: meta.excerpt || `${meta.title} 대회 정보`,
-    keywords: meta.tags || [],
-    // 날짜 미정(주최사 안내성 thin page)은 색인에서 제외하되 링크는 따라가도록
-    ...(meta.date ? {} : { robots: { index: false, follow: true } }),
+    alternates: { canonical: yusulgaUrl(slug) },
+    robots: { index: false, follow: true },
   };
 }
 
@@ -32,57 +29,21 @@ export default async function EventDetailPage({ params }: Props) {
   const meta = getAllEventsMeta().find(e => e.slug === slug);
   if (!meta) notFound();
 
-  const parsedDate = meta.date ? new Date(meta.date) : null;
-  const isValidDate = parsedDate && !Number.isNaN(parsedDate.getTime());
-  const dateLabel = isValidDate ? parsedDate.toLocaleDateString('ko-KR') : '일정 미정';
-
-  const rawHtml = await getEventHtmlBySlug(slug);
-  const html = DOMPurify.sanitize(rawHtml);
-  const eventJsonLd = buildEventJsonLd(meta, slug);
+  const target = yusulgaUrl(slug);
 
   return (
     <>
+      {/* React 19가 <meta>를 자동으로 head로 hoist */}
+      <meta httpEquiv="refresh" content={`0; url=${target}`} />
       <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(eventJsonLd) }}
+        dangerouslySetInnerHTML={{
+          __html: `location.replace(${JSON.stringify(target)});`,
+        }}
       />
-      <article>
-        {meta.cover && (
-          <img
-            className="event-cover"
-            src={meta.cover}
-            alt={meta.title}
-            loading="lazy"
-          />
-        )}
-        <h1>{meta.title}</h1>
-        <div className="small">
-          {dateLabel}
-          {meta.city ? ` · ${meta.city}` : ''}{meta.venue ? ` · ${meta.venue}` : ''}
-        </div>
-        <div className="actions">
-          {meta.registrationUrl && (
-            <a
-              className="btn btn-primary"
-              href={meta.registrationUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              접수하기
-            </a>
-          )}
-          <AddToCalendar meta={meta} />
-          <a
-            className="btn btn-outline"
-            href={`https://www.google.com/search?q=${encodeURIComponent(meta.title + ' 대회 신청')}`}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            대회 신청 검색
-          </a>
-        </div>
-        <div className="mt-16" dangerouslySetInnerHTML={{ __html: html }} />
-      </article>
+      <p style={{ padding: '24px 0', textAlign: 'center' }}>
+        잠시 후 유술가들 상세 페이지로 이동합니다.{' '}
+        <a href={target}>이동하지 않으면 여기를 클릭</a>
+      </p>
     </>
   );
 }

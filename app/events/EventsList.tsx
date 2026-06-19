@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import {
   useRef,
@@ -539,19 +538,19 @@ export default function EventsList({
               className="card animated-card card-link"
               style={{ animationDelay: `${idx * 0.1}s`, cursor: 'pointer' }}
               onClick={(ev) => {
-                if ((ev.target as HTMLElement).closest('a')) return;
-                router.push(`/events/${e.slug}/`);
+                if ((ev.target as HTMLElement).closest('a,button')) return;
+                window.location.href = `https://yusulga.com/t/${e.slug}`;
               }}
               role="link"
               tabIndex={0}
               onKeyDown={(ev) => {
-                if (ev.key === 'Enter') router.push(`/events/${e.slug}/`);
+                if (ev.key === 'Enter') window.location.href = `https://yusulga.com/t/${e.slug}`;
               }}
             >
               <header className="card-top">
                 <div className="card-main">
                   <h3 className="card-title" style={{ marginBottom: 6 }}>
-                    <Link href={`/events/${e.slug}/`}>{e.title}</Link>
+                    <a href={`https://yusulga.com/t/${e.slug}`}>{e.title}</a>
                     <FavoriteButton
                       active={isFavorite(e.slug)}
                       onToggle={() => toggleFavorite(e.slug)}

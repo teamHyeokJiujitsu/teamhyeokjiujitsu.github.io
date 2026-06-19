@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import { getAllEventsMeta } from '@/lib/content';
 
 export const metadata = { title: '대회 목록' };
@@ -12,7 +11,7 @@ export default function EventsListPage() {
         {items.map(e => (
           <div key={e.slug} className="card">
             <h3 style={{ margin: '8px 0' }}>
-              <Link href={`/events/${e.slug}/`}>{e.title}</Link>
+              <a href={`https://yusulga.com/t/${e.slug}`}>{e.title}</a>
             </h3>
             <div className="small">
               {new Date(e.date).toLocaleDateString('ko-KR')} · {e.city} {e.venue ? `· ${e.venue}` : ''}

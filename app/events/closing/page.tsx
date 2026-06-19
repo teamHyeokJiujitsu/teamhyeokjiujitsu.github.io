@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import { getAllEventsMeta } from '@/lib/content';
 
 export const metadata = { title: '얼마 남지 않은 대회 일정' };
@@ -29,7 +28,7 @@ export default function ClosingEventsPage() {
           {closingEvents.map(event => (
             <div key={event.slug} className="card">
               <h3 style={{ margin: '8px 0' }}>
-                <Link href={`/events/${event.slug}/`}>{event.title}</Link>
+                <a href={`https://yusulga.com/t/${event.slug}`}>{event.title}</a>
               </h3>
               <div className="small">
                 {new Date(event.date).toLocaleDateString('ko-KR')}
