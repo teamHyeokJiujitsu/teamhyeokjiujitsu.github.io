@@ -86,9 +86,8 @@ const entriesMap = new Map();
   addEntry(entriesMap, page, today);
 });
 
-collectMarkdownEntries('events', '/events/').forEach(entry => {
-  addEntry(entriesMap, entry.path, entry.lastmod);
-});
+// /events/{slug}/ 는 yusulga로 redirect되는 noindex 페이지라 사이트맵에서 제외.
+// 메인/목록/마감임박 페이지만 색인 대상으로 노출한다.
 
 collectMarkdownEntries('news', '/news/').forEach(entry => {
   addEntry(entriesMap, entry.path, entry.lastmod);

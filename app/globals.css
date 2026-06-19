@@ -175,6 +175,7 @@ img{max-width:100%;height:auto;display:block}
   padding:24px;background:var(--card-bg);
   box-shadow:none;transition:all .2s ease;overflow:hidden;position:relative;
   border-left:2px solid transparent;
+  container-type:inline-size;
 }
 .card-link{display:block;color:inherit;text-decoration:none}
 .card-link:hover{color:inherit}
@@ -182,16 +183,22 @@ img{max-width:100%;height:auto;display:block}
 .card:hover{background:var(--hover);border-left-color:var(--accent)}
 
 .card-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
-.card-main{flex:1;min-width:0}
+.card-main{flex:1 1 auto;min-width:0}
 .card-actions{display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex:0 0 auto;min-width:80px}
-.card-title{margin:0 0 4px;font-size:14px;font-weight:700;word-break:keep-all;line-height:1.4;text-transform:uppercase;letter-spacing:.2px}
+.card-title{margin:0 0 4px;font-size:14px;font-weight:700;word-break:keep-all;overflow-wrap:anywhere;line-height:1.4;text-transform:uppercase;letter-spacing:.2px}
 .card-title a{transition:color .15s}
 .card-title a:hover{color:var(--accent)}
 .card-meta{margin-top:4px;display:flex;flex-wrap:wrap;gap:8px;color:var(--muted);font-size:11px}
-.meta-item{display:inline-flex;align-items:center;gap:3px}
-.meta-item svg{width:11px;height:11px;stroke:currentColor}
-.card-excerpt{margin-top:6px;font-size:12px;color:var(--muted);line-height:1.5}
-.card-tags{margin-top:8px;display:flex;flex-wrap:wrap;gap:4px}
+.meta-item{display:inline-flex;align-items:center;gap:3px;min-width:0;max-width:100%;word-break:keep-all;overflow-wrap:anywhere}
+.meta-item svg{width:11px;height:11px;stroke:currentColor;flex-shrink:0}
+.card-excerpt{margin-top:6px;font-size:12px;color:var(--muted);line-height:1.5;word-break:keep-all;overflow-wrap:anywhere}
+.card-tags{margin-top:8px;display:flex;flex-wrap:wrap;gap:4px;flex-shrink:1;min-width:0;max-width:45%;justify-content:flex-end}
+
+/* 카드 자체 폭이 좁아지면(3컬럼 그리드, 사이드바 등) 우측 태그를 다음 줄로 */
+@container (max-width: 420px){
+  .card-top{flex-direction:column;align-items:stretch}
+  .card-tags{max-width:100%;justify-content:flex-start;margin-top:8px}
+}
 
 /* ===== BADGES ===== */
 .badge{display:inline-block;padding:2px 6px;font-size:10px;font-weight:600;background:var(--tag-bg);border-radius:2px;color:var(--tag-color);text-transform:uppercase;letter-spacing:.3px}
