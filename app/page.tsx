@@ -103,7 +103,7 @@ export default function Page() {
   // 메인 상단 하이라이트 배너 — active 1개만 노출, 나머지는 백업으로 보존.
   // 다른 대회로 교체하려면 highlightBanner 값을 아래 백업 블록과 바꿔치기하면 됨.
   const highlightBanner = {
-    image: '/cos-nagai.png',           // 모바일용 원본(세로)
+    image: '/cos-nagai-graded.png',     // 모바일용 (시네마틱 보정 세로)
     imageWide: '/cos-nagai-banner.png', // 데스크탑용 와이드(우측 인물 + 좌측 페더 투명)
     imageAlt: 'COS × 사무엘 나가이 주짓수 대회',
     label: '주요 대회 안내',
