@@ -320,10 +320,33 @@ img{max-width:100%;height:auto;display:block}
 .fav-btn--active:hover{color:#d97706}
 
 /* filter result summary */
-.filter-summary{margin:-8px 0 16px;padding:8px 12px;font-size:12px;color:var(--muted);background:rgba(0,0,0,.03);border-radius:6px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.filter-summary strong{color:var(--text);font-weight:700}
-.filter-summary__reset{margin-left:auto;padding:4px 10px;border:1px solid var(--border);background:var(--surface);color:var(--text);font-size:11px;font-weight:600;border-radius:4px;cursor:pointer;transition:all .15s}
-.filter-summary__reset:hover{border-color:var(--text)}
+/* ===== ACTIVE FILTERS (A) — 선택 상태 + 결과 수 ===== */
+.active-filters{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:-6px 0 18px;padding:6px 2px}
+.active-filters__count{font-size:13px;color:var(--muted);font-weight:600;flex:0 0 auto}
+.active-filters__count strong{color:var(--text);font-weight:800;font-size:15px}
+.active-filters__chips{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.filter-chip{display:inline-flex;align-items:center;gap:4px;padding:5px 8px 5px 11px;border-radius:999px;background:var(--accent);color:#1a1a1a;border:none;cursor:pointer;font-size:12px;font-weight:700;line-height:1;transition:background .15s}
+.filter-chip:hover{background:var(--accent-hover)}
+.filter-chip__icon{font-size:11px}
+.filter-chip__x{font-size:15px;font-weight:700;opacity:.7;margin-left:1px}
+.filter-chip:hover .filter-chip__x{opacity:1}
+.active-filters__reset{padding:5px 11px;border-radius:999px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;font-size:12px;font-weight:600;transition:all .15s}
+.active-filters__reset:hover{border-color:var(--text);color:var(--text)}
+
+/* 빈 상태 */
+.events-empty{text-align:center;padding:48px 20px;color:var(--muted)}
+.events-empty__title{font-size:16px;font-weight:800;color:var(--text);margin:0 0 6px}
+.events-empty__desc{font-size:13px;margin:0 0 16px}
+.events-empty__reset{padding:9px 18px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text);font-weight:700;font-size:13px;cursor:pointer;transition:all .15s}
+.events-empty__reset:hover{border-color:var(--accent);color:var(--accent)}
+
+/* ===== CONTROL CONSISTENCY (B) — 높이·모서리 통일 ===== */
+.filters .event-search,
+.filters .region-button,
+.filters .month-filter .month-option,
+.filters .fav-toggle{border-radius:8px}
+.filters .month-filter .month-option{padding:7px 13px}
+.filters .fav-toggle{padding:7px 12px}
 
 /* region */
 .region-filter{position:relative;margin-bottom:16px}
@@ -521,6 +544,12 @@ img{max-width:100%;height:auto;display:block}
     top:calc(100% + 6px);max-height:56vh;
   }
   .region-options{grid-template-columns:repeat(auto-fill,minmax(80px,1fr))}
+  /* B: 모바일 탭 타깃 확대 */
+  .filters .month-filter .month-option{padding:9px 14px}
+  .region-option{min-height:42px}
+  .filter-chip{padding:7px 10px 7px 13px;font-size:13px}
+  /* C: 활성 필터 바를 헤더 아래에 고정(스크롤해도 현재 필터·결과 수 보이고 칩으로 즉시 해제) */
+  .active-filters{position:sticky;top:52px;z-index:18;background:var(--bg);margin:-6px -16px 14px;padding:10px 16px;border-bottom:1px solid var(--border)}
   .filters .month-filter{
     width:100%;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;
     padding-bottom:4px;gap:4px;scrollbar-width:none;

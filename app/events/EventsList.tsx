@@ -261,6 +261,21 @@ export default function EventsList({
     [basePath, router, searchParams],
   );
 
+  /** 모든 필터(URL 파라미터 + 검색어 + 즐겨찾기)를 한 번에 초기화한다. */
+  const clearAllFilters = useCallback(() => {
+    setQuery('');
+    setFavoritesOnly(false);
+    router.push(basePath);
+  }, [basePath, router]);
+
+  const monthChipLabel = (value: string) => {
+    const [, mm] = value.split('-');
+    return mm ? `${Number(mm)}월` : value;
+  };
+
+  const activeTag = !isMobile ? tag : undefined;
+  const hasAnyFilter = Boolean(region || month || activeTag || debouncedQuery || favoritesOnly);
+
   const togglePast = useCallback(
     (checked: boolean) => {
       updateSearchParam('past', checked ? '1' : undefined);
@@ -419,22 +434,45 @@ export default function EventsList({
         </div>
       </div>
 
-      {(debouncedQuery || favoritesOnly) && (
-        <p className="filter-summary" role="status" aria-live="polite">
-          {favoritesOnly && '즐겨찾기 '}
-          {debouncedQuery && (
-            <>
-              <strong>&quot;{debouncedQuery}&quot;</strong> 검색{' '}
-            </>
-          )}
-          결과 <strong>{items.length}</strong>건
-          {items.length === 0 && (
-            <button type="button" className="filter-summary__reset" onClick={() => { setQuery(''); setFavoritesOnly(false); }}>
-              초기화
-            </button>
-          )}
-        </p>
-      )}
+      {/* 활성 필터 + 결과 수 (스크롤 시 상단 고정) */}
+      <div className="active-filters" role="status" aria-live="polite">
+        <span className="active-filters__count"><strong>{items.length}</strong>개 대회</span>
+        {hasAnyFilter && (
+          <div className="active-filters__chips">
+            {region && (
+              <button type="button" className="filter-chip" aria-label={`${region} 지역 필터 제거`} onClick={() => updateSearchParam('region', undefined)}>
+                <span className="filter-chip__icon" aria-hidden="true">📍</span>{region}
+                <span className="filter-chip__x" aria-hidden="true">×</span>
+              </button>
+            )}
+            {month && (
+              <button type="button" className="filter-chip" aria-label={`${monthChipLabel(month)} 필터 제거`} onClick={() => updateSearchParam('month', undefined)}>
+                {monthChipLabel(month)}
+                <span className="filter-chip__x" aria-hidden="true">×</span>
+              </button>
+            )}
+            {activeTag && (
+              <button type="button" className="filter-chip" aria-label={`${formatTagLabel(activeTag)} 태그 필터 제거`} onClick={() => updateSearchParam('tag', undefined)}>
+                {formatTagLabel(activeTag)}
+                <span className="filter-chip__x" aria-hidden="true">×</span>
+              </button>
+            )}
+            {debouncedQuery && (
+              <button type="button" className="filter-chip" aria-label="검색어 지우기" onClick={() => setQuery('')}>
+                &quot;{debouncedQuery}&quot;
+                <span className="filter-chip__x" aria-hidden="true">×</span>
+              </button>
+            )}
+            {favoritesOnly && (
+              <button type="button" className="filter-chip" aria-label="즐겨찾기 필터 해제" onClick={() => setFavoritesOnly(false)}>
+                <span className="filter-chip__icon" aria-hidden="true">⭐</span>즐겨찾기
+                <span className="filter-chip__x" aria-hidden="true">×</span>
+              </button>
+            )}
+            <button type="button" className="active-filters__reset" onClick={clearAllFilters}>전체 해제</button>
+          </div>
+        )}
+      </div>
 
       {/* 태그 탭 목록 */}
       {!isMobile && (
@@ -496,6 +534,17 @@ export default function EventsList({
       )}
 
       {/* 대회 카드 목록 */}
+      {items.length === 0 && (
+        <div className="events-empty">
+          <p className="events-empty__title">조건에 맞는 대회가 없어요</p>
+          <p className="events-empty__desc">필터를 바꾸거나 초기화해 보세요.</p>
+          {hasAnyFilter && (
+            <button type="button" className="events-empty__reset" onClick={clearAllFilters}>
+              필터 전체 해제
+            </button>
+          )}
+        </div>
+      )}
       <div className="grid" ref={gridRef}>
         {items.map((e, idx) => {
           const parsed = e.date ? new Date(e.date) : null;
