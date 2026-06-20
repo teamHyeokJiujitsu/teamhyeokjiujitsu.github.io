@@ -5,7 +5,7 @@ html{scroll-behavior:smooth}
 /* ===== PALETTE ===== */
 :root{
   --bg:#fff;--bg2:#f5f5f5;--border:#e0e0e0;
-  --text:#111;--sub:#555;--muted:#999;
+  --text:#111;--sub:#555;--muted:#767676;
   --primary:#111;--accent:#d4a853;--accent-hover:#c49a48;--cta:#e63946;
   --surface:#fff;--hover:#f5f5f5;
   --header-bg:rgba(255,255,255,.9);
@@ -19,7 +19,7 @@ html{scroll-behavior:smooth}
 }
 [data-theme="dark"]{
   --bg:#0a0a0a;--bg2:#141414;--border:#222;
-  --text:#f0f0f0;--sub:#bbb;--muted:#666;
+  --text:#f0f0f0;--sub:#bbb;--muted:#8a8a8a;
   --primary:#f0f0f0;--accent:#d4a853;--accent-hover:#c49a48;--cta:#e63946;
   --surface:#151515;--hover:#1a1a1a;
   --header-bg:rgba(10,10,10,.9);
@@ -332,6 +332,13 @@ img{max-width:100%;height:auto;display:block}
 .filter-chip:hover .filter-chip__x{opacity:1}
 .active-filters__reset{padding:5px 11px;border-radius:999px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;font-size:12px;font-weight:600;transition:all .15s}
 .active-filters__reset:hover{border-color:var(--text);color:var(--text)}
+
+/* 404 / 에러 상태 페이지 */
+.status-page{max-width:520px;margin:0 auto;padding:80px 20px;text-align:center}
+.status-page__code{font-size:13px;font-weight:800;letter-spacing:3px;color:var(--accent);text-transform:uppercase;margin:0 0 12px}
+.status-page__title{font-size:26px;font-weight:900;letter-spacing:-.5px;margin:0 0 12px;color:var(--text)}
+.status-page__desc{font-size:14px;color:var(--muted);line-height:1.6;margin:0 0 28px}
+.status-page__actions{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
 
 /* 빈 상태 */
 .events-empty{text-align:center;padding:48px 20px;color:var(--muted)}

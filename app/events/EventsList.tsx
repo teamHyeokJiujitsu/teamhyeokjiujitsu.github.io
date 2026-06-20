@@ -276,12 +276,6 @@ export default function EventsList({
   const activeTag = !isMobile ? tag : undefined;
   const hasAnyFilter = Boolean(region || month || activeTag || debouncedQuery || favoritesOnly);
 
-  const togglePast = useCallback(
-    (checked: boolean) => {
-      updateSearchParam('past', checked ? '1' : undefined);
-    },
-    [updateSearchParam],
-  );
 
   const selectTab = useCallback(
     (idx: number) => {
