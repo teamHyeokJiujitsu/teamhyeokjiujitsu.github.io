@@ -105,18 +105,23 @@ img{max-width:100%;height:auto;display:block}
   background:#0a0a0a;
 }
 .highlight-banner-bg{position:absolute;inset:0;z-index:0}
-/* 저해상도 원본을 와이드로 늘릴 때 깨짐이 보이지 않도록 블러 앰비언트 배경으로 처리 */
+/* 어두운 앰비언트 배경 — 글자 뒤 배경으로 깔리고 저해상도 티가 안 남 */
 .highlight-banner-bg img{
   width:100%;height:100%;object-fit:cover;
-  filter:blur(24px) brightness(.4);transform:scale(1.15);
+  filter:blur(26px) brightness(.3) saturate(1.15);transform:scale(1.2);
 }
-/* 전경: 등판 전체가 잘리지 않고(contain) 원본 크기에 가깝게(선명하게) 보이는 사진 */
+/* 전경 인물: 우측 하단에서 크게 등장, 등판이 잘 보이도록 아래 기준 배치 */
 .highlight-banner-photo{
-  position:absolute;top:0;bottom:0;right:0;z-index:2;
-  height:100%;width:46%;max-width:480px;
-  object-fit:contain;object-position:bottom center;
+  position:absolute;right:0;bottom:0;z-index:2;
+  height:136%;width:auto;max-width:60%;
+  object-fit:contain;object-position:bottom right;
+  filter:drop-shadow(-24px 0 56px rgba(0,0,0,.6));
   pointer-events:none;
 }
+/* 텍스트는 좌측 영역에만 — 인물과 절대 겹치지 않도록 폭 제한 */
+.highlight-banner-label,
+.highlight-banner-title,
+.highlight-banner-detail{max-width:46%}
 .highlight-banner-overlay{
   position:absolute;inset:0;
   background:linear-gradient(90deg,rgba(0,0,0,.82) 0%,rgba(0,0,0,.5) 50%,rgba(0,0,0,.2) 100%);
@@ -477,6 +482,9 @@ img{max-width:100%;height:auto;display:block}
   /* 모바일은 세로 사진이 화면에 잘 맞으므로 선명한 cover 배경 그대로 사용, 전경 사진은 숨김 */
   .highlight-banner-bg img{filter:none;transform:none;object-position:center 30%}
   .highlight-banner-photo{display:none}
+  .highlight-banner-label,
+  .highlight-banner-title,
+  .highlight-banner-detail{max-width:none}
   .highlight-banner-overlay{background:linear-gradient(0deg,rgba(0,0,0,.85) 0%,rgba(0,0,0,.25) 50%,rgba(0,0,0,.15) 100%)}
   .highlight-banner-content{justify-content:center;padding:24px 20px}
   .highlight-banner-label{font-size:10px;margin-bottom:8px;letter-spacing:2px}
