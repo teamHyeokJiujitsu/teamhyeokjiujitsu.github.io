@@ -100,6 +100,30 @@ export default function Page() {
       },
     ],
   };
+  // 메인 상단 하이라이트 배너 — active 1개만 노출, 나머지는 백업으로 보존.
+  // 다른 대회로 교체하려면 highlightBanner 값을 아래 백업 블록과 바꿔치기하면 됨.
+  const highlightBanner = {
+    image: '/cos-nagai.png',
+    imageAlt: 'COS × 사무엘 나가이 주짓수 대회',
+    imagePosition: 'center 35%',
+    label: '주요 대회 안내',
+    titleLines: ['COS × 사무엘 나가이'],
+    detail: 'THE 4th COS BJJ KOREA CUP · 7월 18일(토) · 양주 경동대 메트로폴캠퍼스 · 사무엘 나가이 출전',
+    ctaHref: 'https://spotlite.co.kr/jiujitsu/433/participations/create/',
+    ctaLabel: '접수 바로가기',
+  };
+  // [백업] 이전 IBJJF Seoul Open 배너 — 되살리려면 위 highlightBanner를 이 값으로 교체
+  // const highlightBanner = {
+  //   image: '/advertise2.jpg',
+  //   imageAlt: '8월 주요 대회 광고 이미지',
+  //   imagePosition: 'center',
+  //   label: '주요 대회 안내',
+  //   titleLines: ['IBJJF Seoul Open', 'Gi & No-Gi 2026'],
+  //   detail: '8월 15일(토)~16일(일) · 서울 서수원칠보체육관',
+  //   ctaHref: 'https://www.instagram.com/p/DW4zMEtDD0W/',
+  //   ctaLabel: '접수 바로가기',
+  // };
+
   return (
     <div>
       <script
@@ -136,26 +160,34 @@ export default function Page() {
       <section className="highlight-banner">
         <div className="highlight-banner-bg">
           <Image
-            src="/advertise2.jpg"
-            alt="8월 주요 대회 광고 이미지"
+            src={highlightBanner.image}
+            alt={highlightBanner.imageAlt}
             width={1920}
             height={800}
             sizes="100vw"
             priority
+            style={{ objectPosition: highlightBanner.imagePosition }}
           />
           <div className="highlight-banner-overlay" />
         </div>
         <div className="highlight-banner-content">
-          <p className="highlight-banner-label">주요 대회 안내</p>
-          <h2 className="highlight-banner-title">IBJJF Seoul Open<br />Gi &amp; No-Gi 2026</h2>
-          <p className="highlight-banner-detail">8월 15일(토)~16일(일) · 서울 서수원칠보체육관</p>
+          <p className="highlight-banner-label">{highlightBanner.label}</p>
+          <h2 className="highlight-banner-title">
+            {highlightBanner.titleLines.map((line, i) => (
+              <span key={i}>
+                {i > 0 && <br />}
+                {line}
+              </span>
+            ))}
+          </h2>
+          <p className="highlight-banner-detail">{highlightBanner.detail}</p>
           <a
-            href="https://www.instagram.com/p/DW4zMEtDD0W/"
+            href={highlightBanner.ctaHref}
             target="_blank"
             rel="noopener noreferrer"
             className="highlight-banner-cta"
           >
-            접수 바로가기
+            {highlightBanner.ctaLabel}
           </a>
           <p className="highlight-banner-biz">
             대회 등록/제휴/광고 문의{' '}
