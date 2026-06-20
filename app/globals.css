@@ -102,15 +102,27 @@ img{max-width:100%;height:auto;display:block}
   width:100vw;margin-left:calc(-50vw + 50%);
   height:clamp(320px,40vw,480px);
   margin-top:36px;margin-bottom:48px;
+  background:#0a0a0a;
 }
-.highlight-banner-bg{position:absolute;inset:0}
-.highlight-banner-bg img{width:100%;height:100%;object-fit:cover}
+.highlight-banner-bg{position:absolute;inset:0;z-index:0}
+/* 저해상도 원본을 와이드로 늘릴 때 깨짐이 보이지 않도록 블러 앰비언트 배경으로 처리 */
+.highlight-banner-bg img{
+  width:100%;height:100%;object-fit:cover;
+  filter:blur(24px) brightness(.4);transform:scale(1.15);
+}
+/* 전경: 등판 전체가 잘리지 않고(contain) 원본 크기에 가깝게(선명하게) 보이는 사진 */
+.highlight-banner-photo{
+  position:absolute;top:0;bottom:0;right:0;z-index:2;
+  height:100%;width:46%;max-width:480px;
+  object-fit:contain;object-position:bottom center;
+  pointer-events:none;
+}
 .highlight-banner-overlay{
   position:absolute;inset:0;
   background:linear-gradient(90deg,rgba(0,0,0,.82) 0%,rgba(0,0,0,.5) 50%,rgba(0,0,0,.2) 100%);
 }
 .highlight-banner-content{
-  position:relative;z-index:2;height:100%;
+  position:relative;z-index:3;height:100%;
   display:flex;flex-direction:column;justify-content:flex-end;
   padding:clamp(32px,4vw,56px) clamp(24px,5vw,80px) clamp(28px,3vw,48px);
   max-width:1200px;margin:0 auto;
@@ -149,12 +161,12 @@ img{max-width:100%;height:auto;display:block}
 }
 .highlight-banner-biz a:hover{color:var(--accent)}
 
-/* darker fade at banner bottom for text legibility */
+/* 좌측 텍스트 영역만 어둡게, 우측 전경 사진은 밝게 유지 */
 .highlight-banner-overlay{
-  position:absolute;inset:0;
+  position:absolute;inset:0;z-index:1;
   background:
-    linear-gradient(90deg,rgba(0,0,0,.82) 0%,rgba(0,0,0,.5) 50%,rgba(0,0,0,.2) 100%),
-    linear-gradient(0deg,rgba(0,0,0,.5) 0%,transparent 30%);
+    linear-gradient(90deg,rgba(0,0,0,.92) 0%,rgba(0,0,0,.72) 35%,rgba(0,0,0,.25) 62%,transparent 82%),
+    linear-gradient(0deg,rgba(0,0,0,.55) 0%,transparent 35%);
 }
 
 /* ===== BUSINESS ===== */
@@ -462,6 +474,9 @@ img{max-width:100%;height:auto;display:block}
 
   /* — banner — */
   .highlight-banner{height:clamp(300px,70vw,380px);margin-top:20px;margin-bottom:28px}
+  /* 모바일은 세로 사진이 화면에 잘 맞으므로 선명한 cover 배경 그대로 사용, 전경 사진은 숨김 */
+  .highlight-banner-bg img{filter:none;transform:none;object-position:center 30%}
+  .highlight-banner-photo{display:none}
   .highlight-banner-overlay{background:linear-gradient(0deg,rgba(0,0,0,.85) 0%,rgba(0,0,0,.25) 50%,rgba(0,0,0,.15) 100%)}
   .highlight-banner-content{justify-content:center;padding:24px 20px}
   .highlight-banner-label{font-size:10px;margin-bottom:8px;letter-spacing:2px}

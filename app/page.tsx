@@ -161,15 +161,23 @@ export default function Page() {
         <div className="highlight-banner-bg">
           <Image
             src={highlightBanner.image}
-            alt={highlightBanner.imageAlt}
-            width={1920}
-            height={800}
+            alt=""
+            aria-hidden="true"
+            width={399}
+            height={501}
             sizes="100vw"
             priority
-            style={{ objectPosition: highlightBanner.imagePosition }}
           />
-          <div className="highlight-banner-overlay" />
         </div>
+        <Image
+          className="highlight-banner-photo"
+          src={highlightBanner.image}
+          alt={highlightBanner.imageAlt}
+          width={399}
+          height={501}
+          priority
+        />
+        <div className="highlight-banner-overlay" />
         <div className="highlight-banner-content">
           <p className="highlight-banner-label">{highlightBanner.label}</p>
           <h2 className="highlight-banner-title">
