@@ -360,7 +360,15 @@ export default function EventsList({
   return (
     <>
       {/* 필터 컨트롤 모음 */}
-      <div className="filters">
+      <div className="filters-panel">
+        <div className="filters-panel__head">
+          <svg className="filters-panel__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M3 5h18M6 12h12M10 19h4" />
+          </svg>
+          <span className="filters-panel__title">원하는 대회 찾기</span>
+          <span className="filters-panel__hint">지역 · 월 · 키워드로 골라보세요</span>
+        </div>
+        <div className="filters">
         <div className="event-search-wrap">
           <svg className="event-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
             <circle cx="11" cy="11" r="7" />
@@ -408,6 +416,7 @@ export default function EventsList({
             <span>즐겨찾기{favoriteCount > 0 ? ` ${favoriteCount}` : ''}</span>
           </button>
         )}
+        </div>
       </div>
 
       {(debouncedQuery || favoritesOnly) && (
