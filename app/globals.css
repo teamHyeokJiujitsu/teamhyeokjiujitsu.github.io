@@ -104,27 +104,25 @@ img{max-width:100%;height:auto;display:block}
   margin-top:36px;margin-bottom:48px;
   background:#0a0a0a;
 }
-.highlight-banner-bg{position:absolute;inset:0;z-index:0}
-/* 어두운 앰비언트 배경 — 글자 뒤 배경으로 깔리고 저해상도 티가 안 남 */
-.highlight-banner-bg img{
-  width:100%;height:100%;object-fit:cover;
-  filter:blur(26px) brightness(.3) saturate(1.15);transform:scale(1.2);
-}
-/* 전경 인물: 우측 하단에서 크게 등장, 등판이 잘 보이도록 아래 기준 배치 */
-.highlight-banner-photo{
-  position:absolute;right:0;bottom:0;z-index:2;
-  height:136%;width:auto;max-width:60%;
-  object-fit:contain;object-position:bottom right;
-  filter:drop-shadow(-24px 0 56px rgba(0,0,0,.6));
+/* 데스크탑: 와이드 이미지(우측 인물 + 좌측 페더 투명)를 그대로 cover */
+.highlight-banner-wide{
+  position:absolute;inset:0;z-index:0;
+  width:100%;height:100%;object-fit:cover;object-position:center;
   pointer-events:none;
 }
-/* 텍스트는 좌측 영역에만 — 인물과 절대 겹치지 않도록 폭 제한 */
+/* 모바일: 원본 세로 사진 cover (데스크탑에선 숨김) */
+.highlight-banner-photo{
+  position:absolute;inset:0;z-index:0;
+  width:100%;height:100%;object-fit:cover;object-position:center 30%;
+  pointer-events:none;display:none;
+}
+/* 텍스트는 좌측 영역에만 — 우측 인물과 겹치지 않도록 폭 제한 */
 .highlight-banner-label,
 .highlight-banner-title,
-.highlight-banner-detail{max-width:46%}
+.highlight-banner-detail{max-width:54%}
 .highlight-banner-overlay{
-  position:absolute;inset:0;
-  background:linear-gradient(90deg,rgba(0,0,0,.82) 0%,rgba(0,0,0,.5) 50%,rgba(0,0,0,.2) 100%);
+  position:absolute;inset:0;z-index:1;
+  background:linear-gradient(90deg,rgba(10,10,10,.9) 0%,rgba(10,10,10,.55) 42%,rgba(10,10,10,.1) 70%,transparent 88%);
 }
 .highlight-banner-content{
   position:relative;z-index:3;height:100%;
@@ -479,9 +477,9 @@ img{max-width:100%;height:auto;display:block}
 
   /* — banner — */
   .highlight-banner{height:clamp(300px,70vw,380px);margin-top:20px;margin-bottom:28px}
-  /* 모바일은 세로 사진이 화면에 잘 맞으므로 선명한 cover 배경 그대로 사용, 전경 사진은 숨김 */
-  .highlight-banner-bg img{filter:none;transform:none;object-position:center 30%}
-  .highlight-banner-photo{display:none}
+  /* 모바일: 와이드 이미지 숨기고 원본 세로 사진을 cover로 */
+  .highlight-banner-wide{display:none}
+  .highlight-banner-photo{display:block}
   .highlight-banner-label,
   .highlight-banner-title,
   .highlight-banner-detail{max-width:none}

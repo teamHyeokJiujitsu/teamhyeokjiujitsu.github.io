@@ -103,9 +103,9 @@ export default function Page() {
   // 메인 상단 하이라이트 배너 — active 1개만 노출, 나머지는 백업으로 보존.
   // 다른 대회로 교체하려면 highlightBanner 값을 아래 백업 블록과 바꿔치기하면 됨.
   const highlightBanner = {
-    image: '/cos-nagai.png',
+    image: '/cos-nagai.png',           // 모바일용 원본(세로)
+    imageWide: '/cos-nagai-banner.png', // 데스크탑용 와이드(우측 인물 + 좌측 페더 투명)
     imageAlt: 'COS × 사무엘 나가이 주짓수 대회',
-    imagePosition: 'center 35%',
     label: '주요 대회 안내',
     titleLines: ['COS × 사무엘 나가이'],
     detail: 'THE 4th COS BJJ KOREA CUP · 7월 18일(토) · 양주 경동대 메트로폴캠퍼스 · 사무엘 나가이 출전',
@@ -158,17 +158,17 @@ export default function Page() {
 
       </section>
       <section className="highlight-banner">
-        <div className="highlight-banner-bg">
-          <Image
-            src={highlightBanner.image}
-            alt=""
-            aria-hidden="true"
-            width={399}
-            height={501}
-            sizes="100vw"
-            priority
-          />
-        </div>
+        {/* 데스크탑: 와이드 이미지(우측 인물 + 좌측 페더 투명) */}
+        <Image
+          className="highlight-banner-wide"
+          src={highlightBanner.imageWide}
+          alt={highlightBanner.imageAlt}
+          width={1280}
+          height={480}
+          sizes="100vw"
+          priority
+        />
+        {/* 모바일: 원본 세로 사진을 cover로 */}
         <Image
           className="highlight-banner-photo"
           src={highlightBanner.image}
