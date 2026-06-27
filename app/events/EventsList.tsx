@@ -657,16 +657,6 @@ export default function EventsList({
                   <strong>주최:</strong> {organizerLabel}
                 </li>
                 <li>
-                  <strong>참가 링크:</strong>{' '}
-                  {e.registrationUrl ? (
-                    <a href={e.registrationUrl} target="_blank" rel="noopener noreferrer" onClick={(ev) => ev.stopPropagation()}>
-                      접수 페이지 바로가기
-                    </a>
-                  ) : (
-                    '확인 중'
-                  )}
-                </li>
-                <li>
                   <strong>종목(기/노기):</strong> {disciplineLabel}
                 </li>
                 <li>

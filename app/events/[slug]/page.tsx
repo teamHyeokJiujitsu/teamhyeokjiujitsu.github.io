@@ -1,6 +1,7 @@
 import { getAllEventsMeta } from '@/lib/content';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
+import RedirectToYusulga from './RedirectToYusulga';
 
 export const dynamicParams = false;
 
@@ -33,13 +34,10 @@ export default async function EventDetailPage({ params }: Props) {
 
   return (
     <>
-      {/* React 19가 <meta>를 자동으로 head로 hoist */}
+      {/* 전체 로드(직접 진입·구글 색인·외부 링크): React 19가 <meta>를 head로 hoist → JS 없이도 이동 */}
       <meta httpEquiv="refresh" content={`0; url=${target}`} />
-      <script
-        dangerouslySetInnerHTML={{
-          __html: `location.replace(${JSON.stringify(target)});`,
-        }}
-      />
+      {/* SPA 클라이언트 내비게이션(옛 캐시 진입 등): useEffect 로도 이동 보장 */}
+      <RedirectToYusulga target={target} />
       <p style={{ padding: '24px 0', textAlign: 'center' }}>
         잠시 후 유술가들 상세 페이지로 이동합니다.{' '}
         <a href={target}>이동하지 않으면 여기를 클릭</a>

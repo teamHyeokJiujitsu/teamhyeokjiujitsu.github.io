@@ -17,17 +17,6 @@ export default function EventsListPage() {
               {new Date(e.date).toLocaleDateString('ko-KR')} · {e.city} {e.venue ? `· ${e.venue}` : ''}
             </div>
             <div style={{ marginTop: 8 }}>{e.excerpt}</div>
-            {e.registrationUrl ? (
-              <div style={{ marginTop: 8 }}>
-                <a
-                  href={e.registrationUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  접수 링크 바로가기
-                </a>
-              </div>
-            ) : null}
           </div>
         ))}
       </div>

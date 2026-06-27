@@ -36,17 +36,6 @@ export default function ClosingEventsPage() {
                 {event.venue ? ` · ${event.venue}` : ''}
               </div>
               <div style={{ marginTop: 8 }}>{event.excerpt}</div>
-              {event.registrationUrl ? (
-                <div style={{ marginTop: 8 }}>
-                  <a
-                    href={event.registrationUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    접수 링크 바로가기
-                  </a>
-                </div>
-              ) : null}
             </div>
           ))}
         </div>
