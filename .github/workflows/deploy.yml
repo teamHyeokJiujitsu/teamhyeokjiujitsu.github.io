@@ -30,6 +30,10 @@ jobs:
       - name: Build
         env:
           NEXT_PUBLIC_GA_MEASUREMENT_ID: G-J7GYLYSMN6
+          # iOS 앱 다운로드 배너 — 저장소 변수 IOS_APP_STORE_URL 채우면 켜짐(비면 휴면, 배너 미렌더).
+          # 설정: Settings → Secrets and variables → Actions → Variables → New variable
+          #       이름 IOS_APP_STORE_URL / 값 예) https://apps.apple.com/app/id0000000000
+          NEXT_PUBLIC_IOS_APP_STORE_URL: ${{ vars.IOS_APP_STORE_URL }}
         run: npm run build                   # out/가 생성되어야 함 (Next.js는 output:'export')
       - run: |
           ls -la out
