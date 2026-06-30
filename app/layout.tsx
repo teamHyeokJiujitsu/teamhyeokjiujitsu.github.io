@@ -4,6 +4,7 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 import ThemeToggle from '@/components/ThemeToggle';
 import AdBanner from '@/components/AdBanner';
+import AppDownloadBanner from '@/components/AppDownloadBanner';
 import GoogleAnalytics from '@/components/GoogleAnalytics';
 
 const notoSans = Noto_Sans_KR({
@@ -41,6 +42,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </div>
         </footer>
         <AdBanner />
+        <AppDownloadBanner />
       </body>
     </html>
   );

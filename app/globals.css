@@ -619,3 +619,23 @@ img{max-width:100%;height:auto;display:block}
   /* — footer — */
   .footer{padding:24px 0;margin-top:32px;font-size:11px}
 }
+
+/* ===== iOS 웹 방문자용 '유술가들 앱' 다운로드 배너 (AppDownloadBanner.tsx) ===== */
+.ya-appbanner{position:fixed;left:0;right:0;bottom:calc(12px + env(safe-area-inset-bottom));
+  z-index:60;padding:0 10px;}
+@media (min-width:768px){.ya-appbanner{display:none}}      /* iOS 모바일 전용 */
+.ya-appbanner__in{max-width:28rem;margin:0 auto;display:flex;align-items:center;gap:10px;
+  background:#111;color:#fff;border-radius:14px;padding:9px 9px 9px 13px;
+  box-shadow:0 12px 32px -10px rgba(8,10,20,.55);}
+[data-theme="dark"] .ya-appbanner__in{background:#1c1d22;border:1px solid #2a2c31}
+.ya-appbanner__icon{font-size:22px;line-height:1;flex-shrink:0}
+.ya-appbanner__txt{display:flex;flex-direction:column;line-height:1.25;flex:1 1 auto;min-width:0}
+.ya-appbanner__txt strong{font-size:13px;font-weight:800;letter-spacing:-.01em}
+.ya-appbanner__txt span{font-size:11.5px;color:#c9cbd1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ya-appbanner__cta{flex-shrink:0;background:#dc2626;color:#fff;font-weight:800;font-size:13px;
+  padding:8px 16px;border-radius:10px;text-decoration:none;-webkit-tap-highlight-color:transparent}
+.ya-appbanner__cta:active{opacity:.85}
+.ya-appbanner__x{flex-shrink:0;background:transparent;border:0;color:#9aa0a6;font-size:14px;
+  width:26px;height:26px;cursor:pointer;padding:0;line-height:1;-webkit-tap-highlight-color:transparent}
+/* 배너 노출 중엔 쿠팡 광고 카드를 위로 밀어 겹침 방지 */
+body.has-app-banner .coupang-card{bottom:calc(84px + env(safe-area-inset-bottom))}
