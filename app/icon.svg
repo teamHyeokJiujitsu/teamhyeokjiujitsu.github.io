@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  BJJ 대회 캘린더 파비콘 — 유술가들 시그니처 재사용(게이트웨이 브랜드 일관성).
+  · 32x32 viewBox, 16px 까지 인식 · 검정 띠 + 빨간 두 줄(블랙벨트 위 빨간 단, #DC2626)
+  · 투명 배경 → 라이트/다크 탭 자동 어울림
+  Next.js App Router 가 이 파일을 자동으로 <link rel="icon" type="image/svg+xml"> 로 링크.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+  <rect x="0" y="10" width="32" height="12" fill="#000000"/>
+  <rect x="20" y="10" width="3" height="12" fill="#DC2626"/>
+  <rect x="25" y="10" width="3" height="12" fill="#DC2626"/>
+</svg>
