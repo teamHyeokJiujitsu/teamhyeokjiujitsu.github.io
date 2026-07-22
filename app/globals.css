@@ -116,6 +116,17 @@ img{max-width:100%;height:auto;display:block}
   width:100%;height:100%;object-fit:cover;object-position:center 30%;
   pointer-events:none;display:none;
 }
+/* 전용 포스터 자산이 없는 대회용 — 사진 없이 브랜드 그라데이션으로 렌더.
+   (다른 대회 사진을 돌려쓰면 잘못된 정보가 되므로, 이미지가 없으면 이 변형을 쓴다) */
+.highlight-banner--noimg{
+  background:
+    radial-gradient(120% 140% at 14% 18%, rgba(220,38,38,.38) 0%, transparent 62%),
+    linear-gradient(120deg,#17171a 0%,#0a0a0a 62%);
+}
+/* 사진이 없으니 텍스트 폭 제한도 해제 */
+.highlight-banner--noimg .highlight-banner-label,
+.highlight-banner--noimg .highlight-banner-title,
+.highlight-banner--noimg .highlight-banner-detail{max-width:none}
 /* 텍스트는 좌측 영역에만 — 우측 인물과 겹치지 않도록 폭 제한 */
 .highlight-banner-label,
 .highlight-banner-title,

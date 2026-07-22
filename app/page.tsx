@@ -103,33 +103,40 @@ export default function Page() {
   // 메인 상단 하이라이트 배너 — active 1개만 노출, 나머지는 백업으로 보존.
   // 다른 대회로 교체하려면 highlightBanner 값을 아래 백업 블록과 바꿔치기하면 됨.
   const highlightBanner = {
-    image: '/advertise2.jpg',      // 686x386 — 모바일/데스크탑 공용(CSS object-fit:cover 로 채움)
-    imageWide: '/advertise2.jpg',
-    imageAlt: 'IBJJF Seoul Open Gi & No-Gi 2026',
+    // 전용 포스터 자산이 없으면 image 를 비워 둔다 → 사진 없는 그라데이션 배너(.highlight-banner--noimg).
+    // 다른 대회 사진(IBJJF/COS 등)을 돌려쓰면 잘못된 정보가 되므로 금지.
+    image: '',
+    imageWide: '',
+    imageAlt: '',
     label: '주요 대회 안내',
-    titleLines: ['IBJJF Seoul Open', 'Gi & No-Gi 2026'],
-    detail: '8월 15일(토)~16일(일) · 서수원칠보체육관(수원)',
+    titleLines: ['제2회 고양시', 'BEAST CUP 주짓수대회'],
+    detail: '9월 20일(일) · 고양시 어울림누리 · 기/노기 · 접수 마감 9월 12일',
     // CTA 는 외부 접수처 대신 유술가들 대회 상세로 — 게이트웨이 일관성 + 링크가 죽지 않음
     // (대회가 없으면 유술가들이 홈으로 회수해 준다).
-    ctaHref: 'https://yusulga.com/t/2026-08-15-ibjjf-seoul-open-gi-nogi',
+    // sourceId 는 콘텐츠 파일명 기준이라 날짜가 옛것(7/5)이다 — 일정이 9/20 로 변경돼도
+    // sourceId 는 불변 유지해야 유술가들 쪽 대회가 갈라지지 않으므로 그대로 둔다.
+    ctaHref: 'https://yusulga.com/t/2026-07-05-goyang-beast-cup',
     ctaLabel: '대회 정보 보기',
     // 대회 종료일(KST). 이 날이 지나면 배너를 아예 렌더하지 않는다 — 끝난 대회를 계속 노출하고
     // 죽은 링크로 보내던 문제 방지. 정적 export + 매일 크론 재빌드라 하루 안에 자동 소멸.
-    until: '2026-08-16',
+    until: '2026-09-20',
   };
   // 대회 당일 자정(KST)까지만 노출.
   const bannerActive = Date.now() <= Date.parse(highlightBanner.until + 'T23:59:59+09:00');
-  // [백업] 이전 COS × 사무엘 나가이 배너 (2026-07-18 종료) — 되살리려면 위 highlightBanner 를 이 값으로 교체
+  // 전용 포스터가 없으면(image 빈 값) 사진/오버레이 없이 그라데이션 배너로 렌더.
+  const hasBannerImage = Boolean(highlightBanner.image);
+  // [백업] IBJJF Seoul Open 배너 — 전용 이미지(/advertise2.jpg)가 있는 유일한 대회.
+  //   8월에 이걸로 돌리려면 위 highlightBanner 를 이 값으로 교체.
   // const highlightBanner = {
-  //   image: '/cos-nagai-graded.png',
-  //   imageWide: '/cos-nagai-banner.png',
-  //   imageAlt: 'COS × 사무엘 나가이 주짓수 대회',
+  //   image: '/advertise2.jpg',
+  //   imageWide: '/advertise2.jpg',
+  //   imageAlt: 'IBJJF Seoul Open Gi & No-Gi 2026',
   //   label: '주요 대회 안내',
-  //   titleLines: ['COS × 사무엘 나가이'],
-  //   detail: 'THE 4th COS BJJ KOREA CUP · 7월 18일(토) · 양주 경동대 메트로폴캠퍼스 · 사무엘 나가이 출전',
-  //   ctaHref: 'https://spotlite.co.kr/jiujitsu/433/participations/create/',
-  //   ctaLabel: '접수 바로가기',
-  //   until: '2026-07-18',
+  //   titleLines: ['IBJJF Seoul Open', 'Gi & No-Gi 2026'],
+  //   detail: '8월 15일(토)~16일(일) · 서수원칠보체육관(수원)',
+  //   ctaHref: 'https://yusulga.com/t/2026-08-15-ibjjf-seoul-open-gi-nogi',
+  //   ctaLabel: '대회 정보 보기',
+  //   until: '2026-08-16',
   // };
 
   return (
@@ -166,27 +173,32 @@ export default function Page() {
 
       </section>
       {bannerActive && (
-      <section className="highlight-banner">
-        {/* 데스크탑: 와이드 이미지(우측 인물 + 좌측 페더 투명) */}
-        <Image
-          className="highlight-banner-wide"
-          src={highlightBanner.imageWide}
-          alt={highlightBanner.imageAlt}
-          width={686}
-          height={386}
-          sizes="100vw"
-          priority
-        />
-        {/* 모바일: 같은 이미지를 cover 로 (CSS object-position 으로 크롭) */}
-        <Image
-          className="highlight-banner-photo"
-          src={highlightBanner.image}
-          alt={highlightBanner.imageAlt}
-          width={686}
-          height={386}
-          priority
-        />
-        <div className="highlight-banner-overlay" />
+      <section className={hasBannerImage ? 'highlight-banner' : 'highlight-banner highlight-banner--noimg'}>
+        {hasBannerImage && (
+          <>
+            {/* 데스크탑: 와이드 이미지 cover */}
+            <Image
+              className="highlight-banner-wide"
+              src={highlightBanner.imageWide}
+              alt={highlightBanner.imageAlt}
+              width={686}
+              height={386}
+              sizes="100vw"
+              priority
+            />
+            {/* 모바일: 같은 이미지를 cover 로 (CSS object-position 으로 크롭) */}
+            <Image
+              className="highlight-banner-photo"
+              src={highlightBanner.image}
+              alt={highlightBanner.imageAlt}
+              width={686}
+              height={386}
+              priority
+            />
+            {/* 사진 위 텍스트 가독성용 그라데이션 — 사진 없을 땐 불필요 */}
+            <div className="highlight-banner-overlay" />
+          </>
+        )}
         <div className="highlight-banner-content">
           <p className="highlight-banner-label">{highlightBanner.label}</p>
           <h2 className="highlight-banner-title">
