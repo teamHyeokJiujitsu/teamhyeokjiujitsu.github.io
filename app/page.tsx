@@ -103,11 +103,12 @@ export default function Page() {
   // 메인 상단 하이라이트 배너 — active 1개만 노출, 나머지는 백업으로 보존.
   // 다른 대회로 교체하려면 highlightBanner 값을 아래 백업 블록과 바꿔치기하면 됨.
   const highlightBanner = {
-    // 전용 포스터 자산이 없으면 image 를 비워 둔다 → 사진 없는 그라데이션 배너(.highlight-banner--noimg).
-    // 다른 대회 사진(IBJJF/COS 등)을 돌려쓰면 잘못된 정보가 되므로 금지.
-    image: '',
-    imageWide: '',
-    imageAlt: '',
+    // 대회 전용 포스터가 아니라 '범용 프로모션 배경'(유술가들 배너 자산 재사용, 브랜드 비특정 일러스트).
+    // 특정 대회 브랜드 사진(IBJJF/COS 등)을 돌려쓰는 건 오정보라 금지.
+    // 쓸 이미지가 없으면 image 를 비워도 됨 → 사진 없는 그라데이션 배너(.highlight-banner--noimg).
+    image: '/promo-bg.jpg',
+    imageWide: '/promo-bg.jpg',
+    imageAlt: '주짓수 대회 프로모션 배경',
     label: '주요 대회 안내',
     titleLines: ['제2회 고양시', 'BEAST CUP 주짓수대회'],
     detail: '9월 20일(일) · 고양시 어울림누리 · 기/노기 · 접수 마감 9월 12일',
@@ -181,8 +182,8 @@ export default function Page() {
               className="highlight-banner-wide"
               src={highlightBanner.imageWide}
               alt={highlightBanner.imageAlt}
-              width={686}
-              height={386}
+              width={1672}
+              height={941}
               sizes="100vw"
               priority
             />
@@ -191,8 +192,8 @@ export default function Page() {
               className="highlight-banner-photo"
               src={highlightBanner.image}
               alt={highlightBanner.imageAlt}
-              width={686}
-              height={386}
+              width={1672}
+              height={941}
               priority
             />
             {/* 사진 위 텍스트 가독성용 그라데이션 — 사진 없을 땐 불필요 */}
