@@ -111,7 +111,12 @@ export default function Page() {
     detail: 'THE 4th COS BJJ KOREA CUP · 7월 18일(토) · 양주 경동대 메트로폴캠퍼스 · 사무엘 나가이 출전',
     ctaHref: 'https://spotlite.co.kr/jiujitsu/433/participations/create/',
     ctaLabel: '접수 바로가기',
+    // 대회일(KST). 이 날이 지나면 배너를 아예 렌더하지 않는다 — 끝난 대회를 계속 노출하고
+    // 죽은 접수 링크로 보내던 문제 방지. 정적 export + 매일 크론 재빌드라 하루 안에 자동 소멸.
+    until: '2026-07-18',
   };
+  // 대회 당일 자정(KST)까지만 노출.
+  const bannerActive = Date.now() <= Date.parse(highlightBanner.until + 'T23:59:59+09:00');
   // [백업] 이전 IBJJF Seoul Open 배너 — 되살리려면 위 highlightBanner를 이 값으로 교체
   // const highlightBanner = {
   //   image: '/advertise2.jpg',
@@ -157,6 +162,7 @@ export default function Page() {
         </div>
 
       </section>
+      {bannerActive && (
       <section className="highlight-banner">
         {/* 데스크탑: 와이드 이미지(우측 인물 + 좌측 페더 투명) */}
         <Image
@@ -203,6 +209,7 @@ export default function Page() {
           </p>
         </div>
       </section>
+      )}
       <section className="card" style={{ marginTop: 24 }}>
         <h2 style={{ marginBottom: 12 }}>주요 키워드로 빠르게 찾기</h2>
         <p style={{ marginBottom: 8 }}>
