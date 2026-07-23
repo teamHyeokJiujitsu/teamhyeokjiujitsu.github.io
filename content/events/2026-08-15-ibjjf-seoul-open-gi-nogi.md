@@ -1,7 +1,7 @@
 ---
 title: "IBJJF Seoul Open Gi & No-Gi 2026"
 date: "2026-08-15"
-city: "서울"
+city: "수원"
 venue: "서수원칠보체육관"
 organizer: "IBJJF"
 tags: ["gi","nogi","ibjjf","international"]
