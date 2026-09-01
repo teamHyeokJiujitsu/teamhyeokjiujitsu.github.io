@@ -3,7 +3,7 @@ title: "THE 5th COS BJJ KOREA CUP"
 date: "2026-09-13"
 city: "홍천"
 venue: "홍천종합체육관"
-organizer: "사단법인 코스 (C.O.S"
+organizer: "사단법인 코스"
 tags: ["gi"]
 registrationUrl: "https://flowcomp.co.kr/championship/59"
 sourceUrl: "https://flowcomp.co.kr/championship/59"

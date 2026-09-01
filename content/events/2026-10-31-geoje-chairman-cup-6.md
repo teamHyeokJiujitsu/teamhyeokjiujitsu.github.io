@@ -3,7 +3,7 @@ title: "제6회 거제시 주짓수회장기 대회"
 date: "2026-10-31"
 city: "거제"
 venue: "거제시실내체육관"
-organizer: "거제시 주짓수회 (추정)"
+organizer: "거제시주짓수회"
 tags: ["gi"]
 registrationUrl: "https://flowcomp.co.kr/championship/44"
 sourceUrl: "https://flowcomp.co.kr/championship/44"

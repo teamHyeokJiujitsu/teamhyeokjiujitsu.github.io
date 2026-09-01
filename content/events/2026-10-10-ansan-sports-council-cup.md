@@ -2,8 +2,8 @@
 title: "2026 안산 체육회장기 주짓수 챔피언십"
 date: "2026-10-10"
 city: "안산"
-venue: "경기 안산시 단원구 적금로 202"
-organizer: "안산시주짓수협회 (KORJJC 코리아주짓수챔피언쉽)"
+venue: "안산올림픽기념관"
+organizer: "안산시주짓수협회"
 tags: ["gi","nogi"]
 registrationUrl: "https://www.koreajiu.com/about"
 sourceUrl: "https://www.koreajiu.com/about"

@@ -1,9 +1,9 @@
 ---
 title: "다이노스컵 주짓수 전국대회"
 date: "2026-09-19"
-city: "고성"
-venue: "고성군군민체육센터"
-organizer: "고성군주짓수협회 (추정)"
+city: "경남 고성"
+venue: "고성군국민체육센터"
+organizer: "고성군주짓수협회"
 tags: ["gi"]
 registrationUrl: "https://flowcomp.co.kr/championship/74"
 sourceUrl: "https://flowcomp.co.kr/championship/74"
