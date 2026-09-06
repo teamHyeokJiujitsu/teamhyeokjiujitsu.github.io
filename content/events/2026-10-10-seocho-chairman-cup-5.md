@@ -5,8 +5,8 @@ city: "서울 서초구"
 venue: "양재 서초종합체육관"
 organizer: "서초구주짓수회"
 tags: ["gi","nogi"]
-registrationUrl: "https://spotlite.co.kr/jiujitsu/481/"
-sourceUrl: "https://spotlite.co.kr/jiujitsu/481/"
+registrationUrl: "https://flowcomp.co.kr/championship/71"
+sourceUrl: "https://flowcomp.co.kr/championship/71"
 regDeadline: "2026-10-03"
 excerpt: "서초구회장배 — 벨트별 팀 앱솔루트, 6매트 운영."
 ---
