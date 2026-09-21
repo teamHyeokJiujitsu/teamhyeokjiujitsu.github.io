@@ -87,6 +87,10 @@ try {
         posterImageUrl: data.cover ? String(data.cover) : null,
         description: data.excerpt ? String(data.excerpt) : null,
         sourceUrl: `${SITE}/events/${slug}/`, // 지터 상세(역링크/참고)
+        // 원 출처 — .md frontmatter 의 sourceUrl(주최측 공고·지자체 일정표 등).
+        // 위 sourceUrl 이 이걸 덮어쓰고 있어서 소비 측(유술가들)에 원 출처가 전달되지 않았다.
+        // "이 정보 어디서 봤냐"는 문의가 실제로 들어왔고, 출처를 화면에 띄울 수가 없었다.
+        originSourceUrl: data.sourceUrl ? String(data.sourceUrl) : null,
         updatedAt,
       });
     })
