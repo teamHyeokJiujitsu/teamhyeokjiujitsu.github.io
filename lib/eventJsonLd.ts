@@ -30,6 +30,7 @@ export function buildEventJsonLd(meta: EventMeta, slug: string) {
     '@type': 'Event',
     name: meta.title,
     startDate: isValidDate ? meta.date : undefined,
+    endDate: isValidDate && meta.endDate ? meta.endDate : undefined,
     description: meta.excerpt || undefined,
     image: meta.cover || undefined,
     url: eventUrl,

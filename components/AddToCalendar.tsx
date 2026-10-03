@@ -24,8 +24,9 @@ export default function AddToCalendar({ meta }: Props) {
     URL.revokeObjectURL(url);
   };
 
-  const end = new Date(start);
-  end.setDate(start.getDate() + 1);
+  const last = meta.endDate ? new Date(meta.endDate) : start;
+  const end = new Date(Number.isNaN(last.getTime()) ? start : last);
+  end.setDate(end.getDate() + 1);
   const fmt = (d: Date) => d.toISOString().slice(0, 10).replace(/-/g, '');
   const dates = `${fmt(start)}/${fmt(end)}`;
   const details = encodeURIComponent(meta.excerpt || '');

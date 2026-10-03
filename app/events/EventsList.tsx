@@ -103,7 +103,7 @@ export default function EventsList({
 
   const dateFiltered = useMemo(
     () =>
-      effectiveShowPast ? events : events.filter(e => new Date(e.date) >= today),
+      effectiveShowPast ? events : events.filter(e => new Date(e.endDate || e.date) >= today),
     [effectiveShowPast, events, today],
   );
 
@@ -543,7 +543,19 @@ export default function EventsList({
         {items.map((e, idx) => {
           const parsed = e.date ? new Date(e.date) : null;
           const isValid = parsed && !Number.isNaN(parsed.getTime());
-          const dateLabel = isValid ? parsed.toLocaleDateString('ko-KR') : '일정 미정';
+          let dateLabel = '일정 미정';
+          if (parsed && isValid) {
+            dateLabel = parsed.toLocaleDateString('ko-KR');
+            // 여러 날 대회: "2026. 12. 3. ~ 12. 4." (해가 바뀌면 끝날에도 연도)
+            const end = e.endDate ? new Date(e.endDate) : null;
+            if (end && !Number.isNaN(end.getTime()) && end.getTime() > parsed.getTime()) {
+              const endLabel =
+                end.getFullYear() === parsed.getFullYear()
+                  ? `${end.getMonth() + 1}. ${end.getDate()}.`
+                  : end.toLocaleDateString('ko-KR');
+              dateLabel = `${dateLabel} ~ ${endLabel}`;
+            }
+          }
           const tagSet = (e.tags ?? []).map(t => t.toLowerCase());
           const hasGi = tagSet.includes('gi');
           const hasNoGi = tagSet.includes('nogi') || tagSet.includes('no-gi');

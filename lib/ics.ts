@@ -14,8 +14,9 @@ function escape(text: string) {
 
 export function eventToICS(meta: EventMeta): string {
   const start = new Date(meta.date);
-  const end = new Date(start);
-  end.setDate(start.getDate() + 1);
+  const last = meta.endDate ? new Date(meta.endDate) : start;
+  const end = new Date(Number.isNaN(last.getTime()) ? start : last);
+  end.setDate(end.getDate() + 1);
 
   const lines = [
     'BEGIN:VCALENDAR',

@@ -30,6 +30,8 @@ export type EventMeta = BaseMeta & {
   organizer?: string;
   sourceUrl?: string;
   regDeadline?: string;
+  /** 여러 날 열리는 대회의 마지막 날(YYYY-MM-DD). 하루짜리면 없음. */
+  endDate?: string;
 };
 
 function readDir(dir: string) {
@@ -82,6 +84,7 @@ export function getAllEventsMeta(): EventMeta[] {
       organizer: String(data.organizer || ''),
       sourceUrl: String(data.sourceUrl || ''),
       regDeadline: data.regDeadline ? String(data.regDeadline) : undefined,
+      endDate: data.endDate ? String(data.endDate) : undefined,
     } as EventMeta;
   });
   return items.sort((a, b) => {
