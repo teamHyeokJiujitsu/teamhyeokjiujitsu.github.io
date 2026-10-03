@@ -5,8 +5,9 @@ city: "부산"
 venue: "부산항국제전시컨벤션센터(BPEX)"
 organizer: "ADCC KOREA"
 tags: ["nogi"]
-registrationUrl: "https://adcombat.com/adcc-events/adcc-korea-busan-open-2026/"
+registrationUrl: "https://smoothcomp.com/en/event/32666"
 sourceUrl: "https://adcombat.com/adcc-events/adcc-korea-busan-open-2026/"
+regDeadline: "2026-12-06"
 excerpt: "ADCC KOREA 부산 오픈 — 노기 서브미션 그래플링(ADCC 룰)."
 ---
 
