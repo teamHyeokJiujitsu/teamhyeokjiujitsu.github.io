@@ -4,11 +4,11 @@ date: "2026-12-05"
 city: "서울 서초구"
 venue: "양재 서초종합체육관"
 organizer: "서초구체육회 / 서초구주짓수회"
-tags: ["gi","nogi"]
+tags: ["gi","kids","masters"]
 registrationUrl: "https://jiudaepl.com/tournament_detail.php?id=7"
 sourceUrl: "https://jiudaepl.com/tournament_detail.php?id=7"
 regDeadline: "2026-11-30"
-excerpt: "서초구청장배 — 기·노기 벨트별 앱솔루트, 6매트 운영."
+excerpt: "서울 서초구 대회입니다. 얼리버드는 11월 1일까지입니다."
 ---
 
 - 등록 마감: 2026-11-30 23:59 (얼리버드 11/1까지)

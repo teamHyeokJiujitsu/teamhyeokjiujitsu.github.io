@@ -20,7 +20,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: meta.title,
     description: meta.excerpt || `${meta.title} 대회 정보`,
-    alternates: { canonical: yusulgaUrl(slug) },
+    // canonical 은 걸지 않는다 — 이 페이지는 noindex 이고 곧바로 유술가들로 넘어간다.
+    // 리다이렉트(/t/) 주소를 canonical 로 가리키면 '색인하지 마라'와 '저 주소가 원본'이 서로 모순된다.
     robots: { index: false, follow: true },
   };
 }
@@ -40,7 +41,7 @@ export default async function EventDetailPage({ params }: Props) {
       <RedirectToYusulga target={target} />
       <p style={{ padding: '24px 0', textAlign: 'center' }}>
         잠시 후 유술가들 상세 페이지로 이동합니다.{' '}
-        <a href={target}>이동하지 않으면 여기를 클릭</a>
+        <a href={target}>{meta.title} 대회 정보 보기</a>
       </p>
     </>
   );
