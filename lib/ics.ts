@@ -1,4 +1,5 @@
 import type { EventMeta } from './content';
+import { outboundUrl } from './outbound';
 
 function formatDate(d: Date) {
   return d.toISOString().slice(0, 10).replace(/-/g, '');
@@ -33,7 +34,7 @@ export function eventToICS(meta: EventMeta): string {
     meta.city || meta.venue
       ? `LOCATION:${escape([meta.venue, meta.city].filter(Boolean).join(', '))}`
       : '',
-    meta.registrationUrl ? `URL:${meta.registrationUrl}` : '',
+    meta.registrationUrl ? `URL:${outboundUrl(meta.registrationUrl, meta.slug)}` : '',
     'END:VEVENT',
     'END:VCALENDAR',
   ];

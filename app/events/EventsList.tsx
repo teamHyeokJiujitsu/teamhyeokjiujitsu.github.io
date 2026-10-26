@@ -14,6 +14,7 @@ import MonthFilter from './MonthFilter';
 import FavoriteButton from '@/components/FavoriteButton';
 import { useFavorites } from '@/lib/useFavorites';
 import type { EventMeta } from '@/lib/content';
+import { isReroutedHost, outboundUrl } from '@/lib/outbound';
 
 interface Tab {
   key: string | undefined;
@@ -677,8 +678,9 @@ export default function EventsList({
                 <li>
                   <strong>출처:</strong>{' '}
                   {e.sourceUrl ? (
-                    <a href={e.sourceUrl} target="_blank" rel="noopener noreferrer" onClick={(ev) => ev.stopPropagation()}>
-                      공식/주최 확인
+                    // 접속이 안 되는 접수처(스포트라이트)는 유술가들 상세로 — 거기서 접수처 상태를 안내한다
+                    <a href={outboundUrl(e.sourceUrl, e.slug)} target="_blank" rel="noopener noreferrer" onClick={(ev) => ev.stopPropagation()}>
+                      {isReroutedHost(e.sourceUrl) ? '유술가들에서 확인' : '공식/주최 확인'}
                     </a>
                   ) : (
                     '공식 안내 확인 중'
