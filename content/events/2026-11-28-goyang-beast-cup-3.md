@@ -8,7 +8,8 @@ tags: ["gi","nogi","kids","masters"]
 registrationUrl: "https://www.flowcomp.co.kr/championship/104"
 sourceUrl: "https://www.flowcomp.co.kr/championship/104"
 regDeadline: "2026-11-21"
-excerpt: "접수 페이지 안에서도 장소가 달라요. 지도 칸에는 관산 다목적구장, 본문에는 고양국민체육센터로 나와 있어 지도 칸 기준으로 적었어요. 정확한 장소는 주최측에 확인해 주세요."
+excerpt: "접수 페이지 지도 칸에는 관산 다목적구장, 본문에는 고양국민체육센터로 나와 있어요. 본문이 1회 대회 문구 그대로라 지도 칸 기준으로 적었어요."
+notice: "장소가 안내마다 달라요. 접수 페이지 본문에는 고양국민체육센터로 나와 있어요. 참가 전에 주최측에 확인해 주세요."
 ---
 
 - 등록 마감: 2026-11-21 (본문 기준. 접수 시스템 마감은 11/22 23:59)

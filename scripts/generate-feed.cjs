@@ -86,6 +86,8 @@ try {
         status: data.status ? String(data.status).toUpperCase() : 'SCHEDULED',
         posterImageUrl: data.cover ? String(data.cover) : null,
         description: data.excerpt ? String(data.excerpt) : null,
+        // 애매한 정보 안내 한 줄(안내마다 다름·개최 여부 확인 불가 …). 유술가들 상세 맨 위 '확인이 필요해요' 상자에 뜬다.
+        notice: data.notice ? String(data.notice) : null,
         sourceUrl: `${SITE}/events/${slug}/`, // 지터 상세(역링크/참고)
         // 원 출처 — .md frontmatter 의 sourceUrl(주최측 공고·지자체 일정표 등).
         // 위 sourceUrl 이 이걸 덮어쓰고 있어서 소비 측(유술가들)에 원 출처가 전달되지 않았다.
