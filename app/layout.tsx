@@ -3,7 +3,6 @@ import { Noto_Sans_KR } from 'next/font/google';
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import ThemeToggle from '@/components/ThemeToggle';
-import AdBanner from '@/components/AdBanner';
 import AppDownloadBanner from '@/components/AppDownloadBanner';
 import GoogleAnalytics from '@/components/GoogleAnalytics';
 
@@ -41,7 +40,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <div className="small">© {new Date().getFullYear()} BJJ 대회 정보</div>
           </div>
         </footer>
-        <AdBanner />
         <AppDownloadBanner />
       </body>
     </html>

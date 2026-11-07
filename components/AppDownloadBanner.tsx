@@ -37,13 +37,6 @@ export default function AppDownloadBanner() {
     setVisible(true);
   }, []);
 
-  // 노출 동안 body 표식 → 쿠팡 광고 카드(.coupang-card)를 위로 밀어 겹침 방지
-  useEffect(() => {
-    if (!visible) return;
-    document.body.classList.add('has-app-banner');
-    return () => document.body.classList.remove('has-app-banner');
-  }, [visible]);
-
   if (!IOS_APP_STORE_URL || !visible) return null;
 
   const snooze = (days: number) => {
