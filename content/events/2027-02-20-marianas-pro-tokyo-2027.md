@@ -3,7 +3,7 @@ title: "2027 Guam Marianas Pro Tokyo (Gi & No-Gi)"
 date: "2027-02-20"
 city: "東京都 世田谷区"
 venue: "Komazawa Okunai Kyugijo (indoor Ball Court)"
-organizer: "ASJJF"
+organizer: "MSJJF / ASJJF"
 tags: ["gi","nogi","international","asjjf"]
 registrationUrl: "https://asjjf.org/main/eventNotice/2233"
 sourceUrl: "https://asjjf.org/main/eventInfo/2233"

@@ -2,14 +2,17 @@
 title: "THE 7th COS BJJ KOREA CUP (김해)"
 date: "2026-12-20"
 city: "김해"
-venue: "김해 운동장실내체육관"
+venue: "김해운동장 실내체육관"
 organizer: "COS"
-tags: []
-registrationUrl: ""
-sourceUrl: "https://www.instagram.com/cos.koreacup/p/DdOib7MqMe_/"
-excerpt: "COS 하반기 일정 공지로 날짜와 장소만 나왔습니다. 접수 페이지가 열리면 갱신합니다."
+tags: ["gi","kids","women","masters"]
+registrationUrl: "https://www.flowcomp.co.kr/championship/100"
+sourceUrl: "https://www.flowcomp.co.kr/championship/100"
+regDeadline: "2026-12-14"
+excerpt: "COS 코리아컵 일곱 번째 대회예요. 얼리버드는 11월 20일까지이고, 여성 통합 앱솔루트와 유치부는 참가비가 없어요."
 ---
 
-- 등록 마감: 정보 없음 (접수 페이지 미공개)
+- 등록 마감: 2026-12-14 23:59 (얼리버드 11/20까지 50,000원, 일반 60,000원)
+- 추가 체급·일반 앱솔루트 각 30,000원, COS 여성 통합 앱솔루트·유치부 무료
+- 참가자 명단 12/15, 임시 대진표 12/17, 최종 대진표 12/18
 
 공식 안내 페이지를 확인하세요.

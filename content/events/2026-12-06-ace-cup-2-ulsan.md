@@ -3,7 +3,7 @@ title: "에이스컵2 : PLAY YOUR ACE"
 date: "2026-12-06"
 city: "울산"
 venue: "울산 문수체육관"
-organizer: "에이스컵"
+organizer: "김관장박사장"
 tags: ["gi","nogi","kids","masters"]
 registrationUrl: "https://www.flowcomp.co.kr/championship/97"
 sourceUrl: "https://www.flowcomp.co.kr/championship/97"
