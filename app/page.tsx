@@ -6,6 +6,7 @@ import { getAllEventsMeta } from '@/lib/content';
 import EventsList from './events/EventsList';
 import EventsListSkeleton from './events/EventsListSkeleton';
 import KeywordBlockRemover from '@/components/KeywordBlockRemover';
+import YusulgaHubLinks from '@/components/YusulgaHubLinks';
 
 const SITE_URL = 'https://jiujitsu.teamhyeok.com';
 
@@ -243,6 +244,8 @@ export default function Page() {
           <EventsList events={events} />
         </Suspense>
       </section>
+      {/* 대회 목록 아래 — 유술가들 지역별·달별 대회 일정으로 가는 링크 묶음(정적 링크만, 목록과 무관) */}
+      <YusulgaHubLinks />
       <section className="card" style={{ marginTop: 32 }}>
         <h2 style={{ marginBottom: 12 }}>자주 묻는 질문</h2>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
